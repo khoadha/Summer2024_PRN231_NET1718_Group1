@@ -1,0 +1,110 @@
+<ng-container *ngIf="role == undefined">
+    <div class="d-flex">
+      <button
+        mat-raised-button
+        class="bg-light text-dark"
+        routerLink="/sign-up">
+        Đăng ký
+      </button>
+      <button
+        mat-raised-button
+        class="text-light pastel-bg ms-3"
+        routerLink="/sign-in">
+        Đăng nhập
+      </button>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="role != undefined">
+    <div class="dropdown">
+      <a
+        class="btn dropdown-toggle border-0"
+        href="#"
+        role="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false">
+
+        <img
+          [src]="imgPath"
+          style="width: 50px; height: 50px"
+          class="rounded-circle"
+          referrerpolicy="no-referrer"/>
+      </a>
+      <ul class="dropdown-menu">
+        <ng-container *ngIf="role == 'Admin'; else userSection">
+          <li>
+            <h6 class="dropdown-header web-font pb-0">Tùy chọn</h6>
+          </li>
+          <li>
+            <a
+              class="dropdown-item web-font d-flex align-items-center"
+              routerLink="adashboard/home">
+              <i class="pi pi-wrench me-2"></i> Bảng điều khiển</a>
+          </li>
+        </ng-container>
+
+        <ng-template #userSection>
+          <li>
+            <p class="dropdown-header web-font mb-0 fs-6 py-0">
+              Tài khoản: <span class="pastel fw-bold">{{ username }}</span>
+            </p>
+          </li>
+          <!-- <li>
+            <p class="dropdown-header web-font mb-0 fs-6 py-0">
+              Balance: <span class="pastel fw-bold">{{ point }}</span>
+            </p>
+          </li>
+          <hr class="dropdown-divider" />
+          <li></li>
+          <li>
+            <h6 class="dropdown-header web-font pb-0">Tùy chọn</h6>
+          </li>
+          <li>
+            <a
+              class="dropdown-item web-font d-flex align-items-center"
+              routerLink="my-order">
+              <i class="me-2">newspaper</i> Đơn hàng của tôi
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item web-font d-flex align-items-center"
+              routerLink="mdashboard/store-manager"
+              ><mat-icon class="me-2">storefront</mat-icon> Kênh người bán</a
+            >
+          </li>
+          <li>
+            <a
+              class="dropdown-item web-font d-flex align-items-center"
+              routerLink="wemade-pay"
+              ><mat-icon class="me-2">account_balance_wallet</mat-icon
+              >WemadePay</a
+            >
+          </li>
+          <li>
+            <a
+              class="dropdown-item web-font d-flex align-items-center"
+              routerLink="manage-profile"
+              ><mat-icon class="me-2">manage_accounts</mat-icon> Tài khoản của
+              tôi</a
+            >
+          </li>
+          <li>
+            <a
+              class="dropdown-item web-font d-flex align-items-center"
+              routerLink="chatting"
+              ><mat-icon class="me-2">chat</mat-icon> Tin nhắn</a
+            >
+          </li> -->
+        </ng-template>
+        <li style="cursor: pointer">
+          <a
+            class="dropdown-item web-font d-flex align-items-center"
+            (click)="logOut()">
+            <!-- <mat-icon class="me-2">logout</mat-icon>  -->
+            Đăng xuất
+        </a>
+        </li>
+      </ul>
+    </div>
+  </ng-container>
