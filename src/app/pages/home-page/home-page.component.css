@@ -1,0 +1,67 @@
+#carouselExampleControls {
+  background-color: #000;
+}
+
+#carouselExampleControls .carousel-item {
+  height: 400px;
+  display: none;
+  align-items: center;
+  background-color: #000;
+}
+
+#carouselExampleControls .carousel-item.active {
+  display: flex;
+}
+
+#carouselExampleControls img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+  #counter-section .counter-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+  
+  #counter-section .counter {
+    font-size: 36px; /* Adjust font size as needed */
+  }
+  
+  #counter-section .counter-label {
+    font-size: 16px; /* Adjust font size as needed */
+    margin-top: 10px; /* Add space between counter and label */
+  }
+  .testimonial-section {
+    padding: 80px 0;
+}
+
+.testimony {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.testimony:hover {
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.2);
+}
+
+.blockquote {
+    font-size: 18px;
+    color: #555;
+}
+
+.author {
+    font-size: 16px;
+    color: #888;
+    margin-top: 20px;
+}
+
+.author cite {
+    font-style: normal;
+}
