@@ -1,3 +1,16 @@
 .p-carousel .p-paginator .p-paginator-page {
     background-color: #2eca6a !important;
 }
+.swiper-slide.carousel-item-a.intro-item {
+    background-size: cover;
+    background-position: center;
+}
+
+.table-cell{
+    height: 100vh;
+}
+
+::ng-deep .p-carousel-next,
+::ng-deep .p-carousel-prev {
+  display: none !important;
+}

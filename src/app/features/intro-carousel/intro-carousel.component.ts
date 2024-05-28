@@ -7,9 +7,9 @@ import { Component } from '@angular/core';
 })
 export class IntroCarouselComponent {
   images = [
-    { url: 'src\assets\images\slide-1.jpg', location: 'Doral, Florida', zipCode: '78345', propertyNumber: '204', propertyName: 'Mount Olive Road Two', price: '12,000' },
-    { url: 'src\assets\images\slide-2.jpg', location: 'Doral, Florida', zipCode: '78345', propertyNumber: '204', propertyName: 'Rino Venda Road Five', price: '12,000' },
-    { url: 'src\assets\images\slide-3.jpg', location: 'Doral, Florida', zipCode: '78345', propertyNumber: '204', propertyName: 'Alira Roan Road One', price: '12,000' }
+    { url: "assets/images/slide-1.jpg", location: 'Doral, Florida', zipCode: '78345', propertyNumber: '204', propertyName: 'Mount Olive Road Two', price: '12,000' },
+    { url: "assets/images/slide-2.jpg", location: 'Doral, Florida', zipCode: '78345', propertyNumber: '204', propertyName: 'Rino Venda Road Five', price: '12,000' },
+    { url: "assets/images/slide-3.jpg", location: 'Doral, Florida', zipCode: '78345', propertyNumber: '204', propertyName: 'Alira Roan Road One', price: '12,000' }
   ];
 
   responsiveOptions: any[] = [
