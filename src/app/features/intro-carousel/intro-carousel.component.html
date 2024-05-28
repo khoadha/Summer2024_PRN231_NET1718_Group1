@@ -1,0 +1,37 @@
+<p-carousel 
+    [value]="images" 
+    [numVisible]="1" 
+    [numScroll]="1" 
+    [circular]="true" 
+    [autoplayInterval]="5000" 
+    [responsiveOptions]="responsiveOptions">
+    <ng-template let-image pTemplate="item">
+        <div 
+            class="swiper-slide carousel-item-a intro-item bg-image" 
+            [style.background]="'url(' + image.url + ')'">
+            
+            <div class="overlay overlay-a"></div>
+            <div class="intro-content display-table">
+                <div class="table-cell">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="intro-body">
+                                    <p class="intro-title-top">{{image.location}}
+                                        <br>{{image.zipCode}}
+                                    </p>
+                                    <h1 class="intro-title mb-4 ">
+                                        <span class="color-b">{{image.propertyNumber}} </span>{{image.propertyName}}
+                                    </h1>
+                                    <p class="intro-subtitle intro-price">
+                                        <a href="#"><span class="price-a">rent | $ {{image.price}}</span></a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-carousel>

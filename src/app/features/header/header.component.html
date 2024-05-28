@@ -1,110 +1,107 @@
-<ng-container *ngIf="role == undefined">
-    <div class="d-flex">
-      <button
-        mat-raised-button
-        class="bg-light text-dark"
-        routerLink="/sign-up">
-        Đăng ký
+  <nav class="navbar navbar-default navbar-trans navbar-expand-lg fixed-top">
+    <div class="container">
+      <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
-      <button
-        mat-raised-button
-        class="text-light pastel-bg ms-3"
-        routerLink="/sign-in">
-        Đăng nhập
-      </button>
-    </div>
-</ng-container>
+      <a class="navbar-brand text-brand" href="index.html">Hostel<span class="color-b">Land</span></a>
 
-<ng-container *ngIf="role != undefined">
-    <div class="dropdown">
-      <a
-        class="btn dropdown-toggle border-0"
-        href="#"
-        role="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false">
+      <div class="navbar-collapse collapse justify-content-center" id="navbarDefault">
+        <ul class="navbar-nav">
 
-        <img
-          [src]="imgPath"
-          style="width: 50px; height: 50px"
-          class="rounded-circle"
-          referrerpolicy="no-referrer"/>
-      </a>
-      <ul class="dropdown-menu">
-        <ng-container *ngIf="role == 'Admin'; else userSection">
-          <li>
-            <h6 class="dropdown-header web-font pb-0">Tùy chọn</h6>
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">Home</a>
           </li>
-          <li>
+
+          <li class="nav-item">
+            <a class="nav-link " href="about.html">About</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link " href="property-grid.html">Property</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link " href="blog-grid.html">Blog</a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item " href="property-single.html">Property Single</a>
+              <a class="dropdown-item " href="blog-single.html">Blog Single</a>
+              <a class="dropdown-item " href="agents-grid.html">Agents Grid</a>
+              <a class="dropdown-item " href="agent-single.html">Agent Single</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="contact.html">Contact</a>
+          </li>
+        </ul>
+      </div>
+
+      <ng-container *ngIf="role == undefined">
+        <div class="d-flex">
+          <button
+            class="bg-light text-dark shadow-lg border-0 px-3"
+            routerLink="/sign-up">
+            Sign up
+          </button>
+          <button
+            class="text-light primary-color-bg ms-3 btn shadow"
+            routerLink="/sign-in">
+            Sign in
+          </button>
+        </div>
+      </ng-container>      
+
+    <ng-container *ngIf="role != undefined">
+      <div class="dropdown">
+        <a
+          class="btn dropdown-toggle border-0"
+          href="#"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false">
+  
+          <img
+            [src]="imgPath"
+            style="width: 50px; height: 50px"
+            class="rounded-circle"
+            referrerpolicy="no-referrer"/>
+        </a>
+        <ul class="dropdown-menu">
+          <ng-container *ngIf="role == 'Admin'; else userSection">
+            <li>
+              <h6 class="dropdown-header web-font pb-0">Tùy chọn</h6>
+            </li>
+            <li>
+              <a
+                class="dropdown-item web-font d-flex align-items-center"
+                routerLink="adashboard/home">
+                <i class="pi pi-wrench me-2"></i> Bảng điều khiển</a>
+            </li>
+          </ng-container>
+  
+          <ng-template #userSection>
+            <li>
+              <p class="dropdown-header web-font mb-0 fs-6 py-0">
+                Account: <span class="pastel fw-bold">{{ username }}</span>
+              </p>
+            </li>
+          </ng-template>
+          <li style="cursor: pointer">
             <a
               class="dropdown-item web-font d-flex align-items-center"
-              routerLink="adashboard/home">
-              <i class="pi pi-wrench me-2"></i> Bảng điều khiển</a>
-          </li>
-        </ng-container>
-
-        <ng-template #userSection>
-          <li>
-            <p class="dropdown-header web-font mb-0 fs-6 py-0">
-              Tài khoản: <span class="pastel fw-bold">{{ username }}</span>
-            </p>
-          </li>
-          <!-- <li>
-            <p class="dropdown-header web-font mb-0 fs-6 py-0">
-              Balance: <span class="pastel fw-bold">{{ point }}</span>
-            </p>
-          </li>
-          <hr class="dropdown-divider" />
-          <li></li>
-          <li>
-            <h6 class="dropdown-header web-font pb-0">Tùy chọn</h6>
-          </li>
-          <li>
-            <a
-              class="dropdown-item web-font d-flex align-items-center"
-              routerLink="my-order">
-              <i class="me-2">newspaper</i> Đơn hàng của tôi
+              (click)="logOut()">
+              <!-- <mat-icon class="me-2">logout</mat-icon>  -->
+              Logout
             </a>
           </li>
-          <li>
-            <a
-              class="dropdown-item web-font d-flex align-items-center"
-              routerLink="mdashboard/store-manager"
-              ><mat-icon class="me-2">storefront</mat-icon> Kênh người bán</a
-            >
-          </li>
-          <li>
-            <a
-              class="dropdown-item web-font d-flex align-items-center"
-              routerLink="wemade-pay"
-              ><mat-icon class="me-2">account_balance_wallet</mat-icon
-              >WemadePay</a
-            >
-          </li>
-          <li>
-            <a
-              class="dropdown-item web-font d-flex align-items-center"
-              routerLink="manage-profile"
-              ><mat-icon class="me-2">manage_accounts</mat-icon> Tài khoản của
-              tôi</a
-            >
-          </li>
-          <li>
-            <a
-              class="dropdown-item web-font d-flex align-items-center"
-              routerLink="chatting"
-              ><mat-icon class="me-2">chat</mat-icon> Tin nhắn</a
-            >
-          </li> -->
-        </ng-template>
-        <li style="cursor: pointer">
-          <a
-            class="dropdown-item web-font d-flex align-items-center"
-            (click)="logOut()">
-            <!-- <mat-icon class="me-2">logout</mat-icon>  -->
-            Đăng xuất
-        </a>
-        </li>
-      </ul>
+        </ul>
+      </div>
+    </ng-container>
+
     </div>
-  </ng-container>
+  </nav><!-- End Header/Navbar -->

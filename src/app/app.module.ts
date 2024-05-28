@@ -21,7 +21,17 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { LoaderComponent } from './shared/loader/loader.component';
 import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { DividerModule } from 'primeng/divider';
+import { CarouselModule } from 'primeng/carousel';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { ResetPasswordSuccessComponent } from './pages/reset-password-success/reset-password-success.component';
+import { CheckEmailComponent } from './pages/check-email/check-email.component';
+import { ConfirmEmailComponent } from './pages/confirm-email/confirm-email.component';
+import { ConfirmEmailSuccessComponent } from './pages/confirm-email-success/confirm-email-success.component';
+import { BreadcrumbComponent } from './features/breadcrumb/breadcrumb.component';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { IntroCarouselComponent } from './features/intro-carousel/intro-carousel.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -34,6 +44,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     ScrollTopModule,
     CheckboxModule,
     ReactiveFormsModule,
+    DividerModule,
+    CarouselModule,
+    BreadcrumbModule,
   ],
   declarations: [
     AppComponent,
@@ -45,7 +58,15 @@ import { ReactiveFormsModule } from '@angular/forms';
     HeaderComponent,
     FooterComponent,
     LoaderComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+    ResetPasswordSuccessComponent,
+    CheckEmailComponent,
+    ConfirmEmailComponent,
+    ConfirmEmailSuccessComponent,
+    BreadcrumbComponent,
+    IntroCarouselComponent
   ],
   providers: [
     {

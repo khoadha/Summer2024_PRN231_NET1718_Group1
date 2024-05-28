@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header *ngIf="!hideElements"></app-header>
 <p-scrollTop></p-scrollTop>
 <router-outlet></router-outlet>
-<!-- <app-footer *ngIf="!hideElements"></app-footer> -->
+<app-footer *ngIf="!hideElements"></app-footer>

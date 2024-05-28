@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { TokenApiModel } from 'src/app/core/models/token-api.model';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserStoreService } from 'src/app/core/services/user-store.service';
+import { CredentialResponse, PromptMomentNotification } from 'google-one-tap';
 
 @Component({
   selector: 'app-sign-in',
@@ -20,23 +21,23 @@ export class SignInComponent implements OnInit{
 
 
   ngOnInit(): void {
-    // this.auth.getSecureClientId().subscribe(client_id => {
-    //   // @ts-ignore
-    //   google.accounts.id.initialize({
-    //     client_id: atob(client_id),
-    //     callback: this.handleCredentialResponse.bind(this),
-    //     auto_select: false,
-    //     cancel_on_tap_outside: true,
-    //   });
-    //   // @ts-ignore
-    //   google.accounts.id.renderButton(
-    //     // @ts-ignore
-    //     document.getElementById("google-button"),
-    //     { theme: "outline", size: "large" }
-    //   );
-    //   // @ts-ignore
-    //   google.accounts.id.prompt((notification: PromptMomentNotification) => { });
-    // });
+    this.auth.getSecureClientId().subscribe(client_id => {
+      // @ts-ignore
+      google.accounts.id.initialize({
+        client_id: atob(client_id),
+        callback: this.handleCredentialResponse.bind(this),
+        auto_select: false,
+        cancel_on_tap_outside: true,
+      });
+      // @ts-ignore
+      google.accounts.id.renderButton(
+        // @ts-ignore
+        document.getElementById("google-button"),
+        { theme: "outline", size: "large" }
+      );
+      // @ts-ignore
+      google.accounts.id.prompt((notification: PromptMomentNotification) => { });
+    });
 
     this.signInForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -64,18 +65,18 @@ export class SignInComponent implements OnInit{
     }
   }
 
-  // handleCredentialResponse(response: CredentialResponse) {
-  //   this.auth.loginWithGoogle(response.credential).subscribe({
-  //     next: (res) => {
-  //       this.storeUserInformation(res);
-  //       window.location.reload();
-  //     },
-  //     error: (err) => {
-  //       this.isLoading = false;
-  //       alert(err?.error.message);
-  //     }
-  //   })
-  // }
+  handleCredentialResponse(response: CredentialResponse) {
+    this.auth.loginWithGoogle(response.credential).subscribe({
+      next: (res) => {
+        this.storeUserInformation(res);
+        window.location.reload();
+      },
+      error: (err) => {
+        this.isLoading = false;
+        alert(err?.error.message);
+      }
+    })
+  }
 
   storeUserInformation(res: TokenApiModel) {
     this.auth.storeToken(res.accessToken);
