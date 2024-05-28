@@ -32,6 +32,8 @@ import { ConfirmEmailSuccessComponent } from './pages/confirm-email-success/conf
 import { BreadcrumbComponent } from './features/breadcrumb/breadcrumb.component';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { IntroCarouselComponent } from './features/intro-carousel/intro-carousel.component';
+import { TermOfUseComponent } from './pages/term-of-use/term-of-use.component';
+import { CardModule } from 'primeng/card';
 @NgModule({
   imports: [
     BrowserModule,
@@ -47,6 +49,7 @@ import { IntroCarouselComponent } from './features/intro-carousel/intro-carousel
     DividerModule,
     CarouselModule,
     BreadcrumbModule,
+    CardModule,
   ],
   declarations: [
     AppComponent,
@@ -66,7 +69,8 @@ import { IntroCarouselComponent } from './features/intro-carousel/intro-carousel
     ConfirmEmailComponent,
     ConfirmEmailSuccessComponent,
     BreadcrumbComponent,
-    IntroCarouselComponent
+    IntroCarouselComponent,
+    TermOfUseComponent
   ],
   providers: [
     {
