@@ -14,8 +14,7 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.hideElements = this.router.url.includes('/mdashboard') || this.router.url.includes('adashboard') ||
-         this.router.url.includes('sign-in') || this.router.url.includes('sign-up');
+        this.hideElements = this.router.url.includes('/mdashboard') || this.router.url.includes('adashboard');
       }
     });
  }

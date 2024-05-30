@@ -17,13 +17,13 @@ body, html {
 }
 
 .main-image-container {
-    background-color: ghostwhite; 
-    height: 400px; 
-    width: 100%; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    border: 1px gray solid
+  background-color: ghostwhite; 
+  height: 400px; 
+  width: 100%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  border: 1px gray solid
 }
 
 .img-preview {
@@ -51,8 +51,8 @@ a:focus {
 
 a:hover {
 	text-decoration: none;
-  color: #fc00ff;
-  border-color: #fc00ff;
+  color: #2eca6a;
+  border-color: #2eca6a;
 }
 
 /*---------------------------------------------*/
@@ -248,10 +248,10 @@ iframe {
   top: 0;
   left: 0;
   background: #a64bf4;
-  background: -webkit-linear-gradient(45deg, #00dbde, #fc00ff);
-  background: -o-linear-gradient(45deg, #00dbde, #fc00ff);
-  background: -moz-linear-gradient(45deg, #00dbde, #fc00ff);
-  background: linear-gradient(45deg, #00dbde, #fc00ff);
+  background: -webkit-linear-gradient(45deg, #00dbde, #2eca6a);
+  background: -o-linear-gradient(45deg, #00dbde, #2eca6a);
+  background: -moz-linear-gradient(45deg, #00dbde, #2eca6a);
+  background: linear-gradient(45deg, #00dbde, #2eca6a);
   opacity: 0;
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
@@ -328,7 +328,7 @@ iframe {
   top: -1px;
   left: -1px;
   pointer-events: none;
-  border: 1px solid #fc00ff;
+  border: 1px solid #2eca6a;
   border-radius: 10px;
 
   visibility: hidden;
@@ -361,6 +361,16 @@ iframe {
   visibility: visible;
   opacity: 1;
 
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  transform: scale(1);
+}
+
+::ng-deep .p-password input:focus + .focus-input100 {
+  visibility: visible;
+  opacity: 1;
   -webkit-transform: scale(1);
   -moz-transform: scale(1);
   -ms-transform: scale(1);
@@ -419,10 +429,10 @@ iframe {
   top: 0;
   left: 0;
   background: #a64bf4;
-  background: -webkit-linear-gradient(45deg, #00dbde, #fc00ff);
-  background: -o-linear-gradient(45deg, #00dbde, #fc00ff);
-  background: -moz-linear-gradient(45deg, #00dbde, #fc00ff);
-  background: linear-gradient(45deg, #00dbde, #fc00ff);
+  background: -webkit-linear-gradient(45deg, #00dbde, #2eca6a);
+  background: -o-linear-gradient(45deg, #00dbde, #2eca6a);
+  background: -moz-linear-gradient(45deg, #00dbde, #2eca6a);
+  background: linear-gradient(45deg, #00dbde, #2eca6a);
   opacity: 0;
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
@@ -451,26 +461,16 @@ iframe {
   border-radius: 2px;
   padding: 4px 25px 5px 10px;
   top: 50%;
-  -webkit-transform: translateY(-50%);
-  -moz-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  -o-transform: translateY(-50%);
   transform: translateY(-50%);
   right: 12px;
   pointer-events: none;
-
   font-family: Poppins-Regular;
   color: #c80000;
   font-size: 14px;
   line-height: 1.4;
   text-align: left;
-
   visibility: hidden;
   opacity: 0;
-
-  -webkit-transition: opacity 0.4s;
-  -o-transition: opacity 0.4s;
-  -moz-transition: opacity 0.4s;
   transition: opacity 0.4s;
 }
 
@@ -482,15 +482,23 @@ iframe {
   color: #c80000;
   font-size: 18px;
   top: 50%;
-  -webkit-transform: translateY(-50%);
-  -moz-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  -o-transform: translateY(-50%);
   transform: translateY(-50%);
   right: 18px;
 }
 
-.alert-validate:hover:before {
+.alert-validate:hover::before {
+  visibility: visible;
+  opacity: 1;
+}
+
+.alert-validate::before,
+.alert-validate::after {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.alert-validate.alert-validate::before,
+.alert-validate.alert-validate::after {
   visibility: visible;
   opacity: 1;
 }
@@ -500,6 +508,40 @@ iframe {
     visibility: visible;
     opacity: 1;
   }
+}
+
+.error-message {
+  color: #c80000;
+  font-size: 0.875em;
+  margin-top: 5px;
+}
+
+.input100.ng-invalid.ng-touched,
+.input100.ng-invalid.ng-dirty {
+  border-color: #c80000;
+}
+
+
+/* Password */
+::ng-deep .p-password .p-inputtext {
+  font-family: Poppins-Regular;
+  color: #333333;
+  line-height: 1.2;
+  font-size: 18px;
+
+  display: block;
+  width: 100%;
+  background: transparent;
+  height: 60px;
+  padding: 0 20px;
+}
+
+::ng-deep p-password .p-inputwrapper {
+  width: 100%;
+  position: relative;
+  background-color: #f7f7f7;
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
 }
 
 

@@ -10,7 +10,6 @@ export class UserStoreService {
   private username$ = new BehaviorSubject<string>("");
   private role$ = new BehaviorSubject<string>("");
   private email$ = new BehaviorSubject<string>("");
-  private phoneNumber$ = new BehaviorSubject<string>("");
   private imgPath$ = new BehaviorSubject<string>("");
 
   constructor() { }
@@ -35,10 +34,6 @@ export class UserStoreService {
     return this.email$.asObservable();
   }
 
-  public getPhoneNumberFromStore() {
-    return this.phoneNumber$.asObservable();
-  }
-
   public setUserIdForStore(userId: string) {
     this.userId$.next(userId);
   }
@@ -53,10 +48,6 @@ export class UserStoreService {
 
   public setUsernameForStore(username: string) {
     this.username$.next(username);
-  }
-
-  public setPhoneNumberForStore(phoneNumber: string){
-    this.phoneNumber$.next(phoneNumber);
   }
 
   public setEmailForStore(email: string) {

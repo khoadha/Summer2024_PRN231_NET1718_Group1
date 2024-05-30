@@ -1,84 +1,140 @@
 <app-loader [loader]="isLoading"></app-loader>
 
-<div class="limiter">
-    <div class="container-login100 bg-image" >
-        <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
+<section class="intro-single bg-image">
+  <div class="mt-5 pt-5">
+    <div class="limiter">
+      <div class="container-login100">
+        <div
+          class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33"
+          style="margin-top: 5%"
+        >
             <form [formGroup]="signUpForm" (ngSubmit)="onSignUp()" class="login100-form validate-form flex-sb flex-w">
-                <span class="login100-form-title p-b-53">
-                    Sign up
-                </span>
-
-                <div class="p-t-31 p-b-9" for="userName">
-                    <span class="txt1">
-                        Fullname
-                    </span>
+                <span class="login100-form-title p-b-53">Sign up</span>
+            
+                <!-- UserName Field -->
+                <div class="p-t-31 p-b-9 pt-2">
+                <span class="txt1">Name</span>
                 </div>
-                <div class="wrap-input100 validate-input">
-                    <input class="input100" formControlName="userName" p-inputtext type="text" placeholder="Fullname*" name="userName" id="userName" required>
-                    <span class="focus-input100"></span>
-                </div>
-
-                <div class="p-t-31 p-b-9" for="email">
-                    <span class="txt1">
-                        Email
-                    </span>
-                </div>
-                <div class="wrap-input100 validate-input">
-                    <input class="input100" formControlName="email" p-inputtext type="text" placeholder="Email Address*" name="email" id="email" required>
-                    <span class="focus-input100"></span>
-                </div>
+                <div class="wrap-input100">
+                <input class="input100" formControlName="userName" pInputText type="text" placeholder="Name*" id="userName" />
+                <span class="focus-input100"></span>
                 
-                <div class="p-t-31 p-b-9" for="password">
-                    <span class="txt1">
-                        Password
-                    </span>
                 </div>
-                <div class="wrap-input100 validate-input">
-                    <input class="input100" id="password" formControlName="password" type="password" placeholder="Password*" pInputText name="password" required>
-                    <span class="focus-input100"></span>
+                <div *ngIf="isFieldInvalid('userName')" class="error-message">
+                    Name is required and must be 8-14 characters long with no spaces.
                 </div>
-
-                <div class="p-t-31 p-b-9" for="confirmedPassword">
-                    <span class="txt1">
-                        Confirmed Password
-                    </span>
+            
+                <!-- Email Field -->
+                <div class="p-t-31 p-b-9 pt-2">
+                <span class="txt1">Email</span>
                 </div>
-                <div class="wrap-input100 validate-input">
-                    <input class="input100" id="confirmedPassword" formControlName="confirmedPassword" type="password" placeholder="Confirmed Password*" pInputText name="confirmedPassword" required>
-                    <span class="focus-input100"></span>
-                </div>
+                <div class="wrap-input100">
+                <input class="input100" formControlName="email" pInputText type="text" placeholder="Email Address*" id="email" />
+                <span class="focus-input100"></span>
                 
-                <p-divider align="center">
-                    <span class="text-secondary">Choose avatar</span>
-                </p-divider>
-                <input type="file" accept="image/*" #fileInput formControlName="image" (change)="onFileSelected($event, 'image')" hidden>
+                </div>
+                <div *ngIf="isFieldInvalid('email')" class="error-message">
+                    Valid email is required.
+                </div>
 
-                <button class="mx-auto my-4" type="button" (click)="fileInput.click()"
-                        [ngClass]="isImageSelected ? 'bg-success text-white':'text-dark'">
-                    <i class="pi" [ngClass]="!isImageSelected ? 'pi-image' : 'pi-check'"></i>
-                </button>
-
-                <!-- <div *ngIf="isImageSelected" class="main-image-container">
-                    <img [src]="getImagePreviewUrl()" alt="Profile Image" class="img-preview">
-                </div> -->
-
-                <!-- <p-checkbox formControlName="agreeCheckBox" class="mb-2 text-light border-none">
-                    <ng-template pTemplate="label">
-                        <span class="text-dark web-font">I have read and agree with </span>
-                        <a class="text-decoration-none pastel web-font fw-bold" routerLink="/term-of-use" target="_blank">Term of use</a>
+                <!-- Password Field -->
+                <div class="p-t-31 p-b-9 pt-2">
+                <span class="txt1">Password</span>
+                </div>
+                <div class="">
+                <p-password formControlName="password" 
+                    [style]="{ margin: '1rem 0'}"
+                    [toggleMask]="true"
+                    [feedback]="true"
+                    placeholder="Password*"
+                    promptLabel="Enter password"
+                    weakLabel="Weak" 
+                    mediumLabel="Medium" 
+                    strongLabel="Strong"
+                    (input)="checkPasswordCriteria(signUpForm.get('password')!.value)">
+                    <ng-template pTemplate="header">
+                        <h6>Password Strength</h6>
                     </ng-template>
-                </p-checkbox> -->
+                    <ng-template pTemplate="footer">
+                        <p-divider></p-divider>
+                        <p class="mt-2">Suggestions</p>
+                        <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                            <li [class.text-success]="passwordCriteria.lowercase" [class.text-danger]="!passwordCriteria.lowercase">
+                                <i [class.pi]="true" [class.pi-check]="passwordCriteria.lowercase" [class.pi-times]="!passwordCriteria.lowercase"></i>                              
+                                At least one lowercase letter
+                            </li>
+
+                            <li [class.text-success]="passwordCriteria.uppercase" [class.text-danger]="!passwordCriteria.uppercase">
+                                <i [class.pi]="true" [class.pi-check]="passwordCriteria.uppercase" [class.pi-times]="!passwordCriteria.uppercase"></i>
+                                At least one uppercase letter
+                            </li>
+                            
+                            <li [class.text-success]="passwordCriteria.number" [class.text-danger]="!passwordCriteria.number">
+                                <i [class.pi]="true" [class.pi-check]="passwordCriteria.number" [class.pi-times]="!passwordCriteria.number"></i>
+                                At least one number
+                            </li>
+
+                            <li [class.text-success]="passwordCriteria.specialChar" [class.text-danger]="!passwordCriteria.specialChar">
+                                <i [class.pi]="true" [class.pi-check]="passwordCriteria.specialChar" [class.pi-times]="!passwordCriteria.specialChar"></i>
+                                At least one special character
+                            </li>
+
+                            <li [class.text-success]="passwordCriteria.minLength" [class.text-danger]="!passwordCriteria.minLength">
+                                <i [class.pi]="true" [class.pi-check]="passwordCriteria.minLength" [class.pi-times]="!passwordCriteria.minLength"></i>
+                                Minimum 8 characters
+                            </li>
+                        </ul>
+                    </ng-template>
+                </p-password>
+                <span class="focus-input100"></span>
                 
-                <div class="container-login100-form-btn mt-4 mb-3">
-                    <button 
-                        class="login100-form-btn w-full"
-                        label="Sign Up" 
-                        icon="pi pi-user" 
-                        [disabled]="!signUpForm.valid">
-                        Sign Up
-                    </button>
                 </div>
-            </form>
-        </div>
+                <div *ngIf="isFieldInvalid('password')" class="error-message">
+                    Password is required and must be at least 8 characters, 1 special characters, 1 cased characters, 1 normal characters
+                </div>
+            
+                <!-- Confirmed Password Field -->
+                <div class="p-t-31 p-b-9 pt-2">
+                    <span class="txt1">Confirmed Password</span>
+                </div>
+                <div class="wrap-input100">
+                    <p-password formControlName="confirmedPassword" [feedback]="false" [toggleMask]="true" placeholder="Confirmed Password*"></p-password>
+                    <span class="focus-input100"></span>
+                
+                </div>
+                <div *ngIf="isFieldInvalid('confirmedPassword')" class="error-message">
+                    Passwords must match.
+                </div>
+
+                <!-- Avatar -->
+                <p-divider align="center">
+                <span class="text-secondary">Choose avatar</span>
+                </p-divider>
+                <input type="file" accept="image/*" #fileInput formControlName="image" (change)="onFileSelected($event, 'image')" hidden />
+                <div class="d-flex">
+                <button class="mx-auto my-4" type="button" (click)="fileInput.click()" [ngClass]="isImageSelected ? 'bg-success text-white' : 'text-dark'">
+                    <i class="pi" style="font-size: 2rem" [ngClass]="!isImageSelected ? 'pi-image' : 'pi-check'"></i>
+                </button>
+                </div>
+            
+                <div *ngIf="isImageSelected" class="main-image-container">
+                <img [src]="getImagePreviewUrl()" alt="Profile Image" class="img-preview" />
+                </div>
+            
+                <!-- Check box -->
+                <div class="mt-3" style="display: flex;">
+                    <p-checkbox [binary]="true" formControlName="agreeCheckBox" inputId="term"></p-checkbox>
+                    <label for="term" class="mx-2">I have read and agree with</label>
+                    <a class="text-decoration-none pastel web-font fw-bold" style="display: inline-block;" routerLink="/term-of-use" target="_blank">Term of use</a>
+                </div>
+            
+                <!-- Submit button -->
+                <div class="container-login100-form-btn mt-4 mb-3">
+                <button type="submit" class="login100-form-btn w-full">Sign Up</button>
+                </div>
+            </form>  
+        </div>        
+      </div>
     </div>
-</div>
+  </div>
+</section>
