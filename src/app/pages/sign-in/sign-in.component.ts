@@ -45,6 +45,11 @@ export class SignInComponent implements OnInit{
     });
   }
 
+  isFieldInvalid(field: string): boolean | null {
+    const control = this.signInForm.get(field);
+    return control && control.invalid && (control.dirty || control.touched);
+  }
+
   onSignIn() {
     if (this.signInForm.valid) {
       this.isLoading = true;
@@ -86,7 +91,6 @@ export class SignInComponent implements OnInit{
     this.userStore.setUserIdForStore(tokenPayload.Id);
     this.userStore.setRoleForStore(tokenPayload.role);
     this.userStore.setEmailForStore(tokenPayload.email);
-    this.userStore.setPhoneNumberForStore(tokenPayload.PhoneNumber);
     this.userStore.setImgPathForStore(tokenPayload.ImgPath);
   }
 }

@@ -11,7 +11,13 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class SignUpComponent implements OnInit{
   isLoading: boolean = false;
   signUpForm!: FormGroup;
-  pwdHide = true;
+  passwordCriteria = {
+    lowercase: false,
+    uppercase: false,
+    number: false,
+    specialChar: false,
+    minLength: false
+  };
 
   selectedImageFile!: File;
   isImageSelected: boolean = false;
@@ -22,11 +28,16 @@ export class SignUpComponent implements OnInit{
     this.signUpForm = this.fb.group({
       userName: ['', [Validators.required, this.userNameValidator]],
       email: ['', [Validators.required, Validators.email]],
-      image: [null, Validators.required],
+      image: ['https://images.squarespace-cdn.com/content/v1/6001a095571ff86fe2af7eb1/1610719425819-8P8G4PZ2CKSIVBQ5NBSR/chusa-c3.png', Validators.required],
       password: ['', [Validators.required, this.passwordValidator]],
       confirmedPassword: ['', Validators.required],
-      // agreeCheckBox: ['', Validators.requiredTrue],
+      agreeCheckBox: [false, Validators.requiredTrue],
     }, { validator: this.passwordMatchValidator });
+  }
+
+  isFieldInvalid(field: string): boolean | null {
+    const control = this.signUpForm.get(field);
+    return control && control.invalid && (control.dirty || control.touched);
   }
 
   onSignUp() {
@@ -95,6 +106,14 @@ export class SignUpComponent implements OnInit{
       return { invalidPassword: true };
     }
     return null;
+  }
+
+  checkPasswordCriteria(password: string): void {
+    this.passwordCriteria.lowercase = /[a-z]/.test(password);
+    this.passwordCriteria.uppercase = /[A-Z]/.test(password);
+    this.passwordCriteria.number = /\d/.test(password);
+    this.passwordCriteria.specialChar = /[@#$%^&*!]/.test(password);
+    this.passwordCriteria.minLength = password.length >= 8;
   }
 
   getImagePreviewUrl(): string | null {

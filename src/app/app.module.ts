@@ -34,6 +34,12 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { IntroCarouselComponent } from './features/intro-carousel/intro-carousel.component';
 import { TermOfUseComponent } from './pages/term-of-use/term-of-use.component';
 import { CardModule } from 'primeng/card';
+import { FileUploadModule } from 'primeng/fileupload';
+import { BadgeModule } from 'primeng/badge';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { PasswordModule } from 'primeng/password';
+import { FormsModule } from '@angular/forms';
 import { BookRoomComponent } from './pages/book-room/book-room.component';
 @NgModule({
   imports: [
@@ -51,6 +57,12 @@ import { BookRoomComponent } from './pages/book-room/book-room.component';
     CarouselModule,
     BreadcrumbModule,
     CardModule,
+    BadgeModule,
+    FileUploadModule,
+    InputGroupAddonModule,
+    InputGroupModule,
+    PasswordModule,
+    FormsModule,
   ],
   declarations: [
     AppComponent,
