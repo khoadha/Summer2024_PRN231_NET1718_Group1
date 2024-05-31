@@ -9,6 +9,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { BookRoomComponent } from './pages/book-room/book-room.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,11 @@ const routes: Routes = [
     component: SignUpComponent,
     title: 'Sign up',
     canActivate: [signedInGuard],
+  },
+  {
+    path: 'book-room',
+    component: BookRoomComponent,
+    title: 'Book Room',
   },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },

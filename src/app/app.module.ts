@@ -34,6 +34,7 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { IntroCarouselComponent } from './features/intro-carousel/intro-carousel.component';
 import { TermOfUseComponent } from './pages/term-of-use/term-of-use.component';
 import { CardModule } from 'primeng/card';
+import { BookRoomComponent } from './pages/book-room/book-room.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -70,7 +71,8 @@ import { CardModule } from 'primeng/card';
     ConfirmEmailSuccessComponent,
     BreadcrumbComponent,
     IntroCarouselComponent,
-    TermOfUseComponent
+    TermOfUseComponent,
+    BookRoomComponent
   ],
   providers: [
     {
