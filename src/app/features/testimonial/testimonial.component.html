@@ -1,0 +1,47 @@
+<section class="section-testimonials section-t8 nav-arrow-a">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="title-wrap d-flex justify-content-between">
+            <div class="title-box">
+              <h2 class="title-a">Testimonials</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <p-carousel 
+        [value]="testimonials" 
+        [numVisible]="1" 
+        [numScroll]="1" 
+        [circular]="true" 
+        [autoplayInterval]="3000">
+        <ng-template pTemplate="item" let-testimonial>
+          <div class="testimonials-box">
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="testimonial-img">
+                  <img [src]="testimonial.image" alt="" class="img-fluid">
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="testimonial-ico">
+                  <i class="pi pi-comment"></i>
+                </div>
+                <div class="testimonials-content">
+                  <p class="testimonial-text">
+                    {{testimonial.text}}
+                  </p>
+                </div>
+                <div class="testimonial-author-box">
+                  <img [src]="testimonial.authorImage" alt="" class="testimonial-avatar">
+                  <h5 class="testimonial-author">{{testimonial.author}}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+  </section>
+  

@@ -40,6 +40,9 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { PasswordModule } from 'primeng/password';
 import { FormsModule } from '@angular/forms';
+import { ServiceSectionComponent } from './features/service-section/service-section.component';
+import { ListRoomComponent } from './features/list-room/list-room.component';
+import { TestimonialComponent } from './features/testimonial/testimonial.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -82,7 +85,10 @@ import { FormsModule } from '@angular/forms';
     ConfirmEmailSuccessComponent,
     BreadcrumbComponent,
     IntroCarouselComponent,
-    TermOfUseComponent
+    TermOfUseComponent,
+    ServiceSectionComponent,
+    ListRoomComponent,
+    TestimonialComponent
   ],
   providers: [
     {
