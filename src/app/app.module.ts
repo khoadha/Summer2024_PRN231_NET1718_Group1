@@ -41,6 +41,9 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { PasswordModule } from 'primeng/password';
 import { FormsModule } from '@angular/forms';
 import { BookRoomComponent } from './pages/book-room/book-room.component';
+import { ServiceSectionComponent } from './features/service-section/service-section.component';
+import { ListRoomComponent } from './features/list-room/list-room.component';
+import { TestimonialComponent } from './features/testimonial/testimonial.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -84,7 +87,10 @@ import { BookRoomComponent } from './pages/book-room/book-room.component';
     BreadcrumbComponent,
     IntroCarouselComponent,
     TermOfUseComponent,
-    BookRoomComponent
+    BookRoomComponent,
+    ServiceSectionComponent,
+    ListRoomComponent,
+    TestimonialComponent
   ],
   providers: [
     {

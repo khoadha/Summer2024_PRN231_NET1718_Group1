@@ -33,9 +33,19 @@ body {
   .primary-color{
     color: #2eca6a !important;
   }
+  
   .primary-color-bg{
     background-color: #2eca6a !important;
   }
+
+  .bg-image {
+    background-image: url('src\assets\images\slide-1.jpg'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    min-height: 100vh; /* Make the div take up at least the full viewport height */
+  }
+
   a {
     color: #000000;
     text-decoration: none;
@@ -1685,12 +1695,12 @@ body {
   }
   
   .card-box-ico {
-    padding: 1rem 3rem 1rem 2.5rem;
+    padding: 2rem 3rem 1rem 2.5rem;
     border: 5px solid #2eca6a;
   }
   
   .card-box-ico span {
-    font-size: 4rem;
+    font-size: 3.5rem;
     color: #000000;
   }
   
