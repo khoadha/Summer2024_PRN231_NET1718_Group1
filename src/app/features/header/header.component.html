@@ -40,7 +40,6 @@
           </li>
         </ul>
       </div>
-
       <ng-container *ngIf="role == undefined">
         <div class="d-flex">
           <button
@@ -57,6 +56,14 @@
       </ng-container>      
 
     <ng-container *ngIf="role != undefined">
+      <!-- TEMP DEBUG BUTTON -->
+      <div>
+        <button
+          class="text-light primary-color-bg ms-3 btn shadow"
+          routerLink="/book-room">
+          BOOK ROOM
+        </button>
+      </div>
       <div class="dropdown">
         <a
           class="btn dropdown-toggle border-0"

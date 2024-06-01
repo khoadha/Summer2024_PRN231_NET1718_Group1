@@ -16,6 +16,7 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { ResetPasswordSuccessComponent } from './pages/reset-password-success/reset-password-success.component';
 import { TermOfUseComponent } from './pages/term-of-use/term-of-use.component';
+import { BookRoomComponent } from './pages/book-room/book-room.component';
 
 const routes: Routes = [
   {
@@ -83,6 +84,11 @@ const routes: Routes = [
     component: PageNotFoundComponent,
     title: 'Page Not Found',
     canActivate: [signedInGuard],
+  },
+  {
+    path: 'book-room',
+    component: BookRoomComponent,
+    title: 'Book Room',
   },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
