@@ -2,11 +2,11 @@
 <section class="intro-single text-center">
     <h2>{{ room.name }}</h2>
 </section>
+<div class="form-group">
+  <label>Room Details</label>
+  <p class="form-control-static">{{ room.details }}</p>
+</div>
 <form [formGroup]="bookingForm" (ngSubmit)="submitForm()" class="container">
-    <div class="form-group">
-      <label>Room Details</label>
-      <p class="form-control-static">{{ room.details }}</p>
-    </div>
     <div class="form-group">
       <label>Furnitures</label>
       <ul class="list-group">
@@ -36,25 +36,43 @@
             </div>
         </div>
     </div>
-
     <div class="form-group">
         <label>Occupants</label>
-        <div *ngFor="let occupant of occupants.controls; let i=index" formGroupName="{{i}}" class="row">
+        <div class="row">
             <div class="col">
-                <input class="form-control" type="text" formControlName="fullname" placeholder="Full Name">
+                <input class="form-control" type="text" [(ngModel)]="newOccupant.fullname" [ngModelOptions]="{standalone: true}" placeholder="Full Name">
             </div>
             <div class="col">
-                <input class="form-control" type="email" formControlName="email" placeholder="Email">
+                <input class="form-control" type="email" [(ngModel)]="newOccupant.email" [ngModelOptions]="{standalone: true}" placeholder="Email">
             </div>
             <div class="col">
-                <input class="form-control" type="date" formControlName="birthday">
+                <input class="form-control" type="date" [(ngModel)]="newOccupant.birthday" [ngModelOptions]="{standalone: true}">
             </div>
             <div class="col">
-                <button *ngIf="i > 0" type="button" class="btn btn-danger" (click)="removeOccupant(i)">-</button>
+                <button type="button" class="btn btn-primary" (click)="addOccupant()">Add Occupant</button>
             </div>
         </div>
-        <button type="button" class="btn btn-primary" (click)="addOccupant()">Add new occupant</button>
+        <div formArrayName="occupants" *ngIf="occupants.length > 0" class="mt-2">
+            <div class="row">
+                <div class="col"><strong>Full Name</strong></div>
+                <div class="col"><strong>Email</strong></div>
+                <div class="col"><strong>Birthday</strong></div>
+                <div class="col"><strong>Action</strong></div>
+            </div>
+            <div *ngFor="let occupant of occupants.controls; let i=index" class="row">
+                <div [formGroupName]="i" class="row">
+                    <div class="col">{{ occupant.get('fullname')?.value }}</div>
+                    <div class="col">{{ occupant.get('email')?.value }}</div>
+                    <div class="col">{{ occupant.get('birthday')?.value }}</div>
+                    <div class="col">
+                        <button type="button" class="btn btn-danger" (click)="removeOccupant(i)">Remove</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    
+    
     
           
       <div class="form-group">
@@ -62,7 +80,7 @@
       </div>
       
     <div class="form-group">
-      <button type="submit" class="btn btn-success" [disabled]="bookingForm.invalid">Confirm Book</button>
+      <button type="submit" class="btn btn-success" [disabled]="!bookingForm.valid">Confirm Book</button>
     </div>
   </form>
   
