@@ -40,6 +40,7 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { PasswordModule } from 'primeng/password';
 import { FormsModule } from '@angular/forms';
+import { BookRoomComponent } from './pages/book-room/book-room.component';
 import { ServiceSectionComponent } from './features/service-section/service-section.component';
 import { ListRoomComponent } from './features/list-room/list-room.component';
 import { TestimonialComponent } from './features/testimonial/testimonial.component';
@@ -86,6 +87,7 @@ import { TestimonialComponent } from './features/testimonial/testimonial.compone
     BreadcrumbComponent,
     IntroCarouselComponent,
     TermOfUseComponent,
+    BookRoomComponent,
     ServiceSectionComponent,
     ListRoomComponent,
     TestimonialComponent
