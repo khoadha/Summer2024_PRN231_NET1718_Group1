@@ -44,9 +44,10 @@ export class BookRoomComponent implements OnInit {
       endDate: ['', Validators.required],
       wifi: [false],
       cleaning: [false],
-      occupants: this.fb.array([])
+      occupants: this.fb.array([], Validators.required)
     });
   }
+
   // Getter for occupants form array
   get occupants(): FormArray {
     return this.bookingForm.get('occupants') as FormArray;
@@ -102,35 +103,36 @@ export class BookRoomComponent implements OnInit {
       this.feeText.nativeElement.textContent = totalFee;
     }
   }
-      submitForm() {
-        if (this.bookingForm.valid) {
-          const userId = this.authService.getUserIdFromToken();
-          // Extracting guests from the form
-          const guests = this.bookingForm.get('occupants')?.value.map((occupant: any) => ({
-            fullname: occupant.fullname,
-            email: occupant.email,
-            birthday: occupant.birthday
-          }));
-      
-          const orderDto: CreateOrderDto = {
-            userId: userId,
-            startDate: this.bookingForm.get('startDate')!.value,
-            endDate: this.bookingForm.get('endDate')!.value,
-            cost: this.calculateTotalFee(),
-            guests: guests // Assigning the extracted guests array
-          };
-      
-          console.log("Request payload:", orderDto);
-      
-          this.orderService.createOrder(orderDto).subscribe(
-            response => {
-              console.log('Order created successfully:', response);
-            },
-            error => {
-              console.error('Error creating order:', error);
-            }
-          );
+
+  submitForm() {
+    if (this.bookingForm.valid) {
+      const userId = this.authService.getUserIdFromToken();
+      // Extracting guests from the form
+      const guests = this.bookingForm.get('occupants')?.value.map((occupant: any) => ({
+        fullname: occupant.fullname,
+        email: occupant.email,
+        birthday: occupant.birthday
+      }));
+  
+      const orderDto: CreateOrderDto = {
+        userId: userId,
+        startDate: this.bookingForm.get('startDate')!.value,
+        endDate: this.bookingForm.get('endDate')!.value,
+        cost: this.calculateTotalFee(),
+        guests: guests // Assigning the extracted guests array
+      };
+  
+      console.log("Request payload:", orderDto);
+  
+      this.orderService.createOrder(orderDto).subscribe(
+        response => {
+          console.log('Order created successfully:', response);
+        },
+        error => {
+          console.error('Error creating order:', error);
         }
-      }
+      );
+    }
+  }
       
 }
