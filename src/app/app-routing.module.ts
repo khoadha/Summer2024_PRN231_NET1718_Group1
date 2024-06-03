@@ -17,6 +17,7 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
 import { ResetPasswordSuccessComponent } from './pages/reset-password-success/reset-password-success.component';
 import { TermOfUseComponent } from './pages/term-of-use/term-of-use.component';
 import { BookRoomComponent } from './pages/book-room/book-room.component';
+import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 
 const routes: Routes = [
   {
@@ -89,6 +90,24 @@ const routes: Routes = [
     path: 'book-room',
     component: BookRoomComponent,
     title: 'Book Room',
+  },
+  {
+    path: 'adashboard',
+    component: AdminDashboardComponent,
+    // canActivate: [adminGuard],
+    children: [
+      { path: 'home', component: HomePageComponent, canActivate: [adminGuard] },
+      // {
+      //   path: 'manage-letter',
+      //   component: ManageLetterComponent,
+      //   canActivate: [adminGuard],
+      // },
+      // {
+      //   path: 'manage-category',
+      //   component: ManageCategoriesComponent,
+      //   canActivate: [adminGuard],
+      // },
+    ],
   },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
@@ -22,7 +23,7 @@ export class SignUpComponent implements OnInit{
   selectedImageFile!: File;
   isImageSelected: boolean = false;
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) { }
+  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.signUpForm = this.fb.group({
@@ -57,12 +58,19 @@ export class SignUpComponent implements OnInit{
           },
           error: (err) => {
             this.isLoading = false;
-            alert(err?.error.message);
+            this.showErrorMessage(err);
           }
         });
     } else {
       this.isLoading = false;
       console.error('Form validation error');
+    }
+  }
+
+  showErrorMessage(err: any) {
+    if (err && err.error && err.error.errors && err.error.errors.length > 0) {
+      const errorMessage = err.error.errors.join(', ');
+      this.messageService.add({ severity: 'error', summary: 'Login Error', detail: errorMessage });
     }
   }
 

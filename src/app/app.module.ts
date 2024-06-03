@@ -44,6 +44,12 @@ import { BookRoomComponent } from './pages/book-room/book-room.component';
 import { ServiceSectionComponent } from './features/service-section/service-section.component';
 import { ListRoomComponent } from './features/list-room/list-room.component';
 import { TestimonialComponent } from './features/testimonial/testimonial.component';
+import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
+import { SidebarModule } from 'primeng/sidebar';
+import { AvatarModule } from 'primeng/avatar';
+import { StyleClassModule } from 'primeng/styleclass';
+import { DropdownModule } from 'primeng/dropdown';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -66,6 +72,10 @@ import { TestimonialComponent } from './features/testimonial/testimonial.compone
     InputGroupModule,
     PasswordModule,
     FormsModule,
+    StyleClassModule,
+    AvatarModule,
+    SidebarModule,
+    DropdownModule,
   ],
   declarations: [
     AppComponent,
@@ -90,7 +100,8 @@ import { TestimonialComponent } from './features/testimonial/testimonial.compone
     BookRoomComponent,
     ServiceSectionComponent,
     ListRoomComponent,
-    TestimonialComponent
+    TestimonialComponent,
+    AdminDashboardComponent
   ],
   providers: [
     {

@@ -14,7 +14,6 @@ export class HeaderComponent implements OnInit{
   public userId!: string;
   public role!: string;
   imgPath!: string;
-  searchQuery: string = '';
 
   ngOnInit(): void {
     this.getSessionUserInformation();
