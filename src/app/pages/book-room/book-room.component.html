@@ -2,85 +2,87 @@
 <section class="intro-single text-center">
     <h2>{{ room.name }}</h2>
 </section>
-<div class="form-group">
-  <label>Room Details</label>
-  <p class="form-control-static">{{ room.details }}</p>
-</div>
-<form [formGroup]="bookingForm" (ngSubmit)="submitForm()" class="container">
+<div class="container">
     <div class="form-group">
-      <label>Furnitures</label>
-      <ul class="list-group">
-        <li class="list-group-item" *ngFor="let furniture of room.furnitures">{{ furniture.name }} - {{ furniture.description }}</li>
-      </ul>
+    <label>Room Details</label>
+    <p class="form-control-static">{{ room.roomDescription }}</p>
     </div>
-    <div class="form-group">
-        <label>Start Date</label>
-        <input class="form-control" type="date" formControlName="startDate" (change)="updateTotalFee()">
-    </div>
+    <form [formGroup]="bookingForm" (ngSubmit)="submitForm()" class="container">
+        <div class="form-group">
+        <label>Furnitures</label>
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let furniture of room.roomFurniture">{{ furniture.furnitureId }} - {{ furniture.quantity }}</li>
+        </ul>
+        </div>
+        <div class="form-group">
+            <label>Start Date</label>
+            <input class="form-control" type="date" formControlName="startDate" (change)="updateTotalFee()">
+        </div>
 
-    <div class="form-group">
-        <label>End Date</label>
-        <input class="form-control" type="date" formControlName="endDate" (change)="updateTotalFee()">
-    </div>
+        <div class="form-group">
+            <label>End Date</label>
+            <input class="form-control" type="date" formControlName="endDate" (change)="updateTotalFee()">
+        </div>
 
-    <div class="form-group">
-        <label>Services</label>
-        <div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" formControlName="wifi" (change)="updateTotalFee()">
-                <label class="form-check-label">Wifi</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" formControlName="cleaning" (change)="updateTotalFee()">
-                <label class="form-check-label">Cleaning</label>
+        <div class="form-group">
+            <label>Services</label>
+            <div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" formControlName="wifi" (change)="updateTotalFee()">
+                    <label class="form-check-label">Wifi</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" formControlName="cleaning" (change)="updateTotalFee()">
+                    <label class="form-check-label">Cleaning</label>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label>Occupants</label>
-        <div class="row">
-            <div class="col">
-                <input class="form-control" type="text" [(ngModel)]="newOccupant.fullname" [ngModelOptions]="{standalone: true}" placeholder="Full Name">
-            </div>
-            <div class="col">
-                <input class="form-control" type="email" [(ngModel)]="newOccupant.email" [ngModelOptions]="{standalone: true}" placeholder="Email">
-            </div>
-            <div class="col">
-                <input class="form-control" type="date" [(ngModel)]="newOccupant.birthday" [ngModelOptions]="{standalone: true}">
-            </div>
-            <div class="col">
-                <button type="button" class="btn btn-primary" (click)="addOccupant()">Add Occupant</button>
-            </div>
-        </div>
-        <div formArrayName="occupants" *ngIf="occupants.length > 0" class="mt-2">
+        <div class="form-group">
+            <label>Occupants</label>
             <div class="row">
-                <div class="col"><strong>Full Name</strong></div>
-                <div class="col"><strong>Email</strong></div>
-                <div class="col"><strong>Birthday</strong></div>
-                <div class="col"><strong>Action</strong></div>
+                <div class="col">
+                    <input class="form-control" type="text" [(ngModel)]="newOccupant.fullname" [ngModelOptions]="{standalone: true}" placeholder="Full Name">
+                </div>
+                <div class="col">
+                    <input class="form-control" type="email" [(ngModel)]="newOccupant.email" [ngModelOptions]="{standalone: true}" placeholder="Email">
+                </div>
+                <div class="col">
+                    <input class="form-control" type="date" [(ngModel)]="newOccupant.birthday" [ngModelOptions]="{standalone: true}">
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-primary" (click)="addOccupant()" [disabled]="!isOccupantValid()">Add Occupant</button>
+                </div>
             </div>
-            <div *ngFor="let occupant of occupants.controls; let i=index" class="row">
-                <div [formGroupName]="i" class="row">
-                    <div class="col">{{ occupant.get('fullname')?.value }}</div>
-                    <div class="col">{{ occupant.get('email')?.value }}</div>
-                    <div class="col">{{ occupant.get('birthday')?.value }}</div>
-                    <div class="col">
-                        <button type="button" class="btn btn-danger" (click)="removeOccupant(i)">Remove</button>
+            <div formArrayName="occupants" *ngIf="occupants.length > 0" class="mt-2">
+                <div class="row">
+                    <div class="col"><strong>Full Name</strong></div>
+                    <div class="col"><strong>Email</strong></div>
+                    <div class="col"><strong>Birthday</strong></div>
+                    <div class="col"><strong>Action</strong></div>
+                </div>
+                <div *ngFor="let occupant of occupants.controls; let i=index" class="row">
+                    <div [formGroupName]="i" class="row">
+                        <div class="col">{{ occupant.get('fullname')?.value }}</div>
+                        <div class="col">{{ occupant.get('email')?.value }}</div>
+                        <div class="col">{{ occupant.get('birthday')?.value }}</div>
+                        <div class="col">
+                            <button type="button" class="btn btn-danger" (click)="removeOccupant(i)">Remove</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    
-    
-          
-      <div class="form-group">
-        <p style="color: green;">Total Fee: $<span id="fee-text" #feeText>0</span></p>
-      </div>
-      
-    <div class="form-group">
-      <button type="submit" class="btn btn-success" [disabled]="!bookingForm.valid">Confirm Book</button>
-    </div>
-  </form>
-  
+        <div class="form-group">
+            <p style="color: green;">Total Fee: $<span id="fee-text" #feeText>0</span></p>
+        </div>
+        
+        <div class="form-group">
+        <button type="submit" class="btn btn-success" [disabled]="!bookingForm.valid">Confirm Book</button>
+        </div>
+    </form>
+</div>
+
+<p-dialog header="Order Created Successfully" [(visible)]="displayDialog" [modal]="true" [closable]="false">
+    <p>Order has been created successfully!</p>
+    <button type="button" class="btn btn-primary" (click)="closeDialogAndReturn()">Close</button>
+</p-dialog>
