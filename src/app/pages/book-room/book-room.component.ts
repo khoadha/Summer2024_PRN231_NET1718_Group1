@@ -44,7 +44,8 @@ export class BookRoomComponent implements OnInit {
       const idFromRoute = params.get('id')!;
       const orderId = parseInt(idFromRoute, 10);
       this.roomService.getRoomById(orderId).subscribe(res => {
-        this.room = res;
+        this.room = res.data;
+        console.log(res.data);
       })
     });
     

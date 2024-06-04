@@ -10,11 +10,11 @@ import { CreateOrderDto } from '../models/order';
 export class RoomService {
 
   readonly baseUrl = environment.baseUrl;
-  readonly APIUrl = this.baseUrl + "room";
+  readonly APIUrl = this.baseUrl + "Rooms";
 
   constructor(private http: HttpClient) { }
 
   getRoomById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.APIUrl}/${id}`);
+    return this.http.get<any>(`${this.APIUrl}/get-room/${id}`);
   }
 }
