@@ -49,6 +49,9 @@ import { SidebarModule } from 'primeng/sidebar';
 import { AvatarModule } from 'primeng/avatar';
 import { StyleClassModule } from 'primeng/styleclass';
 import { DropdownModule } from 'primeng/dropdown';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { TabViewModule } from 'primeng/tabview';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   imports: [
@@ -76,6 +79,8 @@ import { DropdownModule } from 'primeng/dropdown';
     AvatarModule,
     SidebarModule,
     DropdownModule,
+    TabViewModule,
+    DialogModule,
   ],
   declarations: [
     AppComponent,
@@ -101,7 +106,8 @@ import { DropdownModule } from 'primeng/dropdown';
     ServiceSectionComponent,
     ListRoomComponent,
     TestimonialComponent,
-    AdminDashboardComponent
+    AdminDashboardComponent,
+    ProfileComponent
   ],
   providers: [
     {

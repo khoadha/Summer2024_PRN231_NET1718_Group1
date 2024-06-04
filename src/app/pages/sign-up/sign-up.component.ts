@@ -29,7 +29,7 @@ export class SignUpComponent implements OnInit{
     this.signUpForm = this.fb.group({
       userName: ['', [Validators.required, this.userNameValidator]],
       email: ['', [Validators.required, Validators.email]],
-      image: ['https://images.squarespace-cdn.com/content/v1/6001a095571ff86fe2af7eb1/1610719425819-8P8G4PZ2CKSIVBQ5NBSR/chusa-c3.png', Validators.required],
+      image: ['', Validators.required],
       password: ['', [Validators.required, this.passwordValidator]],
       confirmedPassword: ['', Validators.required],
       agreeCheckBox: [false, Validators.requiredTrue],

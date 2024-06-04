@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Section, sideNavItems } from './admin-dashboard.constant';
 import { Sidebar } from 'primeng/sidebar';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserStoreService } from 'src/app/core/services/user-store.service';
@@ -25,7 +24,6 @@ export class AdminDashboardComponent implements OnInit{
 
   sidebarVisible: boolean = false;
 
-  items: Section[] = sideNavItems;
 
   ngOnInit(): void {
     this.getSessionUserInformation();

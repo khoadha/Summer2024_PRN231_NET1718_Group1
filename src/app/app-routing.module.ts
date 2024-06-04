@@ -18,6 +18,7 @@ import { ResetPasswordSuccessComponent } from './pages/reset-password-success/re
 import { TermOfUseComponent } from './pages/term-of-use/term-of-use.component';
 import { BookRoomComponent } from './pages/book-room/book-room.component';
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -90,6 +91,11 @@ const routes: Routes = [
     path: 'book-room',
     component: BookRoomComponent,
     title: 'Book Room',
+  },
+  {
+    path: 'manage-profile',
+    component: ProfileComponent,
+    title: 'Manage Profile',
   },
   {
     path: 'adashboard',

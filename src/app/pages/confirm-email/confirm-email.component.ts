@@ -17,7 +17,7 @@ export class ConfirmEmailComponent implements OnInit{
       if(userId!=undefined&&token!=undefined) {
         this.authService.confirmEmail(userId, token).subscribe(res => {
         })
-        this.router.navigate(['confirm-email']);
+        this.router.navigate(['confirm-email-success']);
       }
     });
   }

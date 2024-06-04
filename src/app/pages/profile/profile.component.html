@@ -1,0 +1,215 @@
+<app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+<app-loader [loader]="isLoading"></app-loader>
+<p-toast></p-toast>
+
+<div class="bg-image">
+  <section class="vh-100" *ngIf="profile">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-12 mb-4 mb-lg-0">
+          <div class="card h-100" style="border-radius: .5rem;">
+            <div class="row g-0 h-100">
+              <div class="col-md-4 gradient-custom text-center text-white d-flex flex-column justify-content-center align-items-center">
+                <div class="profile-container">
+                  <img [src]="profile.imgPath" alt="Avatar" class="profile-image img-fluid mt-5" />
+                  <i class="pi pi-camera mt-1" (click)="openAvatarDialog()"></i>
+                </div>
+                <div class="profile-details">
+                  <h5>
+                    {{ profile.userName }}
+                    <span class="pi pi-file-edit" (click)="openUserNameDialog()"></span>            
+                  </h5>
+                  <p>{{ profile.email }}</p>
+                  <div class="mb-5"></div>
+                </div>
+              </div>
+
+              <div class="col-md-8 d-flex flex-column">
+                <div class="card-body p-4 flex-grow-1 d-flex flex-column">
+                  <p-tabView class="flex-grow-1">
+                    <p-tabPanel header="Account Information">
+                      <div class="content-item">
+                        <h6 class="content-text">Email</h6>
+                        <p class="content-text text-muted">{{ profile.email }}</p>
+                      </div>
+                      
+                    </p-tabPanel>
+                    <p-tabPanel header="Account Balance">
+                      <div class="content-item">
+                        <h6 class="content-text">Balance</h6>
+                        <p class="content-text text-muted">{{ profile.accountBalance }}</p>
+                        <a routerLink="">
+                          <i class="pi pi-angle-right icon"></i>
+                        </a>
+                      </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Security" *ngIf="loginMethod === 'Normal'">
+                      <div class="content-item">
+                        <h6 class="content-text">Password</h6>
+                        <p class="content-text text-muted">•••••••••</p>
+                        <i class="pi pi-angle-right icon" (click)="openPasswordDialog()"></i>
+                      </div>
+                    </p-tabPanel>
+                  </p-tabView>  
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+<!-- dialog name -->
+<p-dialog 
+  header="Edit Profile" 
+  [style]="{ width: '25rem' }"
+  [(visible)]="updateUserNameVisible" 
+  [modal]="true"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+  <span class="p-text-secondary block mb-5">Update Name.</span>
+  <div class="field">
+    <div class="p-inputgroup my-2">
+      <span class="p-inputgroup-addon">
+        <i class="pi pi-user"></i>
+      </span>
+      <input 
+        pInputText 
+        placeholder="Name*" 
+        class="custom-input"
+        [(ngModel)]="newUsername" 
+        input="text" 
+        autocomplete="off" 
+        required 
+        autofocus
+        (ngModelChange)="validateUsername()"/>
+    </div>
+    <small *ngIf="userNameError" class="p-error"> Name must be 8-14 chars and no space.</small>
+  </div>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" class="p-button-text custome-button" (click)="updateUserNameVisible = false"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text primary-color-bg text-light custome-button" (click)="updateUsername()"></button>
+  </ng-template>
+</p-dialog>
+
+<!-- dialog password -->
+<p-dialog 
+  header="Edit Profile" 
+  [style]="{ width: '50vw', height: '90vh' }"
+  [(visible)]="updatePasswordVisible" 
+  [modal]="true"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  class="custom-dialog">
+  <span class="p-text-secondary block mb-5">Update Password.</span>
+  <div class="field password-field">
+    <form [formGroup]="updatePasswordForm">  
+      <p-password formControlName="oldPassword" 
+        [style]="{ margin: '1rem 0'}"
+        [toggleMask]="true"
+        [feedback]="false"
+        placeholder="Old Password*"
+        class="custom-password">
+      </p-password>
+
+      <p-password formControlName="newPassword" 
+                    [style]="{ margin: '1rem 0'}"
+                    [toggleMask]="true"
+                    [feedback]="true"
+                    placeholder="New Password*"
+                    class="custom-password"
+                    promptLabel="Enter New password"
+                    weakLabel="Weak" 
+                    mediumLabel="Medium" 
+                    strongLabel="Strong"
+                    (input)="checkPasswordCriteria(updatePasswordForm.get('newPassword')!.value)">
+                    <ng-template pTemplate="header">
+                        <h6>Password Strength</h6>
+                    </ng-template>
+                    <ng-template pTemplate="footer">
+                        <p-divider></p-divider>
+                        <p class="mt-2">Suggestions</p>
+                        <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                            <li [class.text-success]="passwordCriteria.lowercase" [class.text-danger]="!passwordCriteria.lowercase">
+                                <i [class.pi]="true" [class.pi-check]="passwordCriteria.lowercase" [class.pi-times]="!passwordCriteria.lowercase"></i>                              
+                                At least one lowercase letter
+                            </li>
+
+                            <li [class.text-success]="passwordCriteria.uppercase" [class.text-danger]="!passwordCriteria.uppercase">
+                                <i [class.pi]="true" [class.pi-check]="passwordCriteria.uppercase" [class.pi-times]="!passwordCriteria.uppercase"></i>
+                                At least one uppercase letter
+                            </li>
+                            
+                            <li [class.text-success]="passwordCriteria.number" [class.text-danger]="!passwordCriteria.number">
+                                <i [class.pi]="true" [class.pi-check]="passwordCriteria.number" [class.pi-times]="!passwordCriteria.number"></i>
+                                At least one number
+                            </li>
+
+                            <li [class.text-success]="passwordCriteria.specialChar" [class.text-danger]="!passwordCriteria.specialChar">
+                                <i [class.pi]="true" [class.pi-check]="passwordCriteria.specialChar" [class.pi-times]="!passwordCriteria.specialChar"></i>
+                                At least one special character
+                            </li>
+
+                            <li [class.text-success]="passwordCriteria.minLength" [class.text-danger]="!passwordCriteria.minLength">
+                                <i [class.pi]="true" [class.pi-check]="passwordCriteria.minLength" [class.pi-times]="!passwordCriteria.minLength"></i>
+                                Minimum 8 characters
+                            </li>
+                        </ul>
+                    </ng-template>
+                </p-password>
+      <small class="text-warning" *ngIf="updatePasswordForm.get('newPassword')!.invalid 
+                            && updatePasswordForm.get('newPassword')!.dirty">
+                                    New password is required and must be at least 8 characters, 1 special characters, 1 cased characters, 1 normal characters 
+      </small>
+
+      <p-password formControlName="confirmedPassword" 
+        [style]="{ margin: '1rem 0'}"
+        [toggleMask]="true"
+        [feedback]="false"
+        placeholder="Confirm Password*"
+        class="custom-password">
+      </p-password>
+      <small class="text-warning" *ngIf="updatePasswordForm.get('confirmedPassword')!.invalid 
+                            && updatePasswordForm.get('confirmedPassword')!.dirty">
+                                    Confirmed password must match new password
+      </small>
+    </form>
+  </div>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" class="p-button-text custome-button" (click)="updatePasswordVisible = false"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text primary-color-bg text-light custom-button" (click)="updatePassword()"></button>
+  </ng-template>
+</p-dialog>
+
+<!-- dialog avatar-->
+<p-dialog 
+  header="Edit Profile" 
+  [style]="{ width: '50vw', height: 'auto' }"
+  [(visible)]="updateAvatarVisible" 
+  [modal]="true"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+  <span class="p-text-secondary block mb-5">Update Avatar.</span>
+
+  <div class="field">
+    <div class="row mt-2 d-flex flex-column">
+      <p-divider align="center">
+          <span class="text-secondary">Choose Avatar</span>
+      </p-divider>
+      <input type="file" accept="image/*" #fileInput (change)="onFileSelected($event)" hidden>
+      <button class="mx-auto my-4 custome-button" type="button" mat-icon-button (click)="fileInput.click()"
+          [ngClass]="isImageSelected ? 'bg-success text-white':'text-dark'">
+          <i class="pi" style="font-size: 2rem" [ngClass]="!isImageSelected ? 'pi-image' : 'pi-check'"></i>
+      </button>
+      <div *ngIf="isImageSelected" class="main-image-container">
+        <img [src]="getImagePreviewUrl()" alt="Profile Image" class="img-preview">
+      </div>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" class="p-button-text custome-button" (click)="updateAvatarVisible = false"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text primary-color-bg text-light custome-button" (click)="updateAvatar()"></button>
+  </ng-template>
+</p-dialog>
+
