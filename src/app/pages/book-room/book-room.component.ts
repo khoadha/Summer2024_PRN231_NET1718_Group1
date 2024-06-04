@@ -1,10 +1,12 @@
-
-import { Component, OnInit, ViewChild,ElementRef, ChangeDetectorRef, AfterViewInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormArray, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { OrderService } from 'src/app/core/services/order.service';
 import { CreateOrderDto, GuestDto } from 'src/app/core/models/order';
 import { AuthService } from 'src/app/core/services/auth.service';
+import {Dialog} from 'primeng/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RoomService } from 'src/app/core/services/room.service';
+import { Room } from 'src/app/core/models/room';
 
 @Component({
   selector: 'app-book-room',
@@ -12,10 +14,11 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./book-room.component.css']
 })
 export class BookRoomComponent implements OnInit {
-
+  displayDialog: boolean = false;
+  room!: Room;
   bookingForm!: FormGroup;
   newOccupant: GuestDto= { fullname: '', email: '', birthday: undefined };
-  room = {
+  /*room = {
     name: 'Room Name',
     details: 'Room Details, Price $/Day',
     furnitures: [
@@ -23,16 +26,30 @@ export class BookRoomComponent implements OnInit {
       { name: 'Furniture 2', description: 'Description 2' }
     ]
   };
+  */
   @ViewChild('feeText') feeText!: ElementRef;
 
   constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef,
-    private orderService: OrderService,private authService: AuthService) { }
+    private orderService: OrderService,private authService: AuthService,
+    private router: Router, private roomService: RoomService,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.initRoom();
     this.initForm();
     
   }
-
+  initRoom(){
+    this.route.paramMap.subscribe(params => {
+      const idFromRoute = params.get('id')!;
+      const orderId = parseInt(idFromRoute, 10);
+      this.roomService.getRoomById(orderId).subscribe(res => {
+        this.room = res.data;
+        console.log(res.data);
+      })
+    });
+    
+  }
   ngAfterViewInit(): void {
     this.updateTotalFee();
   }
@@ -44,10 +61,22 @@ export class BookRoomComponent implements OnInit {
       endDate: ['', Validators.required],
       wifi: [false],
       cleaning: [false],
-      occupants: this.fb.array([], Validators.required)
+      occupants: this.fb.array([], [this.validateOccupants])
     });
   }
 
+  isOccupantValid(): boolean {
+    return !!this.newOccupant.fullname && !!this.newOccupant.email && !!this.newOccupant.birthday;
+  }
+
+
+  validateOccupants(control: AbstractControl): ValidationErrors | null {
+    const occupantsArray = control as FormArray;
+    if (occupantsArray.length < 1) {
+      return { noOccupants: true };
+    }
+    return null;
+  }
   // Getter for occupants form array
   get occupants(): FormArray {
     return this.bookingForm.get('occupants') as FormArray;
@@ -127,12 +156,18 @@ export class BookRoomComponent implements OnInit {
       this.orderService.createOrder(orderDto).subscribe(
         response => {
           console.log('Order created successfully:', response);
+          this.displayDialog = true; // Show the dialog
         },
         error => {
           console.error('Error creating order:', error);
         }
       );
     }
+  }
+
+  closeDialogAndReturn() {
+    this.displayDialog = false; // Close the dialog
+    this.router.navigate(['/']); // Navigate to the home page
   }
       
 }

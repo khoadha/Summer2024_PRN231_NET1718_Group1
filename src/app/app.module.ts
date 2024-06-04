@@ -6,6 +6,7 @@ import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { ScrollTopModule } from 'primeng/scrolltop';
+import { DialogModule } from 'primeng/dialog';
 import { TokenInterceptor } from './core/interceptors/token.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -62,6 +63,7 @@ import { DialogModule } from 'primeng/dialog';
     ToastModule,
     ButtonModule,
     RippleModule,
+    DialogModule,
     ScrollTopModule,
     CheckboxModule,
     ReactiveFormsModule,

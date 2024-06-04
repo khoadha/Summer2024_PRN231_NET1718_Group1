@@ -88,7 +88,7 @@ const routes: Routes = [
     canActivate: [signedInGuard],
   },
   {
-    path: 'book-room',
+    path: 'book-room/:id',
     component: BookRoomComponent,
     title: 'Book Room',
   },
