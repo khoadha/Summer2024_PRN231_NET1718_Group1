@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environment/environment';
 import { CreateOrderDto } from '../models/order';
+import { Room } from '../models/room';
 
 @Injectable({
   providedIn: 'root'
@@ -16,5 +17,39 @@ export class RoomService {
 
   getRoomById(id: number): Observable<any> {
     return this.http.get<any>(`${this.APIUrl}/get-room/${id}`);
+  }
+
+  getRooms(): Observable<Room[]> {
+    return this.http.get<Room[]>(`${this.APIUrl}/get-room/`);
+  }
+  searchRoomByQuery(query: string): Observable<any> {
+    return this.http.get<any>(`${this.APIUrl}/search-room/${query}`);
+  }
+
+  addRoom(formData: FormData) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Accept: 'application/json',
+      }),
+    };
+    return this.http.post<any>(`${this.APIUrl}/add-room/`, formData, httpOptions);
+  }
+
+  addFurnitureToRoom(formData: FormData) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Accept: 'application/json',
+      }),
+    };
+    return this.http.post<any>(`${this.APIUrl}/add-furniture-to-room/`, formData, httpOptions);
+  }
+
+  updateRoom(data: any) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Accept: 'application/json',
+      }),
+    };
+    return this.http.put<any>(`${this.APIUrl}/update-room/`, data, httpOptions);
   }
 }
