@@ -52,8 +52,6 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { DropdownModule } from 'primeng/dropdown';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { TabViewModule } from 'primeng/tabview';
-import { DialogModule } from 'primeng/dialog';
-
 @NgModule({
   imports: [
     BrowserModule,

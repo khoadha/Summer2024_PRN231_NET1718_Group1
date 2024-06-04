@@ -6,8 +6,10 @@ export interface Room {
   costPerDay: number;
   location?: string;
   categoryId: number;
+  category?: RoomCategory;
   isAvailable: boolean;
   roomFurniture: RoomFurniture[];
+  roomImages: RoomImage[];
 }
 
 export interface RoomFurniture {
@@ -18,6 +20,17 @@ export interface RoomFurniture {
 }
 
 export interface Furniture {
+  id?: number;
+  name: string;
+  description: string;
+  cost: number;
+}
+export interface RoomImage {
+  id?: number;
+  url: string;
+}
+
+export interface RoomCategory {
   id?: number;
   name: string;
 }
