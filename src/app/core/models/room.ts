@@ -32,5 +32,5 @@ export interface RoomImage {
 
 export interface RoomCategory {
   id?: number;
-  name: string;
+  categoryName: string;
 }

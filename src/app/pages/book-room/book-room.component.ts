@@ -45,10 +45,8 @@ export class BookRoomComponent implements OnInit {
       const orderId = parseInt(idFromRoute, 10);
       this.roomService.getRoomById(orderId).subscribe(res => {
         this.room = res.data;
-        console.log(res.data);
       })
     });
-    
   }
   ngAfterViewInit(): void {
     this.updateTotalFee();
