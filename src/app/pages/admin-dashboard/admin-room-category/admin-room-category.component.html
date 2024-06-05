@@ -1,0 +1,33 @@
+<p-toast />
+<section class="intro-single text-center">
+    <h2>asdad</h2>
+</section>
+<div class="container">
+    <div class="d-flex justify-content-between mb-3">
+      <h2>Room Categories</h2>
+      <button type="button" class="btn btn-primary" (click)="showModal = true">Create Category</button>
+    </div>
+  
+    <p-table [value]="roomCategories">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-category>
+        <tr>
+          <td>{{ category.id }}</td>
+          <td>{{ category.categoryName }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  
+    <p-dialog header="Create Category" [(visible)]="showModal" [modal]="true">
+      <div class="mb-3">
+        <label for="categoryName" class="form-label">Name</label>
+        <input type="text" class="form-control" id="categoryName" [(ngModel)]="newCategoryName">
+      </div>
+      <button type="button" class="btn btn-primary" (click)="createCategory()">Create</button>
+    </p-dialog>
+  </div>

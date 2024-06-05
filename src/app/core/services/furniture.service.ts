@@ -10,7 +10,7 @@ import { Furniture, Room, RoomCategory } from '../models/room';
 export class FurnitureService {
 
   readonly baseUrl = environment.baseUrl;
-  readonly APIUrl = this.baseUrl + "RoomCategories";
+  readonly APIUrl = this.baseUrl + "Furnitures";
 
   constructor(private http: HttpClient) { }
 
@@ -18,7 +18,7 @@ export class FurnitureService {
     return this.http.get<Furniture[]>(`${this.APIUrl}/get-furniture/`);
   }
 
-  addFurnitures(formData: FormData) {
+  addFurnitures(formData: any) {
     const httpOptions = {
       headers: new HttpHeaders({
         Accept: 'application/json',

@@ -7,6 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { DialogModule } from 'primeng/dialog';
+import { TableModule } from 'primeng/table';
 import { TokenInterceptor } from './core/interceptors/token.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -52,6 +53,9 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { DropdownModule } from 'primeng/dropdown';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { TabViewModule } from 'primeng/tabview';
+import { AdminRoomCategoryComponent } from './pages/admin-dashboard/admin-room-category/admin-room-category.component';
+import { AdminFurnitureComponent } from './pages/admin-dashboard/admin-furniture/admin-furniture.component';
+import { AdminServiceComponent } from './pages/admin-dashboard/admin-service/admin-service.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -62,6 +66,7 @@ import { TabViewModule } from 'primeng/tabview';
     ButtonModule,
     RippleModule,
     DialogModule,
+    TableModule,
     ScrollTopModule,
     CheckboxModule,
     ReactiveFormsModule,
@@ -107,7 +112,10 @@ import { TabViewModule } from 'primeng/tabview';
     ListRoomComponent,
     TestimonialComponent,
     AdminDashboardComponent,
-    ProfileComponent
+    ProfileComponent,
+    AdminRoomCategoryComponent,
+    AdminFurnitureComponent,
+    AdminServiceComponent
   ],
   providers: [
     {
