@@ -9,6 +9,13 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./reset-password.component.css']
 })
 export class ResetPasswordComponent implements OnInit {
+  passwordCriteria = {
+    lowercase: false,
+    uppercase: false,
+    number: false,
+    specialChar: false,
+    minLength: false
+  };
   newPasswordForm: FormGroup = this.fb.group({
     newPassword: ['', [Validators.required, this.passwordValidator]],
     confirmedPassword: ['', Validators.required]
@@ -32,6 +39,14 @@ export class ResetPasswordComponent implements OnInit {
       this.token = params['token'] || '';
       this.userId = params['userId'] || '';
     });
+  }
+
+  checkPasswordCriteria(password: string): void {
+    this.passwordCriteria.lowercase = /[a-z]/.test(password);
+    this.passwordCriteria.uppercase = /[A-Z]/.test(password);
+    this.passwordCriteria.number = /\d/.test(password);
+    this.passwordCriteria.specialChar = /[@#$%^&*!]/.test(password);
+    this.passwordCriteria.minLength = password.length >= 8;
   }
 
   isFieldInvalid(field: string): boolean | null {

@@ -63,7 +63,7 @@ export class SignUpComponent implements OnInit{
         });
     } else {
       this.isLoading = false;
-      console.error('Form validation error');
+      this.messageService.add({ severity: 'error', summary: 'Login Error', detail: 'Invalid form' });
     }
   }
 
