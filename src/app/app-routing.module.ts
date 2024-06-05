@@ -21,6 +21,7 @@ import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard
 import { AdminRoomCategoryComponent } from './pages/admin-dashboard/admin-room-category/admin-room-category.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { AdminFurnitureComponent } from './pages/admin-dashboard/admin-furniture/admin-furniture.component';
+import { AdminServiceComponent } from './pages/admin-dashboard/admin-service/admin-service.component';
 
 const routes: Routes = [
   {
@@ -113,6 +114,11 @@ const routes: Routes = [
     //canActivate: [adminGuard],
   },
   {
+    path: 'manage-service',
+    component: AdminServiceComponent,
+    title: 'Manage Service',
+  },
+  {
     path: 'adashboard',
     component: AdminDashboardComponent,
     // canActivate: [adminGuard],
@@ -128,6 +134,12 @@ const routes: Routes = [
         path: 'manage-furniture',
         component: AdminFurnitureComponent,
         title: 'Manage Furniture',
+        //canActivate: [adminGuard],
+      },
+      {
+        path: 'manage-service',
+        component: AdminServiceComponent,
+        title: 'Manage Service',
         //canActivate: [adminGuard],
       },
       // {

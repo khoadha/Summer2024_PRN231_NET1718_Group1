@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FurnitureService } from 'src/app/core/services/furniture.service';
 import { Furniture } from 'src/app/core/models/room';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-admin-furniture', // Update selector name
@@ -12,7 +13,7 @@ export class AdminFurnitureComponent implements OnInit {
   showCreateModal = false;
   newFurniture: Furniture = { name: '', description:'',cost:0 }; // Initialize newFurniture object
 
-  constructor(private furnitureService: FurnitureService) { } // Update service injection
+  constructor(private furnitureService: FurnitureService, private messageService: MessageService) { } // Update service injection
 
   ngOnInit(): void {
     this.initFurniture();
@@ -25,10 +26,14 @@ export class AdminFurnitureComponent implements OnInit {
   }
 
   createFurniture() {
-    const formData = new FormData();
-        formData.append('name', this.newFurniture.name);
-        formData.append('description', this.newFurniture.description);
-        formData.append('cost', this.newFurniture.cost.toString());
-    this.furnitureService.addFurnitures(formData).subscribe();
+    const furnitureDto = {
+      name: this.newFurniture.name,
+      description: this.newFurniture.description,
+      cost: this.newFurniture.cost.toString() // Convert cost to string if necessary
+    };
+    this.furnitureService.addFurnitures(furnitureDto).subscribe();
+    this.showCreateModal = false;
+    this.messageService.add({severity:'success', summary:'Success', detail:'Created successfully!'});
+    this.initFurniture();
   }
 }

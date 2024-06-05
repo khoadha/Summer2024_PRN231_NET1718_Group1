@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, AfterViewInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { OrderService } from 'src/app/core/services/order.service';
 import { CreateOrderDto, GuestDto } from 'src/app/core/models/order';
 import { AuthService } from 'src/app/core/services/auth.service';
-import {Dialog} from 'primeng/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoomService } from 'src/app/core/services/room.service';
 import { Room } from 'src/app/core/models/room';
@@ -18,15 +17,6 @@ export class BookRoomComponent implements OnInit {
   room!: Room;
   bookingForm!: FormGroup;
   newOccupant: GuestDto= { fullname: '', email: '', birthday: undefined };
-  /*room = {
-    name: 'Room Name',
-    details: 'Room Details, Price $/Day',
-    furnitures: [
-      { name: 'Furniture 1', description: 'Description 1' },
-      { name: 'Furniture 2', description: 'Description 2' }
-    ]
-  };
-  */
   @ViewChild('feeText') feeText!: ElementRef;
 
   constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef,

@@ -3,55 +3,41 @@
   </section>
   <div class="container">
     <div class="d-flex justify-content-between mb-3">
-      <h2>Furniture Categories</h2>
-      <button type="button" class="btn btn-primary" (click)="showCreateModal = true">Create Category</button>
+      <h2>Furniture</h2>
+      <button type="button" class="btn btn-primary" (click)="showCreateModal = true">Create Furniture</button>
     </div>
   
-    <table class="table table-striped">
-      <thead>
+    <p-table [value]="furnitureData">
+      <ng-template pTemplate="header">
         <tr>
           <th>ID</th>
           <th>Name</th>
           <th>Description</th>
           <th>Cost</th>
         </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let furniture of furnitureData; let i = index">
+      </ng-template>
+      <ng-template pTemplate="body" let-furniture>
+        <tr>
           <td>{{ furniture.id }}</td>
           <td>{{ furniture.name }}</td>
           <td>{{ furniture.description }}</td>
           <td>{{ furniture.cost }}</td>
         </tr>
-      </tbody>
-    </table>
-  
-    <div class="modal" tabindex="-1" [ngClass]="{ 'show': showCreateModal }">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Create Category</h5>
-            <button type="button" class="btn-close" (click)="showCreateModal = false" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="mb-3">
-              <label for="name" class="form-label">Name</label>
-              <input type="text" class="form-control" id="name" [(ngModel)]="newFurniture.name">
-            </div>
-            <div class="mb-3">
-              <label for="description" class="form-label">Description</label>
-              <textarea class="form-control" id="description" [(ngModel)]="newFurniture.description"></textarea>
-            </div>
-            <div class="mb-3">
-              <label for="cost" class="form-label">Cost</label>
-              <input type="number" class="form-control" id="cost" [(ngModel)]="newFurniture.cost">
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" (click)="createFurniture()">Create</button>
-          </div>
-        </div>
+      </ng-template>
+    </p-table>
+
+    <p-dialog header="Create Furniture" [(visible)]="showCreateModal" [modal]="true">
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" [(ngModel)]="newFurniture.name">
       </div>
-    </div>
-  </div>
-  
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" [(ngModel)]="newFurniture.description"></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="cost" class="form-label">Cost</label>
+        <input type="number" class="form-control" id="cost" [(ngModel)]="newFurniture.cost">
+      </div>
+      <button type="button" class="btn btn-primary" (click)="createFurniture()">Create</button>
+    </p-dialog>
