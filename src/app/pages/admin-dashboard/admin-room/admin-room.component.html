@@ -1,0 +1,114 @@
+<section class="intro-single text-center">
+    <h2>asdad</h2>
+  </section>
+  <div class="container">
+    <div class="d-flex justify-content-between mb-3">
+      <h2>Rooms</h2>
+      <button type="button" class="btn btn-primary" (click)="showCreateModal = true">Create Room</button>
+    </div>
+    <p-table [value]="roomData">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Room Description</th>
+            <th>Room Size</th>
+            <th>Room Area</th>
+            <th>Cost Per Day</th>
+            <th>Location</th>
+            <th>Category</th>
+            <th>Is Available</th>
+            <th>Room Furniture</th>
+            <th>Actions</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-room>
+          <tr>
+            <td>{{ room.id }}</td>
+            <td>{{ room.name }}</td>
+            <td>{{ room.roomDescription }}</td>
+            <td>{{ room.roomSize }}</td>
+            <td>{{ room.roomArea }}</td>
+            <td>{{ room.costPerDay }}</td>
+            <td>{{ room.location }}</td>
+            <td>{{ room.categoryName }}</td>
+            <td>{{ room.isAvailable }}</td>
+            <td>
+              <ul>
+                <li *ngFor="let furniture of room.roomFurniture">
+                  {{ furniture.furnitureName }} ({{ furniture.quantity }})
+                </li>
+              </ul>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" (click)="openAddFurnitureModal(room)">Add Furniture</button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      
+  
+    <p-dialog header="Create Room" [(visible)]="showCreateModal" [modal]="true">
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" [(ngModel)]="newRoom.name">
+      </div>
+      <div class="mb-3">
+        <label for="roomSize" class="form-label">Room Size</label>
+        <input type="number" class="form-control" id="roomSize" [(ngModel)]="newRoom.roomSize">
+      </div>
+      <div class="mb-3">
+        <label for="roomDescription" class="form-label">Room Description</label>
+        <textarea class="form-control" id="roomDescription" [(ngModel)]="newRoom.roomDescription"></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="roomArea" class="form-label">Room Area</label>
+        <input type="number" class="form-control" id="roomArea" [(ngModel)]="newRoom.roomArea">
+      </div>
+      <div class="mb-3">
+        <label for="costPerDay" class="form-label">Cost Per Day</label>
+        <input type="number" class="form-control" id="costPerDay" [(ngModel)]="newRoom.costPerDay">
+      </div>
+      <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        <input type="text" class="form-control" id="location" [(ngModel)]="newRoom.location">
+      </div>
+      <div class="mb-3">
+        <label for="categoryId" class="form-label">Category</label>
+        <select class="form-select" id="categoryId" [(ngModel)]="newRoom.categoryId">
+          <option *ngFor="let category of categories" [value]="category.id">{{ category.categoryName }}</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="isAvailable" class="form-label">Is Available</label>
+        <input type="checkbox" class="form-check-input" id="isAvailable" [(ngModel)]="newRoom.isAvailable">
+      </div>
+      <div class="mb-3">
+        <label for="roomImages" class="form-label">Room Images</label>
+        <input type="file" class="form-control" id="roomImages" multiple (change)="onFileChange($event)">
+      </div>
+      <button type="button" class="btn btn-primary" (click)="createRoom()">Create</button>
+    </p-dialog>
+  </div>
+  
+<p-dialog header="Add Furniture" [(visible)]="showAddFurnitureModal" [modal]="true">
+    <div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Furniture Name</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let furniture of allFurnitures">
+            <td>{{ furniture.furnitureName }}</td>
+            <td>
+              <input type="number" class="form-control" [(ngModel)]="furniture.quantity">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="addFurnitures()">Add</button>
+  </p-dialog>

@@ -26,7 +26,7 @@ export class RoomService {
     return this.http.get<any>(`${this.APIUrl}/search-room/${query}`);
   }
 
-  addRoom(formData: FormData) {
+  addRoom(formData: any) {
     const httpOptions = {
       headers: new HttpHeaders({
         Accept: 'application/json',
@@ -35,7 +35,7 @@ export class RoomService {
     return this.http.post<any>(`${this.APIUrl}/add-room/`, formData, httpOptions);
   }
 
-  addFurnitureToRoom(formData: FormData) {
+  addFurnitureToRoom(formData: any) {
     const httpOptions = {
       headers: new HttpHeaders({
         Accept: 'application/json',

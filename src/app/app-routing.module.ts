@@ -22,6 +22,7 @@ import { AdminRoomCategoryComponent } from './pages/admin-dashboard/admin-room-c
 import { ProfileComponent } from './pages/profile/profile.component';
 import { AdminFurnitureComponent } from './pages/admin-dashboard/admin-furniture/admin-furniture.component';
 import { AdminServiceComponent } from './pages/admin-dashboard/admin-service/admin-service.component';
+import { AdminRoomComponent } from './pages/admin-dashboard/admin-room/admin-room.component';
 
 const routes: Routes = [
   {
@@ -119,28 +120,39 @@ const routes: Routes = [
     title: 'Manage Service',
   },
   {
+    path: 'manage-room',
+    component: AdminRoomComponent,
+    title: 'Manage Room',
+  },
+  {
     path: 'adashboard',
     component: AdminDashboardComponent,
-    // canActivate: [adminGuard],
+    canActivate: [adminGuard],
     children: [
       { path: 'home', component: HomePageComponent, canActivate: [adminGuard] },
       {
         path: 'manage-category',
         component: AdminRoomCategoryComponent,
         title: 'Manage Category',
-        //canActivate: [adminGuard],
+        canActivate: [adminGuard],
       },
       {
         path: 'manage-furniture',
         component: AdminFurnitureComponent,
         title: 'Manage Furniture',
-        //canActivate: [adminGuard],
+        canActivate: [adminGuard],
       },
       {
         path: 'manage-service',
         component: AdminServiceComponent,
         title: 'Manage Service',
-        //canActivate: [adminGuard],
+        canActivate: [adminGuard],
+      },
+      {
+        path: 'manage-room',
+        component: AdminRoomComponent,
+        title: 'Manage Room',
+        canActivate: [adminGuard],
       },
       // {
       //   path: 'manage-category',

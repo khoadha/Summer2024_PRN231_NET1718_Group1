@@ -56,6 +56,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { AdminRoomCategoryComponent } from './pages/admin-dashboard/admin-room-category/admin-room-category.component';
 import { AdminFurnitureComponent } from './pages/admin-dashboard/admin-furniture/admin-furniture.component';
 import { AdminServiceComponent } from './pages/admin-dashboard/admin-service/admin-service.component';
+import { AdminRoomComponent } from './pages/admin-dashboard/admin-room/admin-room.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -115,7 +116,8 @@ import { AdminServiceComponent } from './pages/admin-dashboard/admin-service/adm
     ProfileComponent,
     AdminRoomCategoryComponent,
     AdminFurnitureComponent,
-    AdminServiceComponent
+    AdminServiceComponent,
+    AdminRoomComponent
   ],
   providers: [
     {
