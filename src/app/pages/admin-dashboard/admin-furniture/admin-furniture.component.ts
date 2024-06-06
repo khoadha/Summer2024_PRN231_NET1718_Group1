@@ -11,7 +11,7 @@ import { MessageService } from 'primeng/api';
 export class AdminFurnitureComponent implements OnInit {
   furnitureData!: Furniture[];
   showCreateModal = false;
-  newFurniture: Furniture = { name: '', description:'',cost:0 }; // Initialize newFurniture object
+  newFurniture: Furniture = { name: '', description:'',cost:0 };
 
   constructor(private furnitureService: FurnitureService, private messageService: MessageService) { } // Update service injection
 
@@ -29,7 +29,7 @@ export class AdminFurnitureComponent implements OnInit {
     const furnitureDto = {
       name: this.newFurniture.name,
       description: this.newFurniture.description,
-      cost: this.newFurniture.cost.toString() // Convert cost to string if necessary
+      cost: this.newFurniture.cost.toString()
     };
     this.furnitureService.addFurnitures(furnitureDto).subscribe();
     this.showCreateModal = false;

@@ -1,22 +1,26 @@
 export interface Room {
-  name?: string;
+  id:number;
+  name: string;
   roomSize: number;
-  roomDescription?: string;
+  roomDescription: string;
   roomArea: number;
   costPerDay: number;
-  location?: string;
+  location: string;
   categoryId: number;
   category?: RoomCategory;
   isAvailable: boolean;
   roomFurniture: RoomFurniture[];
   roomImages: RoomImage[];
+  //dto
+  categoryName?: string;
 }
-
 export interface RoomFurniture {
   id:number;
   furnitureId?: number;
   quantity: number;
-  furniture: Furniture;
+  furniture?: Furniture;
+  //dto
+  furnitureName?: string;
 }
 
 export interface Furniture {
