@@ -63,6 +63,9 @@ import { RoomPageComponent } from './pages/room-page/room-page.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { RoomDetailComponent } from './pages/room-detail/room-detail.component';
 import { AdminOrderComponent } from './pages/admin-dashboard/admin-order/admin-order.component';
+import { ManageOrderComponent } from './pages/manage-order/manage-order.component';
+import { MatTableModule } from '@angular/material/table';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -95,6 +98,7 @@ import { AdminOrderComponent } from './pages/admin-dashboard/admin-order/admin-o
     DialogModule,
     TooltipModule,
     NgxPaginationModule,
+    MatTableModule,
   ],
   declarations: [
     AppComponent,
@@ -131,6 +135,7 @@ import { AdminOrderComponent } from './pages/admin-dashboard/admin-order/admin-o
     RoomDetailComponent,
     AdminHomeComponent,
     AdminOrderComponent,
+    ManageOrderComponent,
   ],
   providers: [
     {

@@ -24,6 +24,7 @@ import { AdminOrderComponent } from './pages/admin-dashboard/admin-order/admin-o
 
 import { RoomPageComponent } from './pages/room-page/room-page.component';
 import { RoomDetailComponent } from './pages/room-detail/room-detail.component';
+import { ManageOrderComponent } from './pages/manage-order/manage-order.component';
 const routes: Routes = [
   {
     path: 'home',
@@ -109,6 +110,11 @@ const routes: Routes = [
     path: 'manage-profile',
     component: ProfileComponent,
     title: 'Manage Profile',
+  },
+  {
+    path: 'manage-order',
+    component: ManageOrderComponent,
+    title: 'Manage Order',
   },
 
   //DEBUG

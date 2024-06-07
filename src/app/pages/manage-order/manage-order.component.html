@@ -1,0 +1,49 @@
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="orders" class="mat-elevation-z8">
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let order"> {{order.id}} </td>
+        </ng-container>
+
+        <!-- Room ID Column -->
+        <ng-container matColumnDef="roomId">
+            <th mat-header-cell *matHeaderCellDef> Room ID </th>
+            <td mat-cell *matCellDef="let order"> {{order.roomId}} </td>
+        </ng-container>
+
+        <!-- User ID Column -->
+        <ng-container matColumnDef="userId">
+            <th mat-header-cell *matHeaderCellDef> User ID </th>
+            <td mat-cell *matCellDef="let order"> {{order.userId}} </td>
+        </ng-container>
+
+        <!-- User Name Column -->
+        <ng-container matColumnDef="userName">
+            <th mat-header-cell *matHeaderCellDef> User Name </th>
+            <td mat-cell *matCellDef="let order"> {{order.userName}} </td>
+        </ng-container>
+
+        <!-- Room Name Column -->
+        <ng-container matColumnDef="roomName">
+            <th mat-header-cell *matHeaderCellDef> Room Name </th>
+            <td mat-cell *matCellDef="let order"> {{order.roomName}} </td>
+        </ng-container>
+
+        <!-- Order Date Column -->
+        <ng-container matColumnDef="orderDate">
+            <th mat-header-cell *matHeaderCellDef> Order Date </th>
+            <td mat-cell *matCellDef="let order"> {{order.orderDate | date}} </td>
+        </ng-container>
+
+        <!-- Cancel Date Column -->
+        <ng-container matColumnDef="cancelDate">
+            <th mat-header-cell *matHeaderCellDef> Cancel Date </th>
+            <td mat-cell *matCellDef="let order"> {{order.cancelDate | date}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>
