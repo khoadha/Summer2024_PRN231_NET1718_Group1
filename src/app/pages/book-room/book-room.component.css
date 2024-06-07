@@ -1,31 +1,65 @@
 .container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  .list-group-item {
-    background-color: transparent;
-    border: none;
-  }
-  
-  .form-check {
-    margin-bottom: 10px;
-  }
-  
-  .btn-danger {
-    margin-left: 5px;
-  }
-  
-  .btn-primary {
-    margin-top: 10px;
-  }
-  
-  .btn-success {
-    margin-top: 10px;
-  }
-  
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.list-group-item {
+  background-color: transparent;
+  border: none;
+}
+
+.form-check {
+  margin-bottom: 10px;
+}
+
+.btn-danger {
+  margin-left: 5px;
+}
+
+.btn-primary {
+  margin-top: 10px;
+}
+
+.btn-success {
+  margin-top: 10px;
+}
+
+.contract {
+  padding: 2rem;
+  border: 1px solid #ddd;
+  border-radius: .5rem;
+}
+
+.contract h2 {
+  text-align: center;
+}
+
+.contract table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.contract table th,
+.contract table td {
+  padding: .75rem;
+  border: 1px solid #ddd;
+}
+
+.contract table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.contract-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.contract-checkbox {
+  margin-right: 1rem;
+}

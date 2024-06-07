@@ -16,23 +16,25 @@ import { MessageService } from 'primeng/api';
 })
 export class BookRoomComponent implements OnInit {
   displayDialog: boolean = false;
+  showContract: boolean = false;
   room!: Room;
   bookingForm!: FormGroup;
   newOccupant: GuestDto = { fullname: '', email: '', birthday: undefined };
   allServices: ServiceWithPrice[] = [];
   today: string;
+  contractSigned: boolean = false;
   @ViewChild('feeText') feeText!: ElementRef;
 
   constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef,
     private orderService: OrderService, private authService: AuthService,
     private router: Router, private roomService: RoomService,
-    private route: ActivatedRoute, private serviceService: RoomServiceService,private messageService: MessageService) {
-      const todayDate = new Date();
-      this.today = todayDate.toISOString().split('T')[0]; // format the date to 'YYYY-MM-DD' 
-      }
+    private route: ActivatedRoute, private serviceService: RoomServiceService, private messageService: MessageService) {
+    const todayDate = new Date();
+    this.today = todayDate.toISOString().split('T')[0]; // format the date to 'YYYY-MM-DD' 
+  }
 
   ngOnInit(): void {
-  
+
     this.initRoom();
     this.initServicesAndForm();
 
@@ -69,6 +71,7 @@ export class BookRoomComponent implements OnInit {
       wifi: [false],
       cleaning: [false],
       occupants: this.fb.array([], [this.validateOccupants]),
+      contractSigned: [false, Validators.requiredTrue],
       ...serviceControls
     }, { validators: this.dateRangeValidator() });
   }
@@ -126,16 +129,7 @@ export class BookRoomComponent implements OnInit {
     this.newOccupant.email = '';
     this.newOccupant.birthday = undefined;
   }
-  calculateTotalFee() {
-    const baseFee = 50;
-    let totalFee = baseFee;
-    this.allServices.forEach(service => {
-      const serviceControl = this.bookingForm.get(service.name);
-      if (serviceControl && serviceControl.value) {
-        totalFee += service.servicePriceNumber;
-      }
-    });
-
+  calculateDays(){
     const startDateString = this.bookingForm.get('startDate')?.value;
     const endDateString = this.bookingForm.get('endDate')?.value;
 
@@ -143,8 +137,21 @@ export class BookRoomComponent implements OnInit {
       const startDate = new Date(startDateString);
       const endDate = new Date(endDateString);
       const totalDays = Math.ceil(Math.abs((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)));
-      totalFee *= totalDays;
+      return totalDays;
     }
+    return 0;
+  }
+  calculateTotalFee() {
+    const baseFee = this.room.costPerDay;
+    let totalFee = baseFee;
+    this.allServices.forEach(service => {
+      const serviceControl = this.bookingForm.get(service.name);
+      if (serviceControl && serviceControl.value) {
+        totalFee += service.servicePriceNumber;
+      }
+    });
+    const totalDays = this.calculateDays();
+    totalFee *= totalDays;
     return totalFee;
   }
 
@@ -156,7 +163,7 @@ export class BookRoomComponent implements OnInit {
   }
   submitForm() {
     if (this.bookingForm.valid) {
-      
+
       const userId = this.authService.getUserIdFromToken();
       const guests = this.bookingForm.get('occupants')?.value.map((occupant: any) => ({
         fullname: occupant.fullname,
@@ -173,19 +180,18 @@ export class BookRoomComponent implements OnInit {
         endDate: this.bookingForm.get('endDate')!.value,
         cost: this.calculateTotalFee(),
         guests: guests,
-        roomServices: selectedServices 
+        roomServices: selectedServices
       };
 
       this.orderService.createOrder(orderDto).subscribe({
-        next: (res) =>{
+        next: (res) => {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Created order successfully.' });
-          setTimeout(() => {
-            this.closeDialogAndReturn();
-          }, 1000);
+          this.displayDialog = true;
         },
         error: (err) => {
-          this.showErrorMessage(err);   
-        }}
+          this.showErrorMessage(err);
+        }
+      }
       );
     }
   }
@@ -199,6 +205,15 @@ export class BookRoomComponent implements OnInit {
   closeDialogAndReturn() {
     this.displayDialog = false;
     this.router.navigate(['/']);
+  }
+  openContractModal() {
+    this.showContract = true;
+  }
+
+  signContract() {
+    this.contractSigned = true;
+    this.showContract = false;
+    this.bookingForm.get('contractSigned')?.setValue(true); // Update the form control
   }
 
 }
