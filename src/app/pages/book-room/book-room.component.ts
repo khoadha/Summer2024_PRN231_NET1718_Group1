@@ -53,11 +53,12 @@ export class BookRoomComponent implements OnInit {
       this.room = res;
     }
   }
-  
-  
+
+
   async initServicesAndForm() {
     const res = await this.serviceService.getServiceWithNewestPrice().toPromise();
-      if (res) {
+    if (res) {
+      this.allServices = res;
       this.initForm();
     }
   }
@@ -70,8 +71,8 @@ export class BookRoomComponent implements OnInit {
     this.bookingForm = this.fb.group({
       userId: [''],
       cost: [''],
-      startDate: ['', [Validators.required, this.dateValidator()]],
-      endDate: ['', [Validators.required, this.dateValidator()]],
+      startDate: [this.today, [Validators.required, this.dateValidator()]],
+      endDate: [this.today, [Validators.required, this.dateValidator()]],
       wifi: [false],
       cleaning: [false],
       occupants: this.fb.array([], [this.validateOccupants]),
@@ -136,14 +137,14 @@ export class BookRoomComponent implements OnInit {
     this.newOccupant.email = '';
     this.newOccupant.birthday = undefined;
   }
-  calculateDays(){
+  calculateDays() {
     const startDateString = this.bookingForm.get('startDate')?.value;
     const endDateString = this.bookingForm.get('endDate')?.value;
 
     if (startDateString && endDateString) {
       const startDate = new Date(startDateString);
       const endDate = new Date(endDateString);
-      const totalDays = Math.ceil(Math.abs((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)));
+      const totalDays = 1 + Math.ceil(Math.abs((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)));
       return totalDays;
     }
     return 0;
@@ -153,6 +154,7 @@ export class BookRoomComponent implements OnInit {
     let totalFee = baseFee;
     this.allServices.forEach(service => {
       const serviceControl = this.bookingForm.get(service.name);
+      
       if (serviceControl && serviceControl.value) {
         totalFee += service.servicePriceNumber;
       }
@@ -180,7 +182,7 @@ export class BookRoomComponent implements OnInit {
       const roomServices: RoomServiceDto[] = this.selectedServices.map(service => ({
         serviceId: service.id
       }));
-      
+
       // Create the orderDto
       const orderDto: CreateOrderDto = {
         userId: userId,
