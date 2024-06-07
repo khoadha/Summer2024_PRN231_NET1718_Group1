@@ -11,7 +11,7 @@ import { FurnitureService } from 'src/app/core/services/furniture.service';
   styleUrls: ['./admin-room.component.css']
 })
 export class AdminRoomComponent implements OnInit {
-  roomData!: Room[];
+  roomData: Room[] = [];
   showCreateModal = false;
   showAddFurnitureModal = false;
   newRoom: Room = { id:0,name:'', roomDescription:'', location: '', roomSize: 0, roomArea: 0, costPerDay: 0, categoryId: 0, isAvailable: false, roomFurniture:[], roomImages:[] };

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { IsActiveMatchOptions, Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
 import { Sidebar } from 'primeng/sidebar';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserStoreService } from 'src/app/core/services/user-store.service';
@@ -9,49 +10,38 @@ import { UserStoreService } from 'src/app/core/services/user-store.service';
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.css'],
 })
-export class AdminDashboardComponent implements OnInit{
+export class AdminDashboardComponent {
   public username!: string;
   public role!: string;
   imgPath!: string;
 
-  constructor(private router: Router, private auth: AuthService, private userStore: UserStoreService) {
-  }
-
-  @ViewChild('sidebarRef') sidebarRef!: Sidebar;
-  closeCallback(e: Event): void {
-      this.sidebarRef.close(e);
-  }
+  drawerVisible = true;
+  items: MenuItem[] = [
+    { name: 'Dashboard', url: '/adashboard', icon: 'pi-home' },
+    { name: 'Room Category', url: '/adashboard/manage-room-category', icon: 'pi-book' },
+    { name: 'Furniture', url: '/adashboard/manage-furniture', icon: 'pi-cart-arrow-down' },
+    { name: 'Room', url: '/adashboard/manage-room', icon: 'pi-warehouse' },
+    { name: 'Service', url: '/adashboard/manage-service', icon: 'pi-shopping-bag' },
+    { name: 'Order', url: '/adashboard/#', icon: 'pi-box' },
+    { name: 'Transaction', url: '/adashboard/#', icon: 'pi-credit-card' },
+  ];
 
   sidebarVisible: boolean = false;
 
-
-  ngOnInit(): void {
-    this.getSessionUserInformation();
+  constructor(private router: Router, private auth: AuthService, private userStore: UserStoreService) {
   }
 
-  private getSessionUserInformation(){
-    this.userStore.getUsernameFromStore()
-    .subscribe(val => {
-      let usernameFromToken = this.auth.getUsernameFromToken();
-      this.username = val || usernameFromToken
-    })
-
-    this.userStore.getRoleFromStore().subscribe(val => {
-      const roleFromToken = this.auth.getRoleFromToken();
-      this.role = val || roleFromToken;
-    })
-
-    this.userStore.getImgPathFromStore().subscribe(val => {
-      const imgPath = this.auth.getImgPathFromToken();
-      this.imgPath = val || imgPath;
-    })
+  isLinkActive(url: string): boolean {
+    const options: IsActiveMatchOptions = {
+      paths: 'exact',
+      queryParams: 'exact',
+      fragment: 'ignored',
+      matrixParams: 'ignored'
+    };
+    return this.router.isActive(url, options);
   }
 
-  // isLinkActive(url: string): boolean {
-  //   return this.router.isActive(url, true);
-  // }
-
-  // navigateToHome(): void {
-  //   this.router.navigate(['/home']);
-  // }
+  navigateToHome(): void {
+    this.router.navigate(['/home']);
+  }
 }

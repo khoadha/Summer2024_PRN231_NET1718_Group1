@@ -15,7 +15,7 @@ import * as CryptoJS from 'crypto-js';
 })
 export class AuthService {
 
-  readonly baseUrl = environment.baseUrl;
+  readonly baseUrl = environment.baseAuthUrl;
   readonly APIUrl = this.baseUrl + "auth";
 
   private userPayload: any;
