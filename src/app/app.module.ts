@@ -59,6 +59,7 @@ import { AdminServiceComponent } from './pages/admin-dashboard/admin-service/adm
 import { AdminRoomComponent } from './pages/admin-dashboard/admin-room/admin-room.component';
 import { AdminHomeComponent } from './pages/admin-dashboard/admin-home/admin-home.component';
 import { TooltipModule } from 'primeng/tooltip';
+import { AdminOrderComponent } from './pages/admin-dashboard/admin-order/admin-order.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -121,7 +122,8 @@ import { TooltipModule } from 'primeng/tooltip';
     AdminFurnitureComponent,
     AdminServiceComponent,
     AdminRoomComponent,
-    AdminHomeComponent
+    AdminHomeComponent,
+    AdminOrderComponent
   ],
   providers: [
     {
