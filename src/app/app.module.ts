@@ -59,6 +59,9 @@ import { AdminServiceComponent } from './pages/admin-dashboard/admin-service/adm
 import { AdminRoomComponent } from './pages/admin-dashboard/admin-room/admin-room.component';
 import { AdminHomeComponent } from './pages/admin-dashboard/admin-home/admin-home.component';
 import { TooltipModule } from 'primeng/tooltip';
+import { RoomPageComponent } from './pages/room-page/room-page.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { RoomDetailComponent } from './pages/room-detail/room-detail.component';
 import { AdminOrderComponent } from './pages/admin-dashboard/admin-order/admin-order.component';
 @NgModule({
   imports: [
@@ -91,6 +94,7 @@ import { AdminOrderComponent } from './pages/admin-dashboard/admin-order/admin-o
     TabViewModule,
     DialogModule,
     TooltipModule,
+    NgxPaginationModule,
   ],
   declarations: [
     AppComponent,
@@ -123,7 +127,10 @@ import { AdminOrderComponent } from './pages/admin-dashboard/admin-order/admin-o
     AdminServiceComponent,
     AdminRoomComponent,
     AdminHomeComponent,
-    AdminOrderComponent
+    RoomPageComponent,
+    RoomDetailComponent,
+    AdminHomeComponent,
+    AdminOrderComponent,
   ],
   providers: [
     {
@@ -131,8 +138,8 @@ import { AdminOrderComponent } from './pages/admin-dashboard/admin-order/admin-o
       useClass: TokenInterceptor,
       multi: true,
     },
-    MessageService
+    MessageService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

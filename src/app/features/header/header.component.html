@@ -1,6 +1,7 @@
 <nav class="navbar navbar-default navbar-trans navbar-expand-lg fixed-top">
   <div class="container">
-    <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDefault"
+      aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
       <span></span>
       <span></span>
       <span></span>
@@ -20,7 +21,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link " href="property-grid.html">Property</a>
+          <a class="nav-link " routerLink="/all-room">Property</a>
         </li>
 
         <li class="nav-item">
@@ -28,7 +29,8 @@
         </li>
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">Pages</a>
           <div class="dropdown-menu">
             <a class="dropdown-item " href="property-single.html">Property Single</a>
             <a class="dropdown-item " href="blog-single.html">Blog Single</a>
@@ -45,82 +47,63 @@
     <!-- NOT LOGGED -->
     <ng-container *ngIf="role == undefined">
       <div class="d-flex">
-        <button
-          class="bg-light text-dark shadow-lg border-0 px-3"
-          routerLink="/sign-up">
+        <button class="bg-light text-dark shadow-lg border-0 px-3" routerLink="/sign-up">
           Sign up
         </button>
-        <button
-          class="text-light primary-color-bg ms-3 btn shadow"
-          routerLink="/sign-in">
+        <button class="text-light primary-color-bg ms-3 btn shadow" routerLink="/sign-in">
           Sign in
         </button>
       </div>
-    </ng-container>      
+    </ng-container>
 
 
-  <!-- LOGGED   -->
-  <ng-container *ngIf="role != undefined">
-    <div>
-      <button
-        class="text-light primary-color-bg ms-3 btn shadow"
-        routerLink="/book-room">
-        BOOK ROOM
-      </button>
-    </div>
-    <div class="dropdown">
-      <a
-        class="btn dropdown-toggle border-0"
-        href="#"
-        role="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false">
+    <!-- LOGGED   -->
+    <ng-container *ngIf="role != undefined">
+      <div>
+        <button class="text-light primary-color-bg ms-3 btn shadow" routerLink="/book-room">
+          BOOK ROOM
+        </button>
+      </div>
+      <div class="dropdown">
+        <a class="btn dropdown-toggle border-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 
-        <img
-          [src]="imgPath"
-          style="width: 50px; height: 50px"
-          class="rounded-circle"
-          referrerpolicy="no-referrer"/>
-      </a>
-      <ul class="dropdown-menu">
-        <!-- Admin -->
-        <ng-container *ngIf="role == 'Admin'; else userSection">
-          <!-- <li>
+          <img [src]="imgPath" style="width: 50px; height: 50px" class="rounded-circle" referrerpolicy="no-referrer" />
+        </a>
+        <ul class="dropdown-menu">
+          <!-- Admin -->
+          <ng-container *ngIf="role == 'Admin'; else userSection">
+            <!-- <li>
             <h6 class="dropdown-header web-font pb-0">Settings</h6>
           </li> -->
-          <li>
-            <a
-              class="dropdown-item web-font d-flex align-items-center"
-              routerLink="adashboard/home">
-              <i class="pi pi-wrench me-2"></i> Dashboard</a>
-          </li>
-        </ng-container>
-        
-        <!-- User -->
-        <ng-template #userSection>
-          <li>
-            <p class="dropdown-header web-font mb-0 fs-6 py-0">
-              Account: <span class="pastel fw-bold">{{ username }}</span>
-            </p>
-          </li>
-          <li>
-            <a class="dropdown-item web-font d-flex align-items-center" routerLink="manage-profile">
-              Manage Profile
+            <li>
+              <a class="dropdown-item web-font d-flex align-items-center" routerLink="adashboard/home">
+                <i class="pi pi-wrench me-2"></i> Dashboard</a>
+            </li>
+          </ng-container>
+
+          <!-- User -->
+          <ng-template #userSection>
+            <li>
+              <p class="dropdown-header web-font mb-0 fs-6 py-0">
+                Account: <span class="pastel fw-bold">{{ username }}</span>
+              </p>
+            </li>
+            <li>
+              <a class="dropdown-item web-font d-flex align-items-center" routerLink="manage-profile">
+                Manage Profile
+              </a>
+            </li>
+          </ng-template>
+
+          <li style="cursor: pointer">
+            <a class="dropdown-item web-font d-flex align-items-center" (click)="logOut()">
+              <!-- <mat-icon class="me-2">logout</mat-icon>  -->
+              Logout
             </a>
           </li>
-        </ng-template>
-
-        <li style="cursor: pointer">
-          <a
-            class="dropdown-item web-font d-flex align-items-center"
-            (click)="logOut()">
-            <!-- <mat-icon class="me-2">logout</mat-icon>  -->
-            Logout
-          </a>
-        </li>
-      </ul>
-    </div>
-  </ng-container>
+        </ul>
+      </div>
+    </ng-container>
 
   </div>
 </nav><!-- End Header/Navbar -->

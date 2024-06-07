@@ -1,10 +1,6 @@
 import { ConfirmEmailSuccessComponent } from './pages/confirm-email-success/confirm-email-success.component';
 import { NgModule } from '@angular/core';
-import {
-  adminGuard,
-  authGuard,
-  signedInGuard,
-} from './core/guards/auth.guard';
+import { adminGuard, authGuard, signedInGuard } from './core/guards/auth.guard';
 import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
@@ -26,12 +22,13 @@ import { AdminRoomComponent } from './pages/admin-dashboard/admin-room/admin-roo
 import { AdminHomeComponent } from './pages/admin-dashboard/admin-home/admin-home.component';
 import { AdminOrderComponent } from './pages/admin-dashboard/admin-order/admin-order.component';
 
+import { RoomPageComponent } from './pages/room-page/room-page.component';
+import { RoomDetailComponent } from './pages/room-detail/room-detail.component';
 const routes: Routes = [
   {
     path: 'home',
     component: HomePageComponent,
-    title:
-      'Hosteland',
+    title: 'Hosteland',
   },
   {
     path: 'sign-in',
@@ -94,16 +91,26 @@ const routes: Routes = [
     canActivate: [signedInGuard],
   },
   {
+    path: 'room-detail/:id',
+    component: RoomDetailComponent,
+    title: 'Room Detail',
+  },
+  {
     path: 'book-room/:id',
     component: BookRoomComponent,
     title: 'Book Room',
+  },
+  {
+    path: 'all-room',
+    component: RoomPageComponent,
+    title: 'All Rooms',
   },
   {
     path: 'manage-profile',
     component: ProfileComponent,
     title: 'Manage Profile',
   },
-  
+
   //DEBUG
   {
     path: 'manage-category',
@@ -167,7 +174,7 @@ const routes: Routes = [
         component: AdminRoomComponent,
         title: 'Manage Room',
         canActivate: [adminGuard],
-      }
+      },
     ],
   },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -176,6 +183,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
