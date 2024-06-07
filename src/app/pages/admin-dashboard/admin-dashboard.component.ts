@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { IsActiveMatchOptions, Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
 import { Sidebar } from 'primeng/sidebar';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserStoreService } from 'src/app/core/services/user-store.service';
@@ -14,44 +15,35 @@ export class AdminDashboardComponent implements OnInit{
   public role!: string;
   imgPath!: string;
 
+  drawerVisible!: boolean;
+  items: MenuItem[] = [
+    { name: 'Dashboard', url: '/adashboard', icon: 'pi-home' },
+    { name: 'Room Category', url: '/adashboard/manage-room-category', icon: 'pi-book' },
+    { name: 'Furniture', url: '/adashboard/manage-furniture', icon: 'pi-cart-arrow-down' },
+    { name: 'Room', url: '/adashboard/manage-room', icon: 'pi-warehouse' },
+    { name: 'Service', url: '/adashboard/manage-service', icon: 'pi-shopping-bag' },
+    { name: 'Order', url: '/adashboard/#', icon: 'pi-box' },
+    { name: 'Transaction', url: '/adashboard/#', icon: 'pi-credit-card' },
+  ];
+
   constructor(private router: Router, private auth: AuthService, private userStore: UserStoreService) {
   }
 
-  @ViewChild('sidebarRef') sidebarRef!: Sidebar;
-  closeCallback(e: Event): void {
-      this.sidebarRef.close(e);
-  }
-
-  sidebarVisible: boolean = false;
-
-
   ngOnInit(): void {
-    this.getSessionUserInformation();
+    this.drawerVisible = true;
   }
 
-  private getSessionUserInformation(){
-    this.userStore.getUsernameFromStore()
-    .subscribe(val => {
-      let usernameFromToken = this.auth.getUsernameFromToken();
-      this.username = val || usernameFromToken
-    })
-
-    this.userStore.getRoleFromStore().subscribe(val => {
-      const roleFromToken = this.auth.getRoleFromToken();
-      this.role = val || roleFromToken;
-    })
-
-    this.userStore.getImgPathFromStore().subscribe(val => {
-      const imgPath = this.auth.getImgPathFromToken();
-      this.imgPath = val || imgPath;
-    })
+  isLinkActive(url: string): boolean {
+    const options: IsActiveMatchOptions = {
+      paths: 'exact',
+      queryParams: 'exact',
+      fragment: 'ignored',
+      matrixParams: 'ignored'
+    };
+    return this.router.isActive(url, options);
   }
 
-  // isLinkActive(url: string): boolean {
-  //   return this.router.isActive(url, true);
-  // }
-
-  // navigateToHome(): void {
-  //   this.router.navigate(['/home']);
-  // }
+  navigateToHome(): void {
+    this.router.navigate(['/home']);
+  }
 }

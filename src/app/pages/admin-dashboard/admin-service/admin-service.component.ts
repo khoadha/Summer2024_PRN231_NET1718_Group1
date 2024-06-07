@@ -9,7 +9,7 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./admin-service.component.css']
 })
 export class AdminServiceComponent implements OnInit {
-  serviceData!: ServiceWithPrice[];
+  serviceData: Service[] = [];
   showCreateModal = false;
   showPriceModal = false;
   newService: ServiceWithPrice = { name: '', description: '', servicePriceNumber:0 };
@@ -33,28 +33,22 @@ export class AdminServiceComponent implements OnInit {
       description: this.newService.description,
     };
 
-    this.serviceService.addService(serviceDto).subscribe();
-    this.initServices();
-    this.showCreateModal = false;
-    this.messageService.add({severity:'success', summary:'Success', detail:'Created successfully!'});
-  }
-  openPriceModal(service: ServiceWithPrice) {
-    this.selectedService = service;
-    this.showPriceModal = true;
-  }
-  createServicePrice() {
-    const requestBody = {
-      serviceId: this.selectedService!.id,
-      amount: this.newPrice.amount,
-      startDate: this.newPrice.startDate,
-      endDate: this.newPrice.endDate
-    };
-
-    this.serviceService.addServicePrice(requestBody).subscribe(() => {
-      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Service Price added successfully.' });
-      this.showPriceModal = false;
-      this.selectedService = null;
-      this.initServices();
+    this.serviceService.addService(serviceDto).subscribe({
+      next: (res) =>{
+        this.initServices();
+        this.showCreateModal = false;
+        this.messageService.add({severity:'success', summary:'Success', detail:'Created successfully!'});
+      },
+      error: (err) =>{
+        this.showErrorMessage(err);
+      }
     });
+  }
+
+  showErrorMessage(err: any) {
+    if (err && err.error && err.error.errors && err.error.errors.length > 0) {
+      const errorMessage = err.error.errors.join(', ');
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: errorMessage });
+    }
   }
 }

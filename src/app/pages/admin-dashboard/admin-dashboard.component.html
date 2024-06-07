@@ -1,171 +1,38 @@
-<div class="card flex justify-content-center">
-    <p-sidebar #sidebarRef [(visible)]="sidebarVisible">
-        <ng-template pTemplate="headless">
-            <div class="flex flex-column h-full">
-                <div class="flex align-items-center justify-content-between px-4 pt-3 flex-shrink-0">
-                    <span class="inline-flex align-items-center gap-2">
-                        <img href="/src/assets/images/hostel-logo.jpg" alt="logo" />
-                        <span class="font-semibold text-2xl text-primary">Hosteland</span>
-                    </span>
-                    <span>
-                        <p-button type="button" (click)="closeCallback($event)" icon="pi pi-times" rounded="true" outlined="true" styleClass="h-2rem w-2rem"></p-button>
-                    </span>
+<p-sidebar 
+    [(visible)]="drawerVisible" 
+    [position]="'left'" 
+    [fullScreen]="true" 
+    [showCloseIcon]="false" 
+    [style]="{'width':'20%', 'background-color': '#0F172A'}"
+    class="auth-bg-image">
+
+    <a routerLink="/home">
+        <img class="d-flex mx-auto my-4" src="../../../assets/images/hostel-logo-admin.png" alt="Logo" width="auto" height="150">
+    </a>
+    <ul class="py-0 list-unstyled">
+        <li role="listitem" class="list-item" [ngClass]="{'active': isLinkActive(item.url!)}" *ngFor="let item of items">
+            <a class="text-decoration-none d-flex flex-row align-items-center px-2" [routerLink]="item.url">
+                <i [ngClass]="{'icon-active': isLinkActive(item.url!)}" class="pi pi-fw {{item.icon}} text-secondary mt-0 px-1"></i>
+                <div [ngClass]="{'text-active': isLinkActive(item.url!)}" class="text-center web-font ps-3 text-secondary">
+                    {{item['name']}}
                 </div>
-                <div class="overflow-y-auto">
-                    <ul class="list-none p-3 m-0">
-                        <li>
-                            <div
-                                pRipple
-                                pStyleClass="@next"
-                                enterFromClass="hidden"
-                                enterActiveClass="slidedown"
-                                leaveToClass="hidden"
-                                leaveActiveClass="slideup"
-                                class="p-3 flex align-items-center justify-content-between text-600 cursor-pointer p-ripple"
-                            >
-                                <span class="font-medium">Data</span>
-                                <i class="pi pi-chevron-down"></i>
-                            </div>
-                            <ul class="list-none p-0 m-0 overflow-hidden">
-                                <li>
-                                    <a routerLink="/adashboard"  pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-                                        <i class="pi pi-home mr-2"></i>
-                                        <span class="font-medium">Dashboard</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a routerLink="manage-category" pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-                                        <i class="pi pi-book mr-2"></i>
-                                        <span class="font-medium">Room Categories</span>
-                                    </a>
-                                </li>
-                                
-                                <li>
-                                    <a routerLink="manage-furniture" pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-                                        <i class="pi pi-cart-arrow-down mr-2"></i>
-                                        <span class="font-medium">Furnitures</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-                                        <i class="pi pi-warehouse mr-2"></i>
-                                        <span class="font-medium">Rooms</span>
-                                        <!-- <span class="inline-flex align-items-center justify-content-center ml-auto bg-primary border-circle" style="min-width: 1.5rem; height: 1.5rem">3</span> -->
-                                    </a>
-                                </li>
-                                <li>
-                                    <a routerLink="manage-service" pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-                                        <i class="pi pi-shopping-bag mr-2"></i>
-                                        <span class="font-medium">Services</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-                                        <i class="pi pi-box mr-2"></i>
-                                        <span class="font-medium">Orders</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        pRipple
-                                        pStyleClass="@next"
-                                        enterFromClass="hidden"
-                                        enterActiveClass="slidedown"
-                                        leaveToClass="hidden"
-                                        leaveActiveClass="slideup"
-                                        class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple"
-                                    >
-                                        <i class="pi pi-chart-line mr-2"></i>
-                                        <span class="font-medium">Reports</span>
-                                        <i class="pi pi-chevron-down ml-auto"></i>
-                                    </a>
-                                    <ul class="list-none py-0 pl-3 pr-0 m-0 hidden overflow-y-hidden transition-all transition-duration-400 transition-ease-in-out">
-                                        <li>
-                                            <a
-                                                pRipple
-                                                pStyleClass="@next"
-                                                enterFromClass="hidden"
-                                                enterActiveClass="slidedown"
-                                                leaveToClass="hidden"
-                                                leaveActiveClass="slideup"
-                                                class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple"
-                                            >
-                                                <i class="pi pi-chart-line mr-2"></i>
-                                                <span class="font-medium">Invoice</span>
-                                                <i class="pi pi-chevron-down ml-auto"></i>
-                                            </a>
-                                            <ul class="list-none py-0 pl-3 pr-0 m-0 hidden overflow-y-hidden transition-all transition-duration-400 transition-ease-in-out">
-                                                <li>
-                                                    <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-                                                        <i class="pi pi-table mr-2"></i>
-                                                        <span class="font-medium">View</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-                                                        <i class="pi pi-search mr-2"></i>
-                                                        <span class="font-medium">Search</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-                                                <i class="pi pi-chart-line mr-2"></i>
-                                                <span class="font-medium">Expenses</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="list-none p-3 m-0">
-                        <li>
-                            <div
-                                pRipple
-                                pStyleClass="@next"
-                                enterFromClass="hidden"
-                                enterActiveClass="slidedown"
-                                leaveToClass="hidden"
-                                leaveActiveClass="slideup"
-                                class="p-3 flex align-items-center justify-content-between text-600 cursor-pointer p-ripple"
-                            >
-                                <span class="font-medium">APPLICATION</span>
-                                <i class="pi pi-chevron-down"></i>
-                            </div>
-                            <ul class="list-none p-0 m-0 overflow-hidden">
-                                <li>
-                                    <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-                                        <i class="pi pi-folder mr-2"></i>
-                                        <span class="font-medium">Projects</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-                                        <i class="pi pi-chart-bar mr-2"></i>
-                                        <span class="font-medium">Performance</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-                                        <i class="pi pi-cog mr-2"></i>
-                                        <span class="font-medium">Settings</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div class="mt-auto">
-                    <hr class="mb-3 mx-3 border-top-1 border-none surface-border" />
-                    <a pRipple class="m-3 flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-                        <p-avatar image="{{imgPath}}" shape="circle" />
-                        <span class="font-bold">{{username}}</span>
-                    </a>
-                </div>
-            </div>
+            </a>
+        </li>
+    </ul>
+</p-sidebar>
+
+<div class="p-sidebar-content" 
+    [ngClass]="{'p-sidebar-content-overlay': drawerVisible}">
+    <ng-container>
+        <button class="my-3 ms-4 p-button p-component p-button-icon-only rounded" *ngIf="!drawerVisible; else closed" pTooltip="Open menu" (click)="drawerVisible = true">
+            <span class="p-button-icon pi pi-chevron-right"></span>
+        </button>
+        
+        <ng-template #closed>
+            <button class="my-3 ms-4 p-button p-component p-button-icon-only" pTooltip="Close menu" (click)="drawerVisible = false">
+                <span class="p-button-icon pi pi-chevron-left"></span>
+            </button>
         </ng-template>
-    </p-sidebar>
-    <p-button (click)="sidebarVisible = true" icon="pi pi-arrow-right"></p-button>
-    </div>
+        <router-outlet></router-outlet>
+    </ng-container>
+</div>

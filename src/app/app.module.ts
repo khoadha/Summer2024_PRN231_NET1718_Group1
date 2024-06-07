@@ -57,6 +57,8 @@ import { AdminRoomCategoryComponent } from './pages/admin-dashboard/admin-room-c
 import { AdminFurnitureComponent } from './pages/admin-dashboard/admin-furniture/admin-furniture.component';
 import { AdminServiceComponent } from './pages/admin-dashboard/admin-service/admin-service.component';
 import { AdminRoomComponent } from './pages/admin-dashboard/admin-room/admin-room.component';
+import { AdminHomeComponent } from './pages/admin-dashboard/admin-home/admin-home.component';
+import { TooltipModule } from 'primeng/tooltip';
 @NgModule({
   imports: [
     BrowserModule,
@@ -87,6 +89,7 @@ import { AdminRoomComponent } from './pages/admin-dashboard/admin-room/admin-roo
     DropdownModule,
     TabViewModule,
     DialogModule,
+    TooltipModule,
   ],
   declarations: [
     AppComponent,
@@ -117,7 +120,8 @@ import { AdminRoomComponent } from './pages/admin-dashboard/admin-room/admin-roo
     AdminRoomCategoryComponent,
     AdminFurnitureComponent,
     AdminServiceComponent,
-    AdminRoomComponent
+    AdminRoomComponent,
+    AdminHomeComponent
   ],
   providers: [
     {

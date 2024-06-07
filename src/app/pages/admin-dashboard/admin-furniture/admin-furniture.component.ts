@@ -9,7 +9,7 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./admin-furniture.component.css']
 })
 export class AdminFurnitureComponent implements OnInit {
-  furnitureData!: Furniture[];
+  furnitureData: Furniture[] = [];
   showCreateModal = false;
   newFurniture: Furniture = { name: '', description:'',cost:0 };
 
@@ -31,9 +31,22 @@ export class AdminFurnitureComponent implements OnInit {
       description: this.newFurniture.description,
       cost: this.newFurniture.cost.toString()
     };
-    this.furnitureService.addFurnitures(furnitureDto).subscribe();
-    this.showCreateModal = false;
-    this.messageService.add({severity:'success', summary:'Success', detail:'Created successfully!'});
-    this.initFurniture();
+    this.furnitureService.addFurnitures(furnitureDto).subscribe({
+      next: (res) =>{
+        this.showCreateModal = false;
+        this.messageService.add({severity:'success', summary:'Success', detail:'Created successfully!'});
+        this.initFurniture();
+      },
+      error: (err) =>{
+        this.showErrorMessage(err);
+      }
+    });   
+  }
+
+  showErrorMessage(err: any) {
+    if (err && err.error && err.error.errors && err.error.errors.length > 0) {
+      const errorMessage = err.error.errors.join(', ');
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: errorMessage });
+    }
   }
 }
