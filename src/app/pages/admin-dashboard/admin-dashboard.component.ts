@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { IsActiveMatchOptions, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { Sidebar } from 'primeng/sidebar';
@@ -10,12 +10,12 @@ import { UserStoreService } from 'src/app/core/services/user-store.service';
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.css'],
 })
-export class AdminDashboardComponent {
+export class AdminDashboardComponent implements OnInit{
   public username!: string;
   public role!: string;
   imgPath!: string;
 
-  drawerVisible = true;
+  drawerVisible!: boolean;
   items: MenuItem[] = [
     { name: 'Dashboard', url: '/adashboard', icon: 'pi-home' },
     { name: 'Room Category', url: '/adashboard/manage-room-category', icon: 'pi-book' },
@@ -26,9 +26,11 @@ export class AdminDashboardComponent {
     { name: 'Transaction', url: '/adashboard/#', icon: 'pi-credit-card' },
   ];
 
-  sidebarVisible: boolean = false;
-
   constructor(private router: Router, private auth: AuthService, private userStore: UserStoreService) {
+  }
+
+  ngOnInit(): void {
+    this.drawerVisible = true;
   }
 
   isLinkActive(url: string): boolean {

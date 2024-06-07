@@ -74,17 +74,24 @@ export class AdminRoomComponent implements OnInit {
       }
     }
 
-    this.roomService.addRoom(formData).subscribe(() => {
-      this.showCreateModal = false;
-      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Room created successfully!' });
-      this.initRooms();
-      this.clearForm();
+    this.roomService.addRoom(formData).subscribe({
+      next: (res) =>{
+        this.showCreateModal = false;
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Created successfully!' });
+        this.initRooms();
+        this.clearForm();
+      },
+      error: (err) =>{
+        this.showErrorMessage(err);
+      }
     });
   }
+
   clearForm() {
     this.newRoom = { id:0, name:'', roomDescription:'', location: '', roomSize: 0, roomArea: 0, costPerDay: 0, categoryId: 0, isAvailable: false, roomFurniture:[], roomImages:[] };
     this.roomImages = [];
   }
+  
   openAddFurnitureModal(room: Room) {
     this.selectedRoom = room;
     this.showAddFurnitureModal = true;
@@ -123,5 +130,12 @@ export class AdminRoomComponent implements OnInit {
       this.selectedRoom = null;
       this.initRooms(); // Refresh room data
     });
+  }
+
+  showErrorMessage(err: any) {
+    if (err && err.error && err.error.errors && err.error.errors.length > 0) {
+      const errorMessage = err.error.errors.join(', ');
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: errorMessage });
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { RoomCategory } from 'src/app/core/models/room';
@@ -13,7 +13,7 @@ export class AdminRoomCategoryComponent implements OnInit {
   showModal = false;
   newCategoryName = '';
   constructor(private categoryService: RoomCategoryService,
-    private route: ActivatedRoute, private cdr: ChangeDetectorRef, private messageService: MessageService) { }
+    private route: ActivatedRoute, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.initCategory();
@@ -29,10 +29,22 @@ export class AdminRoomCategoryComponent implements OnInit {
     const categoryDto: any = {
       categoryName: this.newCategoryName
     };
-    this.categoryService.addRoomCategories(categoryDto).subscribe();
-    this.initCategory();
-    this.showModal = false;
-    this.messageService.add({severity:'success', summary:'Success', detail:'Created successfully!'});
-    this.cdr.detectChanges();
+    this.categoryService.addRoomCategories(categoryDto).subscribe({
+      next: (res) =>{
+        this.initCategory();
+        this.showModal = false;
+        this.messageService.add({severity:'success', summary:'Success', detail:'Created successfully!'});
+      },
+      error: (err) =>{
+        this.showErrorMessage(err);
+      }
+    });    
+  }
+
+  showErrorMessage(err: any) {
+    if (err && err.error && err.error.errors && err.error.errors.length > 0) {
+      const errorMessage = err.error.errors.join(', ');
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: errorMessage });
+    }
   }
 }

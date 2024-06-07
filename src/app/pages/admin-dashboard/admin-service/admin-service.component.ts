@@ -9,7 +9,7 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./admin-service.component.css']
 })
 export class AdminServiceComponent implements OnInit {
-  serviceData!: Service[];
+  serviceData: Service[] = [];
   showCreateModal = false;
   newService: Service = { name: '', description: '', servicePrice: [] };
 
@@ -31,9 +31,22 @@ export class AdminServiceComponent implements OnInit {
       description: this.newService.description,
     };
 
-    this.serviceService.addService(serviceDto).subscribe();
-    this.initServices();
-    this.showCreateModal = false;
-    this.messageService.add({severity:'success', summary:'Success', detail:'Created successfully!'});
+    this.serviceService.addService(serviceDto).subscribe({
+      next: (res) =>{
+        this.initServices();
+        this.showCreateModal = false;
+        this.messageService.add({severity:'success', summary:'Success', detail:'Created successfully!'});
+      },
+      error: (err) =>{
+        this.showErrorMessage(err);
+      }
+    });
+  }
+
+  showErrorMessage(err: any) {
+    if (err && err.error && err.error.errors && err.error.errors.length > 0) {
+      const errorMessage = err.error.errors.join(', ');
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: errorMessage });
+    }
   }
 }
