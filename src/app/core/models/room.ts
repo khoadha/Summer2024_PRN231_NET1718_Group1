@@ -1,5 +1,5 @@
 export interface Room {
-  id:number;
+  id: number;
   name: string;
   roomSize: number;
   roomDescription: string;
@@ -15,7 +15,7 @@ export interface Room {
   categoryName?: string;
 }
 export interface RoomFurniture {
-  id:number;
+  id: number;
   furnitureId?: number;
   quantity: number;
   furniture?: Furniture;
@@ -31,7 +31,7 @@ export interface Furniture {
 }
 export interface RoomImage {
   id?: number;
-  url: string;
+  imgPath: string;
 }
 
 export interface RoomCategory {
