@@ -63,3 +63,53 @@
 .contract-checkbox {
   margin-right: 1rem;
 }
+.loading-spinner {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  border-top-color: #333;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.form-label {
+  font-weight: bold;
+}
+.form-group {
+  margin-bottom: 20px;
+}
+.form-control-static {
+  border: none;
+  background-color: transparent;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+.list-group-item {
+  border: none;
+  background-color: transparent;
+}
+.btn-add-occupant {
+  margin-top: 10px;
+}
+#rate-text {
+  font-weight: bold;
+}
+#fee-text {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.form-container {
+    border: 1px solid #000;
+    padding: 20px;
+    border-radius: 10px;
+}

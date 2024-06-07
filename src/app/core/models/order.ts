@@ -5,7 +5,16 @@ export interface CreateOrderDto {
     guests: any[];
     startDate: Date | null;
     endDate: Date | null;
-    roomServices: ServiceWithPrice[];
+    roomServices: RoomServiceDto[];
+}
+export interface ServiceWithPrice {
+  id?: number;
+  name: string;
+  description: string;
+  servicePriceNumber: number;
+}
+export interface RoomServiceDto {
+  serviceId?: number;
 }
 export interface GuestDto {
   id?: number;
@@ -19,12 +28,6 @@ export interface Service {
   name: string;
   description: string;
   servicePrice?: ServicePrice[];
-}
-export interface ServiceWithPrice {
-  id?: number;
-  name: string;
-  description: string;
-  servicePriceNumber: number;
 }
 export interface ServicePrice {
   id?: number;
