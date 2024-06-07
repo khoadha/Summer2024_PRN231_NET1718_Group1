@@ -8,6 +8,7 @@ import { RoomService } from 'src/app/core/services/room.service';
 import { Room } from 'src/app/core/models/room';
 import { RoomServiceService } from 'src/app/core/services/room-service.service';
 import { MessageService } from 'primeng/api';
+import { CalendarModule } from 'primeng/calendar';
 
 @Component({
   selector: 'app-book-room',
@@ -79,9 +80,30 @@ export class BookRoomComponent implements OnInit {
       ...serviceControls
     }, { validators: this.dateRangeValidator() });
   }
+  isEmailValid(): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    var isEmailValid = false;
+    if (this.newOccupant.email) {
+      isEmailValid = emailRegex.test(this.newOccupant.email);
+    }
+    return isEmailValid;
+  }
+  isBirthdayValid(): boolean {
+    const today = new Date();
+    var isValid = false;
+    if (this.newOccupant.birthday) {
+      const selectedDate = new Date(this.newOccupant.birthday);
+      isValid = selectedDate <= today;
+    }
+    return isValid;
+  }
+
 
   isOccupantValid(): boolean {
-    return !!this.newOccupant.fullname && !!this.newOccupant.email && !!this.newOccupant.birthday && this.occupants.length < this.room.roomSize;
+    var isEmailValid = this.isEmailValid();
+    var isBirthdayValid = this.isBirthdayValid();
+
+    return !!this.newOccupant.fullname && isEmailValid && isBirthdayValid && !!this.newOccupant.birthday && this.occupants.length < this.room.roomSize;
   }
 
 
@@ -105,7 +127,7 @@ export class BookRoomComponent implements OnInit {
     return (formGroup: AbstractControl): { [key: string]: any } | null => {
       const startDate = formGroup.get('startDate')?.value;
       const endDate = formGroup.get('endDate')?.value;
-      return new Date(startDate) < new Date(endDate) ? null : { 'dateRangeInvalid': true };
+      return new Date(startDate) <= new Date(endDate) ? null : { 'dateRangeInvalid': true };
     };
   }
 
@@ -154,7 +176,7 @@ export class BookRoomComponent implements OnInit {
     let totalFee = baseFee;
     this.allServices.forEach(service => {
       const serviceControl = this.bookingForm.get(service.name);
-      
+
       if (serviceControl && serviceControl.value) {
         totalFee += service.servicePriceNumber;
       }
