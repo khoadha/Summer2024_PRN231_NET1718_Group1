@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { OrderService } from 'src/app/core/services/order.service';
 import { CreateOrderDto, GuestDto, RoomServiceDto, Service, ServiceWithPrice } from 'src/app/core/models/order';
@@ -40,6 +40,7 @@ export class BookRoomComponent implements OnInit {
       await this.initServicesAndForm();
       await this.initRoom();
       this.loading = false;
+      this.updateTotalFee();
     } catch (error) {
       console.error("Error during initialization:", error);
     }
@@ -60,9 +61,6 @@ export class BookRoomComponent implements OnInit {
       this.initForm();
     }
   }
-  ngAfterViewInit(): void {
-    this.updateTotalFee();
-  }
   initForm() {
     const serviceControls: { [key: string]: any } = {};
     this.allServices.forEach(service => {
@@ -82,7 +80,7 @@ export class BookRoomComponent implements OnInit {
   }
 
   isOccupantValid(): boolean {
-    return !!this.newOccupant.fullname && !!this.newOccupant.email && !!this.newOccupant.birthday;
+    return !!this.newOccupant.fullname && !!this.newOccupant.email && !!this.newOccupant.birthday && this.occupants.length < this.room.roomSize;
   }
 
 

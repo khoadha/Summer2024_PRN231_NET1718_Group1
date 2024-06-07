@@ -31,7 +31,7 @@ export interface Furniture {
 }
 export interface RoomImage {
   id?: number;
-  url: string;
+  imgPath: string;
 }
 
 export interface RoomCategory {
