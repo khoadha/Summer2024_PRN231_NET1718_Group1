@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environment/environment';
-import { Service, ServicePrice } from '../models/order';
+import { Service, ServicePrice, ServiceWithPrice } from '../models/order';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,9 @@ export class RoomServiceService {
     return this.http.get<Service[]>(`${this.APIUrl}/get-service/`);
   }
 
+  getServiceWithNewestPrice(): Observable<ServiceWithPrice[]> {
+    return this.http.get<ServiceWithPrice[]>(`${this.APIUrl}/get-service-newest-price/`);
+  }
   addService(formData: any) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -29,7 +32,7 @@ export class RoomServiceService {
   getServicePrice(id: number): Observable<ServicePrice> {
     return this.http.get<ServicePrice>(`${this.APIUrl}/prices/get-price/`);
   }
-  addServicePrice(formData: FormData) {
+  addServicePrice(formData: any) {
     const httpOptions = {
       headers: new HttpHeaders({
         Accept: 'application/json',
