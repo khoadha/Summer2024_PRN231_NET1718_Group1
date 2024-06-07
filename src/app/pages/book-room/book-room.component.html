@@ -1,88 +1,197 @@
-
-<section class="intro-single text-center">
-    <h2>{{ room.name }}</h2>
+<p-toast />
+<section *ngIf="loading" class="intro-single text-center">
+    <div class="loading-spinner"></div>
 </section>
-<div class="container">
-    <div class="form-group">
-    <label>Room Details</label>
-    <p class="form-control-static">{{ room.roomDescription }}</p>
-    </div>
-    <form [formGroup]="bookingForm" (ngSubmit)="submitForm()" class="container">
+<div *ngIf="!loading">
+    <section class="intro-single text-center">
+        <h2>{{ room.name }}</h2>
+    </section>
+    <div class="container form-container">
         <div class="form-group">
-        <label>Furnitures</label>
-        <ul class="list-group">
-            <li class="list-group-item" *ngFor="let furniture of room.roomFurniture">{{ furniture.furnitureId }} - {{ furniture.quantity }}</li>
-        </ul>
+            <label>Room Details</label>
+            <p class="form-control-static">Room Area: {{ room.roomArea }}</p>
+            <p class="form-control-static">Room for: {{ room.roomSize }}</p>
+            <p class="form-control-static">Description: {{ room.roomDescription }}</p>
         </div>
-        <div class="form-group">
-            <label>Start Date</label>
-            <input class="form-control" type="date" formControlName="startDate" (change)="updateTotalFee()">
-        </div>
+        <form #form="ngForm" [formGroup]="bookingForm" (ngSubmit)="submitForm()" class="container">
+            <div class="form-group">
+                <label>Furnitures</label>
+                <ul class="list-group">
+                    <li class="list-group-item" *ngFor="let furniture of room.roomFurniture">{{ furniture.furnitureName
+                        }} -
+                        {{ furniture.quantity }}</li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <label>Start Date</label>
+                <input class="form-control" [min]="today" type="date" formControlName="startDate"
+                    (change)="updateTotalFee()">
+            </div>
 
-        <div class="form-group">
-            <label>End Date</label>
-            <input class="form-control" type="date" formControlName="endDate" (change)="updateTotalFee()">
-        </div>
-
-        <div class="form-group">
-            <label>Services</label>
-            <div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" formControlName="wifi" (change)="updateTotalFee()">
-                    <label class="form-check-label">Wifi</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" formControlName="cleaning" (change)="updateTotalFee()">
-                    <label class="form-check-label">Cleaning</label>
+            <div class="form-group">
+                <label>End Date</label>
+                <input class="form-control" [min]="today" type="date" formControlName="endDate"
+                    (change)="updateTotalFee()">
+            </div>
+            <div class="form-group">
+                <label>Services</label>
+                <div>
+                    <div class="form-check" *ngFor="let service of allServices">
+                        <input class="form-check-input" type="checkbox" [formControlName]="service.name"
+                            (change)="updateTotalFee()">
+                        <label class="form-check-label">{{ service.name }} - ${{ service.servicePriceNumber}}</label>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label>Occupants</label>
-            <div class="row">
-                <div class="col">
-                    <input class="form-control" type="text" [(ngModel)]="newOccupant.fullname" [ngModelOptions]="{standalone: true}" placeholder="Full Name">
-                </div>
-                <div class="col">
-                    <input class="form-control" type="email" [(ngModel)]="newOccupant.email" [ngModelOptions]="{standalone: true}" placeholder="Email">
-                </div>
-                <div class="col">
-                    <input class="form-control" type="date" [(ngModel)]="newOccupant.birthday" [ngModelOptions]="{standalone: true}">
-                </div>
-                <div class="col">
-                    <button type="button" class="btn btn-primary" (click)="addOccupant()" [disabled]="!isOccupantValid()">Add Occupant</button>
-                </div>
-            </div>
-            <div formArrayName="occupants" *ngIf="occupants.length > 0" class="mt-2">
+            <div class="form-group">
+                <label>Occupants</label>
                 <div class="row">
-                    <div class="col"><strong>Full Name</strong></div>
-                    <div class="col"><strong>Email</strong></div>
-                    <div class="col"><strong>Birthday</strong></div>
-                    <div class="col"><strong>Action</strong></div>
+                    <div class="col">
+                        <input class="form-control" type="text" [(ngModel)]="newOccupant.fullname"
+                            [ngModelOptions]="{standalone: true}" placeholder="Full Name">
+                    </div>
+                    <div class="col">
+                        <input class="form-control" type="email" [(ngModel)]="newOccupant.email"
+                            [ngModelOptions]="{standalone: true}" placeholder="Email">
+                    </div>
+                    <div class="col">
+                        <input class="form-control" type="date" [(ngModel)]="newOccupant.birthday" [max]="today"
+                            [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-primary" (click)="addOccupant()"
+                            [disabled]="!isOccupantValid()">Add Occupant</button>
+                    </div>
                 </div>
-                <div *ngFor="let occupant of occupants.controls; let i=index" class="row">
-                    <div [formGroupName]="i" class="row">
-                        <div class="col">{{ occupant.get('fullname')?.value }}</div>
-                        <div class="col">{{ occupant.get('email')?.value }}</div>
-                        <div class="col">{{ occupant.get('birthday')?.value }}</div>
-                        <div class="col">
-                            <button type="button" class="btn btn-danger" (click)="removeOccupant(i)">Remove</button>
+                <div formArrayName="occupants" *ngIf="occupants.length > 0" class="mt-2">
+                    <div class="row">
+                        <div class="col"><strong>Full Name</strong></div>
+                        <div class="col"><strong>Email</strong></div>
+                        <div class="col"><strong>Birthday</strong></div>
+                        <div class="col"><strong>Action</strong></div>
+                    </div>
+                    <div *ngFor="let occupant of occupants.controls; let i=index" class="row">
+                        <div [formGroupName]="i" class="row">
+                            <div class="col">{{ occupant.get('fullname')?.value }}</div>
+                            <div class="col">{{ occupant.get('email')?.value }}</div>
+                            <div class="col">{{ occupant.get('birthday')?.value }}</div>
+                            <div class="col">
+                                <button type="button" class="btn btn-danger" (click)="removeOccupant(i)">Remove</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <p style="color: green;">Total Fee: $<span id="fee-text" #feeText>0</span></p>
-        </div>
-        
-        <div class="form-group">
-        <button type="submit" class="btn btn-success" [disabled]="!bookingForm.valid">Confirm Book</button>
-        </div>
-    </form>
-</div>
+            <div class="form-group">
+                <p style="color: rgb(0, 128, 128);">Rate per day: $<span id="rate-text"> {{room.costPerDay}}</span></p>
+            </div>
+            <div class="form-group">
+                <p style="color: rgb(0, 128, 0); font-size: 1.1rem;">Total Fee: $<span id="fee-text" #feeText>0</span>
+                </p>
+            </div>
 
-<p-dialog header="Order Created Successfully" [(visible)]="displayDialog" [modal]="true" [closable]="false">
-    <p>Order has been created successfully!</p>
-    <button type="button" class="btn btn-primary" (click)="closeDialogAndReturn()">Close</button>
-</p-dialog>
+            <div class="d-flex align-items-center mb-3">
+                <button pButton type="button" label="Show Contract" class="btn btn-primary ms-3"
+                    [disabled]="!bookingForm.valid" (click)="openContractModal()"></button>
+            </div>
+        </form>
+    </div>
+
+    <p-dialog header="Order Created Successfully" [(visible)]="displayDialog" [modal]="true" [closable]="false">
+        <p>Order has been created successfully!</p>
+        <button type="button" class="btn btn-primary" (click)="closeDialogAndReturn()">Close</button>
+    </p-dialog>
+
+    <p-dialog header="Display Contract" [(visible)]="showContract" [modal]="true">
+        <div class="container mt-5">
+            <div class="contract">
+                <h2>Hosteland Booking Contract</h2>
+                <p>This contract is made and entered into as of {{today}} by and between:</p>
+                <ul>
+                    <li><strong>Hosteland</strong> ("Hostel")</li>
+                    <li><strong>{{ username }}</strong> ("Guest")</li>
+                </ul>
+                <p><strong>Witnesseth:</strong></p>
+                <p>WHEREAS, Guest desires to reserve accommodations at Hostel; and</p>
+                <p>WHEREAS, Hostel desires to provide such accommodations to Guest subject to the terms and conditions
+                    set
+                    forth herein.</p>
+                <p><strong>NOW, THEREFORE, in consideration of the mutual covenants contained herein, the parties agree
+                        as
+                        follows:</strong></p>
+
+                <section class="mt-3">
+                    <h4>1. Room Details and Cost</h4>
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th>Room Name</th>
+                                <td>{{ room.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Room Rate</th>
+                                <td>{{ room.costPerDay }}</td>
+                            </tr>
+                            <tr>
+                                <th>Number of Guests</th>
+                                <td>{{ occupants.length }}</td>
+                            </tr>
+                            <tr>
+                                <th>Total Cost</th>
+                                <td>{{ calculateTotalFee() }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section class="mt-3">
+                    <h4>2. Dates of Stay</h4>
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th>Arrival Date</th>
+                                <td>{{ bookingForm.get('startDate')?.value }}</td>
+                            </tr>
+                            <tr>
+                                <th>Departure Date</th>
+                                <td>{{ bookingForm.get('endDate')?.value }}</td>
+                            </tr>
+                            <tr>
+                                <th>Number of Nights</th>
+                                <td>{{this.calculateDays()}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section class="mt-3">
+                    <h4>3. Services Booked</h4>
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th>Service Name</th>
+                                <th>Service Price</th>
+                            </tr>
+                            <tr *ngFor="let service of selectedServices">
+                                <td>{{ service.name }}</td>
+                                <td>${{ service.servicePriceNumber }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <p><strong>IN WITNESS WHEREOF, the parties have executed this Contract as of the date first written
+                        above.</strong></p>
+                <br>
+                <p><strong>Hosteland</strong></p>
+                <p>By: Do Hoang Anh Khoa</p>
+                <p>Title: CEO</p>
+                <br>
+                <p><strong>Guest:</strong></p>
+                <p></p>
+                <p>Signature: ________________________</p>
+            </div>
+            <button pButton type="button" label="Sign Contract and Confirm Book" (click)="submitForm()"></button>
+        </div>
+    </p-dialog>
+</div>

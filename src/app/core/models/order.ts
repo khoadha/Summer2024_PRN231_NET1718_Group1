@@ -1,9 +1,20 @@
 export interface CreateOrderDto {
+  roomId: number;
     userId: string | null;
     cost: number;
     guests: any[];
     startDate: Date | null;
     endDate: Date | null;
+    roomServices: RoomServiceDto[];
+}
+export interface ServiceWithPrice {
+  id?: number;
+  name: string;
+  description: string;
+  servicePriceNumber: number;
+}
+export interface RoomServiceDto {
+  serviceId?: number;
 }
 export interface GuestDto {
   id?: number;
