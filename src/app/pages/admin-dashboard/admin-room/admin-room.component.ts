@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RoomService } from 'src/app/core/services/room.service'; // Update import
-import { Furniture, Room, RoomCategory, RoomFurniture } from 'src/app/core/models/room'; // Update import
+import { Room, RoomCategory, RoomFurniture } from 'src/app/core/models/room'; // Update import
 import { MessageService } from 'primeng/api';
 import { RoomCategoryService } from 'src/app/core/services/room-category.service';
 import { FurnitureService } from 'src/app/core/services/furniture.service';
@@ -88,7 +88,6 @@ export class AdminRoomComponent implements OnInit {
   openAddFurnitureModal(room: Room) {
     this.selectedRoom = room;
     this.showAddFurnitureModal = true;
-    // Initialize quantity for each furniture in the room
     this.allFurnitures.forEach(furniture => {
       const existingFurniture = room.roomFurniture.find(rf => rf.furnitureId === furniture.furnitureId);
       if (existingFurniture) {
@@ -104,8 +103,6 @@ export class AdminRoomComponent implements OnInit {
       roomId: this.selectedRoom!.id,
       furnitures: [] as { furnitureId: number, quantity: number, furnitureName?: string }[]
     };
-  
-    // Populate the furnitures array in the request body
     this.allFurnitures.forEach(furniture => {
       if (furniture.quantity > 0) {
         requestBody.furnitures.push({
@@ -115,13 +112,12 @@ export class AdminRoomComponent implements OnInit {
         });
       }
     });
-  
-    // Call API to add furnitures to the room
+
     this.roomService.addFurnitureToRoom(requestBody).subscribe(() => {
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Furniture added successfully.' });
       this.showAddFurnitureModal = false;
       this.selectedRoom = null;
-      this.initRooms(); // Refresh room data
+      this.initRooms();
     });
   }
 }

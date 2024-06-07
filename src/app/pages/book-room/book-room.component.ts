@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, AfterViewInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { OrderService } from 'src/app/core/services/order.service';
-import { CreateOrderDto, GuestDto } from 'src/app/core/models/order';
+import { CreateOrderDto, GuestDto, Service, ServiceWithPrice } from 'src/app/core/models/order';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoomService } from 'src/app/core/services/room.service';
 import { Room } from 'src/app/core/models/room';
+import { RoomServiceService } from 'src/app/core/services/room-service.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-book-room',
@@ -16,41 +18,59 @@ export class BookRoomComponent implements OnInit {
   displayDialog: boolean = false;
   room!: Room;
   bookingForm!: FormGroup;
-  newOccupant: GuestDto= { fullname: '', email: '', birthday: undefined };
+  newOccupant: GuestDto = { fullname: '', email: '', birthday: undefined };
+  allServices: ServiceWithPrice[] = [];
+  today: string;
   @ViewChild('feeText') feeText!: ElementRef;
 
   constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef,
-    private orderService: OrderService,private authService: AuthService,
+    private orderService: OrderService, private authService: AuthService,
     private router: Router, private roomService: RoomService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute, private serviceService: RoomServiceService,private messageService: MessageService) {
+      const todayDate = new Date();
+      this.today = todayDate.toISOString().split('T')[0]; // format the date to 'YYYY-MM-DD' 
+      }
 
   ngOnInit(): void {
+  
     this.initRoom();
-    this.initForm();
-    
+    this.initServicesAndForm();
+
   }
-  initRoom(){
+  initRoom() {
     this.route.paramMap.subscribe(params => {
       const idFromRoute = params.get('id')!;
       const orderId = parseInt(idFromRoute, 10);
       this.roomService.getRoomById(orderId).subscribe(res => {
-        this.room = res.data;
+        this.room = res;
       })
     });
   }
   ngAfterViewInit(): void {
     this.updateTotalFee();
   }
+  initServicesAndForm() {
+    this.serviceService.getServiceWithNewestPrice().subscribe(res => {
+      this.allServices = res;
+      this.initForm();
+    })
+  }
   initForm() {
+    const serviceControls: { [key: string]: any } = {};
+    this.allServices.forEach(service => {
+      serviceControls[service.name] = [false];
+    });
+
     this.bookingForm = this.fb.group({
       userId: [''],
       cost: [''],
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
+      startDate: ['', [Validators.required, this.dateValidator()]],
+      endDate: ['', [Validators.required, this.dateValidator()]],
       wifi: [false],
       cleaning: [false],
-      occupants: this.fb.array([], [this.validateOccupants])
-    });
+      occupants: this.fb.array([], [this.validateOccupants]),
+      ...serviceControls
+    }, { validators: this.dateRangeValidator() });
   }
 
   isOccupantValid(): boolean {
@@ -65,7 +85,23 @@ export class BookRoomComponent implements OnInit {
     }
     return null;
   }
-  // Getter for occupants form array
+
+  dateValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const today = new Date();
+      const inputDate = new Date(control.value);
+      return inputDate >= today ? null : { 'dateInvalid': true };
+    };
+  }
+
+  dateRangeValidator(): ValidatorFn {
+    return (formGroup: AbstractControl): { [key: string]: any } | null => {
+      const startDate = formGroup.get('startDate')?.value;
+      const endDate = formGroup.get('endDate')?.value;
+      return new Date(startDate) < new Date(endDate) ? null : { 'dateRangeInvalid': true };
+    };
+  }
+
   get occupants(): FormArray {
     return this.bookingForm.get('occupants') as FormArray;
   }
@@ -93,18 +129,16 @@ export class BookRoomComponent implements OnInit {
   calculateTotalFee() {
     const baseFee = 50;
     let totalFee = baseFee;
-  
-    if (this.bookingForm.get('wifi')?.value) {
-      totalFee += 50;
-    }
-  
-    if (this.bookingForm.get('cleaning')?.value) {
-      totalFee += 50;
-    }
-  
+    this.allServices.forEach(service => {
+      const serviceControl = this.bookingForm.get(service.name);
+      if (serviceControl && serviceControl.value) {
+        totalFee += service.servicePriceNumber;
+      }
+    });
+
     const startDateString = this.bookingForm.get('startDate')?.value;
     const endDateString = this.bookingForm.get('endDate')?.value;
-  
+
     if (startDateString && endDateString) {
       const startDate = new Date(startDateString);
       const endDate = new Date(endDateString);
@@ -112,50 +146,59 @@ export class BookRoomComponent implements OnInit {
       totalFee *= totalDays;
     }
     return totalFee;
-  }  
+  }
 
   updateTotalFee() {
     const totalFee = this.calculateTotalFee();
-    if(this.feeText){
+    if (this.feeText) {
       this.feeText.nativeElement.textContent = totalFee;
     }
   }
-
   submitForm() {
     if (this.bookingForm.valid) {
+      
       const userId = this.authService.getUserIdFromToken();
-      // Extracting guests from the form
       const guests = this.bookingForm.get('occupants')?.value.map((occupant: any) => ({
         fullname: occupant.fullname,
         email: occupant.email,
         birthday: occupant.birthday
       }));
-  
+
+      const selectedServices = this.allServices.filter(service => this.bookingForm.get(service.name)?.value);
+
       const orderDto: CreateOrderDto = {
         userId: userId,
+        roomId: this.room.id,
         startDate: this.bookingForm.get('startDate')!.value,
         endDate: this.bookingForm.get('endDate')!.value,
         cost: this.calculateTotalFee(),
-        guests: guests // Assigning the extracted guests array
+        guests: guests,
+        roomServices: selectedServices 
       };
-  
-      console.log("Request payload:", orderDto);
-  
-      this.orderService.createOrder(orderDto).subscribe(
-        response => {
-          console.log('Order created successfully:', response);
-          this.displayDialog = true; // Show the dialog
+
+      this.orderService.createOrder(orderDto).subscribe({
+        next: (res) =>{
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Created order successfully.' });
+          setTimeout(() => {
+            this.closeDialogAndReturn();
+          }, 1000);
         },
-        error => {
-          console.error('Error creating order:', error);
-        }
+        error: (err) => {
+          this.showErrorMessage(err);   
+        }}
       );
     }
   }
 
-  closeDialogAndReturn() {
-    this.displayDialog = false; // Close the dialog
-    this.router.navigate(['/']); // Navigate to the home page
+  showErrorMessage(err: any) {
+    if (err && err.error && err.error.errors && err.error.errors.length > 0) {
+      const errorMessage = err.error.errors.join(', ');
+      this.messageService.add({ severity: 'error', summary: 'Order Error', detail: errorMessage });
+    }
   }
-      
+  closeDialogAndReturn() {
+    this.displayDialog = false;
+    this.router.navigate(['/']);
+  }
+
 }
