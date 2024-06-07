@@ -25,6 +25,7 @@ import { AdminOrderComponent } from './pages/admin-dashboard/admin-order/admin-o
 import { RoomPageComponent } from './pages/room-page/room-page.component';
 import { RoomDetailComponent } from './pages/room-detail/room-detail.component';
 import { ManageOrderComponent } from './pages/manage-order/manage-order.component';
+import { OrderDetailComponent } from './pages/order-detail/order-detail.component';
 const routes: Routes = [
   {
     path: 'home',
@@ -95,6 +96,11 @@ const routes: Routes = [
     path: 'room-detail/:id',
     component: RoomDetailComponent,
     title: 'Room Detail',
+  },
+  {
+    path: 'order-detail/:id',
+    component: OrderDetailComponent,
+    title: 'Order Detail',
   },
   {
     path: 'book-room/:id',
