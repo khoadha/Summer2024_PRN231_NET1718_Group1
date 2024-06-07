@@ -9,7 +9,7 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./admin-service.component.css']
 })
 export class AdminServiceComponent implements OnInit {
-  serviceData: Service[] = [];
+  serviceData!: ServiceWithPrice[];
   showCreateModal = false;
   showPriceModal = false;
   newService: ServiceWithPrice = { name: '', description: '', servicePriceNumber:0 };
@@ -50,5 +50,29 @@ export class AdminServiceComponent implements OnInit {
       const errorMessage = err.error.errors.join(', ');
       this.messageService.add({ severity: 'error', summary: 'Error', detail: errorMessage });
     }
+  }
+  openPriceModal(service: ServiceWithPrice) {
+    this.selectedService = service;
+    this.showPriceModal = true;
+  }
+  createServicePrice() {
+    const requestBody = {
+      serviceId: this.selectedService!.id,
+      amount: this.newPrice.amount,
+      startDate: this.newPrice.startDate,
+      endDate: this.newPrice.endDate
+    };
+
+    this.serviceService.addServicePrice(requestBody).subscribe({
+      next: (res) =>{
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Service Price added successfully.' });
+        this.showPriceModal = false;
+        this.selectedService = null;
+        this.initServices();
+      },
+      error: (err) =>{
+        this.showErrorMessage(err);
+      }
+    });
   }
 }
