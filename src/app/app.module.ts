@@ -62,6 +62,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { RoomPageComponent } from './pages/room-page/room-page.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { RoomDetailComponent } from './pages/room-detail/room-detail.component';
+import { AdminOrderComponent } from './pages/admin-dashboard/admin-order/admin-order.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -128,6 +129,8 @@ import { RoomDetailComponent } from './pages/room-detail/room-detail.component';
     AdminHomeComponent,
     RoomPageComponent,
     RoomDetailComponent,
+    AdminHomeComponent,
+    AdminOrderComponent,
   ],
   providers: [
     {

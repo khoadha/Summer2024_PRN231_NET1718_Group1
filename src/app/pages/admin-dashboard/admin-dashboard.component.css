@@ -1,44 +1,91 @@
 table {
-    width: 100%;
-  }
-  
-  .active {
-    background-color: #999b6d;
-  }
-  
-  .active:hover {
-    background-color: #7f8159 !important;
-  }
-  
-  .icon-active {
-    color: white !important;
-  }
-  
-  .text-active {
-    color: white !important;
-  }
-  
-  .list-item:hover {
-    background-color: rgba(80, 80, 80, 0.2);
-  }
-  
-  .spacer {
-    flex: 1 1 auto;
-  }
-  
-  .auth-bg-image {
-    background-color: #999b6d5b;
-    background-size: cover; 
-    background-position: center; 
-    background-repeat: no-repeat;
-    justify-content: center; /* Horizontally center content */
-    align-items: center; /* Vertically center content */
-  }
+  width: 100%;
+}
 
-  ::ng-deep .p-sidebar .p-sidebar-content{
-    padding: 0;
-    line-height: 2.5;
-  }
+.active {
+  background-color: #999b6d;
+}
+
+.active:hover {
+  background-color: #7f8159 !important;
+}
+
+.icon-active {
+  color: white !important;
+}
+
+.text-active {
+  color: white !important;
+}
+
+.list-item:hover {
+  background-color: rgba(80, 80, 80, 0.2);
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.auth-bg-image {
+  background-color: #999b6d5b;
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat;
+  justify-content: center; /* Horizontally center content */
+  align-items: center; /* Vertically center content */
+}
+
+::ng-deep .p-sidebar .p-sidebar-content{
+  padding: 0;
+  line-height: 2.5;
+}
+
+/* admin-dashboard.component.css */
+
+.admin-container {
+  display: flex;
+  transition: all 0.3s ease;
+}
+
+.sidebar-container {
+  width: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.sidebar-container.sidebar-visible {
+  width: 20%; /* Adjust based on your sidebar width */
+}
+
+.content-container {
+  flex-grow: 1;
+  transition: all 0.3s ease;
+  margin-left: 0;
+}
+
+.content-container.content-shift {
+  margin-left: 20%; /* Match this to the sidebar width */
+}
+
+
+/* visibility button */
+.visible-btn {
+  background-color: #999b6d; /* Background color */
+  color: #111; /* Icon color */
+  z-index: 1001;
+}
+
+.visible-btn .p-button-icon {
+  z-index: 1001;
+  border: none;
+}
+
+.visible-btn:hover {
+  background-color: #7f8159; /* Darker shade for hover */
+  color: #fff;
+}
+
+
   
   
   

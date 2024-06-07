@@ -20,6 +20,8 @@ import { AdminFurnitureComponent } from './pages/admin-dashboard/admin-furniture
 import { AdminServiceComponent } from './pages/admin-dashboard/admin-service/admin-service.component';
 import { AdminRoomComponent } from './pages/admin-dashboard/admin-room/admin-room.component';
 import { AdminHomeComponent } from './pages/admin-dashboard/admin-home/admin-home.component';
+import { AdminOrderComponent } from './pages/admin-dashboard/admin-order/admin-order.component';
+
 import { RoomPageComponent } from './pages/room-page/room-page.component';
 import { RoomDetailComponent } from './pages/room-detail/room-detail.component';
 const routes: Routes = [
@@ -133,6 +135,11 @@ const routes: Routes = [
     title: 'Manage Room',
   },
   {
+    path: 'manage-order',
+    component: AdminOrderComponent,
+    title: 'Manage Order',
+  },
+  {
     path: 'adashboard',
     component: AdminDashboardComponent,
     canActivate: [adminGuard],
@@ -154,6 +161,12 @@ const routes: Routes = [
         path: 'manage-service',
         component: AdminServiceComponent,
         title: 'Manage Service',
+        canActivate: [adminGuard],
+      },
+      {
+        path: 'manage-order',
+        component: AdminOrderComponent,
+        title: 'Manage Order',
         canActivate: [adminGuard],
       },
       {

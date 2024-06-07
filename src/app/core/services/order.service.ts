@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environment/environment';
-import { CreateOrderDto } from '../models/order';
+import { CreateOrderDto, GetOrderDto } from '../models/order';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,10 @@ export class OrderService {
   readonly APIUrl = this.baseUrl + "order";
 
   constructor(private http: HttpClient) { }
+
+  getOrders(): Observable<GetOrderDto[]> {
+    return this.http.get<GetOrderDto[]>(`${this.APIUrl}/get-order/`);
+  }
 
   createOrder(orderDto: CreateOrderDto): Observable<any> {
     const httpOptions = {
