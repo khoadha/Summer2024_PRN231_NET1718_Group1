@@ -102,30 +102,6 @@ const routes: Routes = [
     component: ProfileComponent,
     title: 'Manage Profile',
   },
-  
-  //DEBUG
-  {
-    path: 'manage-category',
-    component: AdminRoomCategoryComponent,
-    title: 'Manage Category',
-    //canActivate: [adminGuard],
-  },
-  {
-    path: 'manage-furniture',
-    component: AdminFurnitureComponent,
-    title: 'Manage Furniture',
-    //canActivate: [adminGuard],
-  },
-  {
-    path: 'manage-service',
-    component: AdminServiceComponent,
-    title: 'Manage Service',
-  },
-  {
-    path: 'manage-room',
-    component: AdminRoomComponent,
-    title: 'Manage Room',
-  },
   {
     path: 'adashboard',
     component: AdminDashboardComponent,

@@ -26,7 +26,7 @@
           <div class="card-box-a card-shadow">
 
             <div class="img-box-a">
-              <img [src]="property.image" alt="" class="img-a img-fluid">
+              <img [src]="property.imgPath" alt="" class="img-a img-fluid">
             </div>
 
             <div class="card-overlay">
@@ -34,16 +34,16 @@
 
                 <div class="card-header-a">
                   <h2 class="card-title-a">
-                    <a [routerLink]="['/property-single', property.id]">{{property.title}}</a>
+                    <a [routerLink]="['/property-single', property.id]">{{property.name}}</a>
                   </h2>
                 </div>
                 
                 <div class="card-body-a">
                   <div class="price-box d-flex">
-                    <span class="price-a">{{property.price}}</span>
+                    <span class="price-a">rent | $ {{property.costPerDay}}</span>
                   </div>
                   <a [routerLink]="['/property-single', property.id]" class="link-a">Click here to view
-                    <span class="bi bi-chevron-right"></span>
+                    <span class="pi pi-chevron-right"></span>
                   </a>
                 </div>
 
@@ -51,22 +51,14 @@
                   <ul class="card-info d-flex justify-content-around">
                     <li>
                       <h4 class="card-info-title">Area</h4>
-                      <span>{{property.area}}</span>
+                      <span>{{ property.roomArea }}m²</span>
                     </li>
-                    <li>
-                      <h4 class="card-info-title">Beds</h4>
-                      <span>{{property.beds}}</span>
-                    </li>
-                    <li>
-                      <h4 class="card-info-title">Baths</h4>
-                      <span>{{property.baths}}</span>
-                    </li>
-                    <li>
-                      <h4 class="card-info-title">Garages</h4>
-                      <span>{{property.garages}}</span>
+                    <li *ngFor="let furniture of property.roomFurniture; let i = index">
+                      <h4 class="card-info-title">{{ furniture.furnitureName }}</h4>
+                      <span>{{ furniture.quantity }}</span>
                     </li>
                   </ul>
-                </div>
+                </div>                
               </div>
             </div>
           </div>
