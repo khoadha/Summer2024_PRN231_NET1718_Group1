@@ -55,6 +55,7 @@ export class ProfileComponent implements OnInit{
     private userStore: UserStoreService) { }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.breadcrumbItems = [{ label: 'Profile' }];
     const role = this.authService.getRoleFromToken();
     const userId = this.authService.getUserIdFromToken();
@@ -74,6 +75,9 @@ export class ProfileComponent implements OnInit{
       newPassword: ['', [Validators.required, this.passwordValidator]],
       confirmedPassword: ['', Validators.required],
     }, { validator: this.passwordMatchValidator });   
+
+    this.isLoading = false;
+
   }
 
   // dialog visibility
@@ -99,10 +103,11 @@ export class ProfileComponent implements OnInit{
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Invalid username' });
       return;
     }
-  
+
+    this.isLoading = true;  
     const model: UpdateUsernameDto = { username: this.newUsername };
     this.userService.updateUserName(this.profile.id, model).subscribe(
-      response => {
+      response => {  
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Username updated Successfully' });
         this.updateUserNameVisible = false; 
         this.userService.getProfileByUserId(this.profile.id).subscribe(res => {
@@ -115,6 +120,7 @@ export class ProfileComponent implements OnInit{
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Username update failed' });
       }
     );
+    this.isLoading = false;  
   }
 
   userNameValidator(control: AbstractControl): ValidationErrors | null {
@@ -138,6 +144,8 @@ export class ProfileComponent implements OnInit{
     if(this.updatePasswordForm.invalid){
       return;
     }
+
+    this.isLoading = true;  
     const oldPassword = this.updatePasswordForm.get('oldPassword')!.value;
     const newPassword = this.updatePasswordForm.get('newPassword')!.value;
 
@@ -158,6 +166,7 @@ export class ProfileComponent implements OnInit{
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Password update failed' });
       }
     );
+    this.isLoading = false;  
   }
 
   passwordMatchValidator(control: AbstractControl) {
@@ -194,7 +203,7 @@ export class ProfileComponent implements OnInit{
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Image required!.' });
       return;
     }
-  
+    this.isLoading = true;  
     const formData = new FormData();
     formData.append('avatar', this.selectedImageFile);
   
@@ -214,6 +223,7 @@ export class ProfileComponent implements OnInit{
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Avatar update failed' });
       }
     );
+    this.isLoading = false;  
   }
   
   onFileSelected(event: Event): void {
