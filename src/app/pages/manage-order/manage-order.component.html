@@ -1,0 +1,33 @@
+<div class="container" style="margin-top: 200px;">
+    <p-table [value]="orders" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                Orders
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>User ID</th>
+                <th>User Name</th>
+                <th>Room Name</th>
+                <th>Order Date</th>
+                <th>Cancel Date</th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-order>
+            <tr>
+                <td>{{order.userId}}</td>
+                <td>{{order.userName}}</td>
+                <td>{{order.roomName}}</td>
+                <td>{{order.orderDate}}</td>
+                <td>{{order.cancelDate}}</td>
+                <td>
+                    <a [routerLink]="['/order-detail', order.id]">
+                        <i class="pi pi-info"></i>
+                    </a>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

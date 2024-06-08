@@ -1,11 +1,23 @@
+import { Room } from "./room";
+
 export interface CreateOrderDto {
   roomId: number;
-    userId: string | null;
-    cost: number;
-    guests: any[];
-    startDate: Date | null;
-    endDate: Date | null;
-    roomServices: RoomServiceDto[];
+  userId: string | null;
+  cost: number;
+  guests: any[];
+  startDate: Date | null;
+  endDate: Date | null;
+  roomServices: RoomServiceDto[];
+}
+export interface GetOrderDto {
+  id?: number;
+  roomId: number;
+  userId: string | null;
+  guests: GuestDto[];
+  orderDate: Date | null;
+  cancelDate: Date | null;
+  userName: string;
+  roomName: string;
 }
 export interface ServiceWithPrice {
   id?: number;

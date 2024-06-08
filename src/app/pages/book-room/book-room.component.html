@@ -7,35 +7,57 @@
         <h2>{{ room.name }}</h2>
     </section>
     <div class="container form-container">
+        <p-carousel [value]="room.roomImages" styleClass="custom-carousel" [circular]="true">
+            <ng-template let-image pTemplate="item">
+                <img [src]="image?.imgPath" alt="Room Image">
+            </ng-template>
+        </p-carousel>
+
         <div class="form-group">
-            <label>Room Details</label>
-            <p class="form-control-static">Room Area: {{ room.roomArea }}</p>
-            <p class="form-control-static">Room for: {{ room.roomSize }}</p>
-            <p class="form-control-static">Description: {{ room.roomDescription }}</p>
+            <h3>Room Details</h3>
+            <div class="form-container">
+                <p class="form-control-static">Room Area: {{ room.roomArea }} m³</p>
+                <p class="form-control-static">Room for: {{ room.roomSize }}</p>
+                <p class="form-control-static">Description: {{ room.roomDescription }}</p>
+            </div>
         </div>
         <form #form="ngForm" [formGroup]="bookingForm" (ngSubmit)="submitForm()" class="container">
             <div class="form-group">
                 <label>Furnitures</label>
-                <ul class="list-group">
-                    <li class="list-group-item" *ngFor="let furniture of room.roomFurniture">{{ furniture.furnitureName
-                        }} -
-                        {{ furniture.quantity }}</li>
-                </ul>
+                <div class="form-container">
+                    <ul class="list-group">
+                        <li class="list-group-item" *ngFor="let furniture of room.roomFurniture">
+                            {{furniture.furnitureName}}
+                            ({{ furniture.quantity }}) </li>
+                    </ul>
+                </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" [ngClass]="{'has-error': bookingForm.get('startDate')?.invalid && (bookingForm.get('startDate')?.dirty || bookingForm.get('startDate')?.touched)}">
                 <label>Start Date</label>
-                <input class="form-control" [min]="today" type="date" formControlName="startDate"
-                    (change)="updateTotalFee()">
+                <input class="form-control" [min]="today" type="date" formControlName="startDate" (change)="updateTotalFee()">
+                <div *ngIf="bookingForm.get('startDate')?.invalid && (bookingForm.get('startDate')?.dirty || bookingForm.get('startDate')?.touched)">
+                    <small class="text-danger" *ngIf="bookingForm.get('startDate')?.errors?.['dateInvalid']">
+                        Start date cannot be in the past.
+                    </small>
+                </div>
             </div>
-
-            <div class="form-group">
+            
+            <div class="form-group" [ngClass]="{'has-error': bookingForm.get('endDate')?.invalid && (bookingForm.get('endDate')?.dirty || bookingForm.get('endDate')?.touched)}">
                 <label>End Date</label>
-                <input class="form-control" [min]="today" type="date" formControlName="endDate"
-                    (change)="updateTotalFee()">
+                <input class="form-control" [min]="today" type="date" formControlName="endDate" (change)="updateTotalFee()">
+                <div *ngIf="bookingForm.get('endDate')?.invalid || bookingForm.get('endDate')?.dirty || bookingForm.get('endDate')?.touched">
+                    <small class="text-danger" *ngIf="bookingForm.get('endDate')?.errors?.['dateInvalid']">
+                        End date cannot be in the past.
+                    </small>
+                    <small class="text-danger" *ngIf="bookingForm.errors?.['dateRangeInvalid']">
+                        End date must be after start date.
+                    </small>
+                </div>
             </div>
+            
             <div class="form-group">
-                <label>Services</label>
-                <div>
+                <label>Services - Each services chosen will increase the rate per day</label>
+                <div class="form-container">
                     <div class="form-check" *ngFor="let service of allServices">
                         <input class="form-check-input" type="checkbox" [formControlName]="service.name"
                             (change)="updateTotalFee()">
@@ -53,10 +75,12 @@
                     <div class="col">
                         <input class="form-control" type="email" [(ngModel)]="newOccupant.email"
                             [ngModelOptions]="{standalone: true}" placeholder="Email">
+                            <span class="text-danger" *ngIf="!isEmailValid() && newOccupant.email !== ''">Invalid email</span>
                     </div>
                     <div class="col">
                         <input class="form-control" type="date" [(ngModel)]="newOccupant.birthday" [max]="today"
                             [ngModelOptions]="{standalone: true}">
+                        <span class="text-danger" *ngIf="!isBirthdayValid() && newOccupant.birthday !== undefined">Birthday must be before today</span>
                     </div>
                     <div class="col">
                         <button type="button" class="btn btn-primary" (click)="addOccupant()"
@@ -71,7 +95,7 @@
                         <div class="col"><strong>Action</strong></div>
                     </div>
                     <div *ngFor="let occupant of occupants.controls; let i=index" class="row">
-                        <div [formGroupName]="i" class="row">
+                        <div [formGroupName]="i" class="row mt-2">
                             <div class="col">{{ occupant.get('fullname')?.value }}</div>
                             <div class="col">{{ occupant.get('email')?.value }}</div>
                             <div class="col">{{ occupant.get('birthday')?.value }}</div>
@@ -86,7 +110,7 @@
                 <p style="color: rgb(0, 128, 128);">Rate per day: $<span id="rate-text"> {{room.costPerDay}}</span></p>
             </div>
             <div class="form-group">
-                <p style="color: rgb(0, 128, 0); font-size: 1.1rem;">Total Fee: $<span id="fee-text" #feeText>0</span>
+                <p style="color: rgb(0, 128, 0); font-size: 1.1rem;">Total Fee: $<span id="fee-text" #feeText>{{room.costPerDay}}</span>
                 </p>
             </div>
 
