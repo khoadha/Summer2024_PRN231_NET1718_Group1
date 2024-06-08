@@ -53,6 +53,7 @@
                                 <div class="card-title-c align-self-center">
                                     <h5 class="title-c">{{room.costPerDay}}</h5>
                                 </div>
+                                
                             </div>
                         </div>
                         <div class="property-summary">
@@ -114,11 +115,16 @@
                                 {{room.roomDescription}}
                             </p>
                             <p class="description color-text-a no-margin">
-                                {{room.categoryName}} is a {{room.roomSize}} room with {{room.roomArea}}m<sup>2</sup>
+                                {{room.categoryName}} is a {{room.roomSize}}-slot room with {{room.roomArea}}m<sup>2</sup>
                                 area. It is located in {{room.location}}. The cost per day is {{room.costPerDay}}. The
                                 room is {{room.isAvailable ? 'Available' : 'Not Available'}}. The room is furnished with
-                                {{room.roomFurniture.length}} items. The room has {{room.roomImages.length}} images.
+                                {{room.roomFurniture.length}} items.
                             </p>
+                            <div>
+                                <button class="text-light primary-color-bg mt-2 btn shadow" routerLink="/book-room/{{ room.id }}">
+                                    Book Now
+                                </button>
+                            </div>
                         </div>
                         <div class="row section-t3">
                             <div class="col-sm-12">

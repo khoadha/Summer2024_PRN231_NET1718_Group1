@@ -18,7 +18,7 @@
                                     <a href="#">Home</a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">
-                                    Properties Grid
+                                    Rooms Grid
                                 </li>
                             </ol>
                         </nav>
@@ -49,7 +49,7 @@
                         class="col-md-4">
                         <div class="card-box-a card-shadow">
                             <div class="img-box-a">
-                                <img [src]="room.roomImages[0].imgPath" alt="" class="img-a img-fluid" />
+                                <img [src]="room.imgPath" alt="room-image" class="img-a img-fluid" />
                             </div>
                             <div class="card-overlay">
                                 <div class="card-overlay-a-content">
@@ -63,7 +63,7 @@
                                             <span class="price-a">rent | ${{ room.costPerDay }}</span>
                                         </div>
                                         <a [routerLink]="['/room-detail', room.id]" class="link-a">Click here to view
-                                            <!-- <mat-icon>chevron_right</mat-icon> -->
+                                            <span class="pi pi-chevron-right"></span>
                                         </a>
                                     </div>
                                     <div class="card-footer-a">
@@ -72,18 +72,10 @@
                                                 <h4 class="card-info-title">Area</h4>
                                                 <span class="truncate">{{ room.roomArea }}m<sup>2</sup></span>
                                             </li>
-                                            <li>
-                                                <h4 class="card-info-title">Beds</h4>
-                                                <span class="truncate">{{ room.roomFurniture.length }}</span>
-                                            </li>
-                                            <li>
-                                                <h4 class="card-info-title">Description</h4>
-                                                <span class="truncate">{{ room.roomDescription }}</span>
-                                            </li>
-                                            <li>
-                                                <h4 class="card-info-title">Location</h4>
-                                                <span class="truncate">{{ room.location }}</span>
-                                            </li>
+                                            <li *ngFor="let furniture of room.roomFurniture; let i = index">
+                                                <h4 class="card-info-title">{{ furniture.furnitureName }}</h4>
+                                                <span>{{ furniture.quantity }}</span>
+                                              </li>
                                         </ul>
                                     </div>
                                 </div>

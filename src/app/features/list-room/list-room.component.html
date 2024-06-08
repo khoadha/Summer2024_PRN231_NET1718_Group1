@@ -8,7 +8,7 @@
               <h2 class="title-a">Our Rooms</h2>
             </div>
             <div class="title-link">
-              <a routerLink="/property-grid">All Property
+              <a routerLink="/all-room">All Property
                 <span class="pi pi-chevron-right"></span>
               </a>
             </div>
@@ -22,8 +22,9 @@
         [numScroll]="1" 
         [circular]="true" 
         [autoplayInterval]="5000">
+
         <ng-template pTemplate="item" let-property>
-          <div class="card-box-a card-shadow">
+          <div class="card-box-a card-shadow mx-2">
 
             <div class="img-box-a">
               <img [src]="property.imgPath" alt="" class="img-a img-fluid">
@@ -51,7 +52,7 @@
                   <ul class="card-info d-flex justify-content-around">
                     <li>
                       <h4 class="card-info-title">Area</h4>
-                      <span>{{ property.roomArea }}m²</span>
+                      <span>{{ property.roomArea }}m<sup>2</sup></span>
                     </li>
                     <li *ngFor="let furniture of property.roomFurniture; let i = index">
                       <h4 class="card-info-title">{{ furniture.furnitureName }}</h4>

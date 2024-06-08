@@ -3,7 +3,8 @@
   display: none !important;
 }
 
-:host ::ng-deep .p-carousel-item {
-    box-sizing: border-box;
-    margin: 0 0.5em;
-}
+/* :host ::ng-deep .p-carousel-item {
+  box-sizing: border-box;
+  margin: 0 0.5em;
+} */
+ 
