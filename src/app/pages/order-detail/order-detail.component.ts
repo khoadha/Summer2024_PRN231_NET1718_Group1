@@ -25,7 +25,7 @@ export class OrderDetailComponent implements OnInit {
   getOrderById(orderId: number) {
     this.orderService.getOrderById(orderId).subscribe((orders) => {
       if (orders && orders.length > 0) {
-        this.orders = orders[0]; // assuming you want the first order if there are multiple
+        this.orders = orders[0];
       }
     });
   }

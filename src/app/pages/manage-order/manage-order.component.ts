@@ -39,7 +39,6 @@ export class ManageOrderComponent implements OnInit {
             email: 'guestone@example.com',
             birthday: new Date('1990-01-01'),
           },
-          // Add more guests as needed
         ],
         orderDate: new Date(),
         cancelDate: null,
@@ -57,14 +56,12 @@ export class ManageOrderComponent implements OnInit {
             email: 'guesttwo@example.com',
             birthday: new Date('1995-01-01'),
           },
-          // Add more guests as needed
         ],
         orderDate: new Date(),
         cancelDate: null,
         userName: 'Jane Doe',
         roomName: 'Room 102',
       },
-      // Add more orders as needed
     ];
   }
 }
