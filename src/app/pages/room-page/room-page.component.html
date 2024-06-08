@@ -45,8 +45,7 @@
                     </div>
 
 
-                    <div *ngFor="let room of Rooms | paginate: { itemsPerPage: 6, currentPage: currentPage }"
-                        class="col-md-4">
+                    <div *ngFor="let room of Rooms" class="col-md-4">
                         <div class="card-box-a card-shadow">
                             <div class="img-box-a">
                                 <img [src]="room.roomImages[0].imgPath" alt="" class="img-a img-fluid" />

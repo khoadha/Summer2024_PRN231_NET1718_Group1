@@ -45,7 +45,7 @@
             <div class="form-group" [ngClass]="{'has-error': bookingForm.get('endDate')?.invalid && (bookingForm.get('endDate')?.dirty || bookingForm.get('endDate')?.touched)}">
                 <label>End Date</label>
                 <input class="form-control" [min]="today" type="date" formControlName="endDate" (change)="updateTotalFee()">
-                <div *ngIf="bookingForm.get('endDate')?.invalid && (bookingForm.get('endDate')?.dirty || bookingForm.get('endDate')?.touched)">
+                <div *ngIf="bookingForm.get('endDate')?.invalid || bookingForm.get('endDate')?.dirty || bookingForm.get('endDate')?.touched">
                     <small class="text-danger" *ngIf="bookingForm.get('endDate')?.errors?.['dateInvalid']">
                         End date cannot be in the past.
                     </small>
@@ -75,12 +75,12 @@
                     <div class="col">
                         <input class="form-control" type="email" [(ngModel)]="newOccupant.email"
                             [ngModelOptions]="{standalone: true}" placeholder="Email">
-                            <span class="text-danger" *ngIf="!isEmailValid()">Invalid email</span>
+                            <span class="text-danger" *ngIf="!isEmailValid() && newOccupant.email !== ''">Invalid email</span>
                     </div>
                     <div class="col">
                         <input class="form-control" type="date" [(ngModel)]="newOccupant.birthday" [max]="today"
                             [ngModelOptions]="{standalone: true}">
-                        <span class="text-danger" *ngIf="!isBirthdayValid()">Birthday must be before today</span>
+                        <span class="text-danger" *ngIf="!isBirthdayValid() && newOccupant.birthday !== undefined">Birthday must be before today</span>
                     </div>
                     <div class="col">
                         <button type="button" class="btn btn-primary" (click)="addOccupant()"

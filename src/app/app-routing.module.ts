@@ -1,6 +1,6 @@
 import { ConfirmEmailSuccessComponent } from './pages/confirm-email-success/confirm-email-success.component';
 import { NgModule } from '@angular/core';
-import { adminGuard, authGuard, signedInGuard } from './core/guards/auth.guard';
+import { adminGuard, authGuard, signedInGuard, userGuard } from './core/guards/auth.guard';
 import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
@@ -106,6 +106,7 @@ const routes: Routes = [
     path: 'book-room/:id',
     component: BookRoomComponent,
     title: 'Book Room',
+    canActivate: [userGuard],
   },
   {
     path: 'all-room',
@@ -116,40 +117,6 @@ const routes: Routes = [
     path: 'manage-profile',
     component: ProfileComponent,
     title: 'Manage Profile',
-  },
-  {
-    path: 'manage-order',
-    component: ManageOrderComponent,
-    title: 'Manage Order',
-  },
-
-  //DEBUG
-  {
-    path: 'manage-category',
-    component: AdminRoomCategoryComponent,
-    title: 'Manage Category',
-    //canActivate: [adminGuard],
-  },
-  {
-    path: 'manage-furniture',
-    component: AdminFurnitureComponent,
-    title: 'Manage Furniture',
-    //canActivate: [adminGuard],
-  },
-  {
-    path: 'manage-service',
-    component: AdminServiceComponent,
-    title: 'Manage Service',
-  },
-  {
-    path: 'manage-room',
-    component: AdminRoomComponent,
-    title: 'Manage Room',
-  },
-  {
-    path: 'manage-order',
-    component: AdminOrderComponent,
-    title: 'Manage Order',
   },
   {
     path: 'adashboard',

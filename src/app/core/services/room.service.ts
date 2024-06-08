@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environment/environment';
 import { CreateOrderDto } from '../models/order';
-import { Room } from '../models/room';
+import { Room, RoomDisplay } from '../models/room';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +20,10 @@ export class RoomService {
 
   getRooms(): Observable<Room[]> {
     return this.http.get<Room[]>(`${this.APIUrl}/get-room/`);
+  }
+
+  getRoomsDisplay(): Observable<RoomDisplay[]> {
+    return this.http.get<RoomDisplay[]>(`${this.APIUrl}/get-room-display/`);
   }
 
   getRoomsOData(page: number): Observable<Room[]> {

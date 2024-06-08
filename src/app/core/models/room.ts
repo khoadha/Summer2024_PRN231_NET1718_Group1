@@ -14,6 +14,20 @@ export interface Room {
   //dto
   categoryName?: string;
 }
+
+export interface RoomDisplay {
+  id: number
+  name: string
+  imgPath: string
+  roomSize: number
+  roomArea: number
+  costPerDay: number
+  location: string
+  categoryName: string
+  isAvailable: boolean
+  roomFurniture: RoomFurniture[];
+}
+
 export interface RoomFurniture {
   id: number;
   furnitureId?: number;
