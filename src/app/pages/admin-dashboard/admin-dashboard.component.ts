@@ -15,7 +15,7 @@ export class AdminDashboardComponent implements OnInit{
   public role!: string;
   imgPath!: string;
 
-  drawerVisible!: boolean;
+  drawerVisible: boolean = true;
   items: MenuItem[] = [
     { name: 'Dashboard', url: '/adashboard', icon: 'pi-home' },
     { name: 'Room Category', url: '/adashboard/manage-room-category', icon: 'pi-book' },
@@ -30,7 +30,6 @@ export class AdminDashboardComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.drawerVisible = true;
   }
 
   isLinkActive(url: string): boolean {

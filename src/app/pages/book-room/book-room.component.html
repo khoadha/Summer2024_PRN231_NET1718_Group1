@@ -126,7 +126,11 @@
         <button type="button" class="btn btn-primary" (click)="closeDialogAndReturn()">Close</button>
     </p-dialog>
 
-    <p-dialog header="Display Contract" [(visible)]="showContract" [modal]="true">
+    <p-dialog header="Display Contract" 
+        [(visible)]="showContract" 
+        [modal]="true" 
+        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+        [maximizable]="true">
         <div class="container mt-5">
             <div class="contract">
                 <h2>Hosteland Booking Contract</h2>

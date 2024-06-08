@@ -1,3 +1,4 @@
+import { ScrollService } from './core/services/scroll.service';
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
@@ -10,7 +11,7 @@ export class AppComponent implements OnInit{
   title = 'hosteland';
   hideElements: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private scrollService: ScrollService) {}
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -18,5 +19,4 @@ export class AppComponent implements OnInit{
       }
     });
  }
-
 }

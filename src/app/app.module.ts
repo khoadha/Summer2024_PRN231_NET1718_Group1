@@ -64,6 +64,7 @@ import { RoomDetailComponent } from './pages/room-detail/room-detail.component';
 import { AdminOrderComponent } from './pages/admin-dashboard/admin-order/admin-order.component';
 import { ManageOrderComponent } from './pages/manage-order/manage-order.component';
 import { OrderDetailComponent } from './pages/order-detail/order-detail.component';
+import { ScrollService } from './core/services/scroll.service';
 
 @NgModule({
   imports: [
@@ -142,6 +143,7 @@ import { OrderDetailComponent } from './pages/order-detail/order-detail.componen
       multi: true,
     },
     MessageService,
+    ScrollService,
   ],
   bootstrap: [AppComponent],
 })
