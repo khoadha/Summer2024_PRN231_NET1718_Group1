@@ -18,16 +18,4 @@ export class RoomPageComponent implements OnInit {
       this.Rooms = res;
     });
   }
-
-  nextPage(): void {
-    this.currentPage++;
-    this.getRooms();
-  }
-
-  previousPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.getRooms();
-    }
-  }
 }
