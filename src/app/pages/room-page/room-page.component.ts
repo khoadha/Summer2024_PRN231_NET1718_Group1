@@ -10,11 +10,29 @@ import { Room } from 'src/app/core/models/room';
 export class RoomPageComponent implements OnInit {
   Rooms: Room[] = [];
   currentPage = 1;
+
   constructor(private roomService: RoomService) {}
 
   ngOnInit(): void {
-    this.roomService.getRooms().subscribe((res) => {
+    this.getRooms();
+  }
+
+  getRooms(): void {
+    this.roomService.getRoomsOData(this.currentPage).subscribe((res) => {
+      console.log(res);
       this.Rooms = res;
     });
+  }
+
+  nextPage(): void {
+    this.currentPage++;
+    this.getRooms();
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.getRooms();
+    }
   }
 }

@@ -6,14 +6,13 @@ import { CreateOrderDto } from '../models/order';
 import { Room } from '../models/room';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RoomService {
-
   readonly baseUrl = environment.baseUrl;
-  readonly APIUrl = this.baseUrl + "Rooms";
+  readonly APIUrl = this.baseUrl + 'Rooms';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getRoomById(id: number): Observable<Room> {
     return this.http.get<Room>(`${this.APIUrl}/get-room/${id}`);
@@ -21,6 +20,14 @@ export class RoomService {
 
   getRooms(): Observable<Room[]> {
     return this.http.get<Room[]>(`${this.APIUrl}/get-room/`);
+  }
+
+  getRoomsOData(page: number): Observable<Room[]> {
+    const skip = (page - 1) * 3;
+    const top = 3;
+    return this.http.get<Room[]>(
+      `${this.APIUrl}/get-room/?$skip=${skip}&$top=${top}`
+    );
   }
   searchRoomByQuery(query: string): Observable<any> {
     return this.http.get<any>(`${this.APIUrl}/search-room/${query}`);
@@ -32,7 +39,11 @@ export class RoomService {
         Accept: 'application/json',
       }),
     };
-    return this.http.post<any>(`${this.APIUrl}/add-room/`, formData, httpOptions);
+    return this.http.post<any>(
+      `${this.APIUrl}/add-room/`,
+      formData,
+      httpOptions
+    );
   }
 
   addFurnitureToRoom(formData: any) {
@@ -41,7 +52,11 @@ export class RoomService {
         Accept: 'application/json',
       }),
     };
-    return this.http.post<any>(`${this.APIUrl}/add-furniture-to-room/`, formData, httpOptions);
+    return this.http.post<any>(
+      `${this.APIUrl}/add-furniture-to-room/`,
+      formData,
+      httpOptions
+    );
   }
 
   updateRoom(data: any) {
