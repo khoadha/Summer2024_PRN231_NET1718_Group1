@@ -218,6 +218,7 @@ export class BookRoomComponent implements OnInit {
         next: (res) => {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Created order successfully.' });
           this.displayDialog = true;
+          this.showContract = false;
         },
         error: (err) => {
           this.showErrorMessage(err);

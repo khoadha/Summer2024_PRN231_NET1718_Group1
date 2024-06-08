@@ -16,8 +16,8 @@
         <div class="form-group">
             <h3>Room Details</h3>
             <div class="form-container">
-                <p class="form-control-static">Room Area: {{ room.roomArea }} m³</p>
-                <p class="form-control-static">Room for: {{ room.roomSize }}</p>
+                <p class="form-control-static">Room Area: {{ room.roomArea }} m²</p>
+                <p class="form-control-static">Room for: {{ room.roomSize }} people</p>
                 <p class="form-control-static">Description: {{ room.roomDescription }}</p>
             </div>
         </div>
@@ -158,15 +158,15 @@
                             </tr>
                             <tr>
                                 <th>Room Rate</th>
-                                <td>{{ room.costPerDay }}</td>
+                                <td>{{ room.costPerDay }}$</td>
                             </tr>
                             <tr>
                                 <th>Number of Guests</th>
-                                <td>{{ occupants.length }}</td>
+                                <td>{{ occupants.length }} people</td>
                             </tr>
                             <tr>
                                 <th>Total Cost</th>
-                                <td>{{ calculateTotalFee() }}</td>
+                                <td>{{ calculateTotalFee() }}$</td>
                             </tr>
                         </tbody>
                     </table>
