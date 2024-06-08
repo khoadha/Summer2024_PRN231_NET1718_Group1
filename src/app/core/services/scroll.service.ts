@@ -32,4 +32,10 @@ export class ScrollService {
   shouldScrollToTop(url: string): boolean {
     return !this.noScrollUrls.includes(url);
   }
+
+  scrollToTop(element: HTMLElement): void {
+    if (element) {
+      element.scrollTop = 0;
+    }
+  }
 }

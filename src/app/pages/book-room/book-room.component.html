@@ -128,7 +128,7 @@
 
     <p-dialog header="Display Contract" 
         [(visible)]="showContract" 
-        [modal]="true" 
+        [modal]="false" 
         [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
         [maximizable]="true">
         <div class="container mt-5">
@@ -219,7 +219,7 @@
                 <p></p>
                 <p>Signature: ________________________</p>
             </div>
-            <button pButton type="button" label="Sign Contract and Confirm Book" (click)="submitForm()"></button>
+            <button pButton type="button" class="rounded" label="Sign Contract and Confirm Book" tabindex="-1" (click)="submitForm()"></button>
         </div>
     </p-dialog>
 </div>
