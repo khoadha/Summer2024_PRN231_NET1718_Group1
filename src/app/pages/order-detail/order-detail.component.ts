@@ -9,7 +9,7 @@ import { GetOrderDto } from 'src/app/core/models/order';
   styleUrls: ['./order-detail.component.css'],
 })
 export class OrderDetailComponent implements OnInit {
-  orders!: GetOrderDto;
+  order!: GetOrderDto;
 
   constructor(
     private route: ActivatedRoute,
@@ -18,15 +18,13 @@ export class OrderDetailComponent implements OnInit {
 
   ngOnInit() {
     const orderId = Number(this.route.snapshot.paramMap.get('id'));
-    this.getOrderById(orderId);
-    console.log(this.orders);
-  }
-
-  getOrderById(orderId: number) {
-    this.orderService.getOrderById(orderId).subscribe((orders) => {
-      if (orders && orders.length > 0) {
-        this.orders = orders[0];
-      }
-    });
+    this.orderService
+      .getOrderById(orderId)
+      .toPromise()
+      .then((res) => {
+        this.order = res!;
+        console.log(this.order);
+      })
+      .catch((error) => {});
   }
 }

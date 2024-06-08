@@ -117,7 +117,7 @@ export class BookRoomComponent implements OnInit {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const inputDate = control.value;
       
-      return inputDate >= this.today ? { 'dateInvalid': false } : { 'dateInvalid': true };
+      return inputDate >= this.today ? null: { 'dateInvalid': true };
     };
   }
 
@@ -125,7 +125,7 @@ export class BookRoomComponent implements OnInit {
     return (formGroup: AbstractControl): { [key: string]: any } | null => {
       const startDate = formGroup.get('startDate')?.value;
       const endDate = formGroup.get('endDate')?.value;
-      return new Date(startDate) <= new Date(endDate) ? { 'dateRangeInvalid': false } : { 'dateRangeInvalid': true };
+      return new Date(startDate) <= new Date(endDate) ? null : { 'dateRangeInvalid': true };
     };
   }
 

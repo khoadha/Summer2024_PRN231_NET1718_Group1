@@ -2,19 +2,18 @@
     <h2>Order Details</h2>
     <div class="card">
         <div class="card-header">
-            Order ID: 12 <!--  {{order.id}}  -->
+            Order ID: {{order.id}} <!--    -->
         </div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item"><strong>Room ID:</strong> 21321 <!-- {{order.roomId}} --></li>
-            <li class="list-group-item"><strong>User ID:</strong> adsdas <!-- {{order.userId}} --></li>
-            <li class="list-group-item"><strong>Order Date:</strong> adasd
-                <!--  {{order.orderDate | date}} -->
+            <li class="list-group-item"><strong>Room ID:</strong> {{order.roomId}} <!--  --></li>
+            <li class="list-group-item"><strong>Order Date:</strong> {{order.orderDate | date}}
+                <!--   -->
             </li>
-            <li class="list-group-item"><strong>Cancel Date:</strong>asdasd
-                <!-- {{order.cancelDate | date}} -->
+            <li class="list-group-item"><strong>Cancel Date:</strong>{{order.cancelDate | date}}
+                <!--  -->
             </li>
-            <li class="list-group-item"><strong>User Name:</strong> asdas <!--  {{order.userName}} --></li>
-            <li class="list-group-item"><strong>Room Name:</strong>dadas adaads <!--  {{order.roomName}} -->
+            <li class="list-group-item"><strong>User Name:</strong> {{order.userName}} <!--   --></li>
+            <li class="list-group-item"><strong>Room Name:</strong>{{order.roomName}} <!--   -->
             </li>
         </ul>
     </div>

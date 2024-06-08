@@ -27,41 +27,41 @@ export class ManageOrderComponent implements OnInit {
 
   getOrders(): void {
     this.orderService.getOrders().subscribe((orders) => (this.orders = orders));
-    this.orders = [
-      {
-        id: 1,
-        roomId: 101,
-        userId: 'user1',
-        guests: [
-          {
-            id: 1,
-            fullname: 'Guest One',
-            email: 'guestone@example.com',
-            birthday: new Date('1990-01-01'),
-          },
-        ],
-        orderDate: new Date(),
-        cancelDate: null,
-        userName: 'John Doe',
-        roomName: 'Room 101',
-      },
-      {
-        id: 2,
-        roomId: 102,
-        userId: 'user2',
-        guests: [
-          {
-            id: 2,
-            fullname: 'Guest Two',
-            email: 'guesttwo@example.com',
-            birthday: new Date('1995-01-01'),
-          },
-        ],
-        orderDate: new Date(),
-        cancelDate: null,
-        userName: 'Jane Doe',
-        roomName: 'Room 102',
-      },
-    ];
+    // this.orders = [
+    //   {
+    //     id: 1,
+    //     roomId: 101,
+    //     userId: 'user1',
+    //     guests: [
+    //       {
+    //         id: 1,
+    //         fullname: 'Guest One',
+    //         email: 'guestone@example.com',
+    //         birthday: new Date('1990-01-01'),
+    //       },
+    //     ],
+    //     orderDate: new Date(),
+    //     cancelDate: null,
+    //     userName: 'John Doe',
+    //     roomName: 'Room 101',
+    //   },
+    //   {
+    //     id: 2,
+    //     roomId: 102,
+    //     userId: 'user2',
+    //     guests: [
+    //       {
+    //         id: 2,
+    //         fullname: 'Guest Two',
+    //         email: 'guesttwo@example.com',
+    //         birthday: new Date('1995-01-01'),
+    //       },
+    //     ],
+    //     orderDate: new Date(),
+    //     cancelDate: null,
+    //     userName: 'Jane Doe',
+    //     roomName: 'Room 102',
+    //   },
+    // ];
   }
 }

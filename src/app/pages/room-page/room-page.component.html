@@ -45,8 +45,7 @@
                     </div>
 
 
-                    <div *ngFor="let room of Rooms"
-                        class="col-md-4">
+                    <div *ngFor="let room of Rooms" class="col-md-4">
                         <div class="card-box-a card-shadow">
                             <div class="img-box-a">
                                 <img [src]="room.imgPath" alt="room-image" class="img-a img-fluid" />
@@ -86,6 +85,14 @@
 
 
                 </div>
+                <!-- <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <button class="btn btn-primary" (click)="previousPage()"
+                            [disabled]="currentPage === 1">Previous</button>
+                        <button class="btn btn-primary" (click)="nextPage()">Next</button>
+                    </div>
+                </div> -->
+                <!-- <pagination-controls (pageChange)="currentPage = $event"></pagination-controls> -->
             </div>
         </section><!-- End Property Grid Single-->
 

@@ -17,8 +17,8 @@ export class OrderService {
     return this.http.get<GetOrderDto[]>(`${this.APIUrl}/get-order/`);
   }
 
-  getOrderById(id: number): Observable<GetOrderDto[]> {
-    return this.http.get<GetOrderDto[]>(`${this.APIUrl}/get-order/${id}`);
+  getOrderById(id: number): Observable<GetOrderDto> {
+    return this.http.get<GetOrderDto>(`${this.APIUrl}/get-order/${id}`);
   }
   createOrder(orderDto: CreateOrderDto): Observable<any> {
     const httpOptions = {

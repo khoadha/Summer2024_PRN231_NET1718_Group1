@@ -26,27 +26,27 @@
         <ng-template pTemplate="item" let-property>
           <div class="card-box-a card-shadow mx-2">
 
-            <div class="img-box-a">
-              <img [src]="property.imgPath" alt="" class="img-a img-fluid">
-            </div>
+          <div class="img-box-a">
+            <img [src]="property.imgPath" alt="" class="img-a img-fluid">
+          </div>
 
-            <div class="card-overlay">
-              <div class="card-overlay-a-content">
+          <div class="card-overlay">
+            <div class="card-overlay-a-content">
 
-                <div class="card-header-a">
-                  <h2 class="card-title-a">
-                    <a [routerLink]="['/property-single', property.id]">{{property.name}}</a>
-                  </h2>
+              <div class="card-header-a">
+                <h2 class="card-title-a">
+                  <a [routerLink]="['/property-single', property.id]">{{property.name}}</a>
+                </h2>
+              </div>
+
+              <div class="card-body-a">
+                <div class="price-box d-flex">
+                  <span class="price-a">rent | $ {{property.costPerDay}}</span>
                 </div>
-                
-                <div class="card-body-a">
-                  <div class="price-box d-flex">
-                    <span class="price-a">rent | $ {{property.costPerDay}}</span>
-                  </div>
-                  <a [routerLink]="['/property-single', property.id]" class="link-a">Click here to view
-                    <span class="pi pi-chevron-right"></span>
-                  </a>
-                </div>
+                <a [routerLink]="['/property-single', property.id]" class="link-a">Click here to view
+                  <span class="pi pi-chevron-right"></span>
+                </a>
+              </div>
 
                 <div class="card-footer-a">
                   <ul class="card-info d-flex justify-content-around">
