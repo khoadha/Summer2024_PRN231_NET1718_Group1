@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from 'src/environment/environment';
 import { Service, ServicePrice, ServiceWithPrice } from '../models/order';
 
@@ -11,16 +11,27 @@ export class RoomServiceService {
 
   readonly baseUrl = environment.baseUrl;
   readonly APIUrl = this.baseUrl + "Services";
+  readonly odataUrl = environment.odataUrl + "OServices"
+  readonly odataServicePriceUrl = environment.odataUrl + "OServicePrices" 
 
   constructor(private http: HttpClient) { }
 
   getService(): Observable<Service[]> {
-    return this.http.get<Service[]>(`${this.APIUrl}/get-service/`);
+    return this.http.get<{value: Service[]}>(`${this.odataUrl}`).pipe(
+      map(response => response.value)
+    );
   }
 
   getServiceWithNewestPrice(): Observable<ServiceWithPrice[]> {
-    return this.http.get<ServiceWithPrice[]>(`${this.APIUrl}/get-service-newest-price/`);
+    return this.http.get<{value: ServiceWithPrice[]}>(`${this.odataUrl}/NewestPrice`).pipe(
+      map(response => response.value)
+    );
   }
+
+  getServicePrice(id: number): Observable<ServicePrice> {
+    return this.http.get<ServicePrice>(`${this.odataServicePriceUrl}({${id}})`);
+  }
+  
   addService(formData: any) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -29,9 +40,7 @@ export class RoomServiceService {
     };
     return this.http.post<any>(`${this.APIUrl}/add-service/`, formData, httpOptions);
   }
-  getServicePrice(id: number): Observable<ServicePrice> {
-    return this.http.get<ServicePrice>(`${this.APIUrl}/prices/get-price/`);
-  }
+
   addServicePrice(formData: any) {
     const httpOptions = {
       headers: new HttpHeaders({

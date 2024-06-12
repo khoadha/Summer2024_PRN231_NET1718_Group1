@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from 'src/environment/environment';
 import { CreateOrderDto, GetOrderDto } from '../models/order';
 
@@ -10,16 +10,20 @@ import { CreateOrderDto, GetOrderDto } from '../models/order';
 export class OrderService {
   readonly baseUrl = environment.baseUrl;
   readonly APIUrl = this.baseUrl + 'order';
+  readonly odataUrl = environment.odataUrl + "OOrders"
 
   constructor(private http: HttpClient) {}
 
   getOrders(): Observable<GetOrderDto[]> {
-    return this.http.get<GetOrderDto[]>(`${this.APIUrl}/get-order/`);
+    return this.http.get<{ value: GetOrderDto[]}>(`${this.odataUrl}`).pipe(
+      map(response => response.value)
+    );
   }
 
   getOrderById(id: number): Observable<GetOrderDto> {
-    return this.http.get<GetOrderDto>(`${this.APIUrl}/get-order/${id}`);
+    return this.http.get<GetOrderDto>(`${this.odataUrl}({${id}})`);
   }
+
   createOrder(orderDto: CreateOrderDto): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({

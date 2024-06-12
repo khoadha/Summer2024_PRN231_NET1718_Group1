@@ -21,5 +21,4 @@ export class ListRoomComponent implements OnInit{
       this.properties = res;
     });
   }
-
 }

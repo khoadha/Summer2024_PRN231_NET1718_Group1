@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from 'src/environment/environment';
 import { Furniture } from '../models/room';
 
@@ -11,11 +11,14 @@ export class FurnitureService {
 
   readonly baseUrl = environment.baseUrl;
   readonly APIUrl = this.baseUrl + "Furnitures";
+  readonly odataUrl = environment.odataUrl + "OFurnitures"
 
   constructor(private http: HttpClient) { }
 
   getFurnitures(): Observable<Furniture[]> {
-    return this.http.get<Furniture[]>(`${this.APIUrl}/get-furniture/`);
+    return this.http.get<{ value: Furniture[]}>(`${this.odataUrl}`).pipe(
+      map(response => response.value)
+    );
   }
 
   addFurnitures(formData: any) {
