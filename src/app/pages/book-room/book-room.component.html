@@ -128,7 +128,7 @@
 
     <p-dialog header="Display Contract" 
         [(visible)]="showContract" 
-        [modal]="false" 
+        [modal]="true" 
         [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
         [maximizable]="true">
         <div class="container mt-5">
@@ -219,7 +219,16 @@
                 <p></p>
                 <p>Signature: ________________________</p>
             </div>
-            <button pButton type="button" class="rounded" label="Sign Contract and Confirm Book" tabindex="-1" (click)="submitForm()"></button>
+            <button pButton 
+            type="button" 
+            class="rounded" 
+            [label]="loadingSubmit ? 'Signing...' : 'Sign Contract and Confirm Book'" 
+            [disabled]="loadingSubmit" 
+            tabindex="-1" 
+            (click)="submitForm()"></button>
+            <ng-container *ngIf="loadingSubmit">
+                <i class="pi pi-spin pi-spinner"></i>
+            </ng-container>
         </div>
     </p-dialog>
 </div>

@@ -17,15 +17,11 @@ export class RoomServiceService {
   constructor(private http: HttpClient) { }
 
   getService(): Observable<Service[]> {
-    return this.http.get<{value: Service[]}>(`${this.odataUrl}`).pipe(
-      map(response => response.value)
-    );
+    return this.http.get<Service[]>(`${this.odataUrl}`);
   }
 
   getServiceWithNewestPrice(): Observable<ServiceWithPrice[]> {
-    return this.http.get<{value: ServiceWithPrice[]}>(`${this.odataUrl}/NewestPrice`).pipe(
-      map(response => response.value)
-    );
+    return this.http.get<ServiceWithPrice[]>(`${this.odataUrl}/NewestPrice`);
   }
 
   getServicePrice(id: number): Observable<ServicePrice> {

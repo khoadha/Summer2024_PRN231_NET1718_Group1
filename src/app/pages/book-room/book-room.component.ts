@@ -17,6 +17,7 @@ import { CalendarModule } from 'primeng/calendar';
 })
 export class BookRoomComponent implements OnInit {
   loading: boolean = true;
+  loadingSubmit: boolean = false;
   displayDialog: boolean = false;
   showContract: boolean = false;
   room!: Room;
@@ -117,7 +118,7 @@ export class BookRoomComponent implements OnInit {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const inputDate = control.value;
       
-      return inputDate >= this.today ? null: { 'dateInvalid': true };
+      return inputDate >= this.today ? null : { 'dateInvalid': true };
     };
   }
 
@@ -192,6 +193,7 @@ export class BookRoomComponent implements OnInit {
   }
   submitForm() {
     if (this.bookingForm.valid) {
+      this.loadingSubmit = true; 
 
       const userId = this.authService.getUserIdFromToken();
       const guests = this.bookingForm.get('occupants')?.value.map((occupant: any) => ({
@@ -219,8 +221,10 @@ export class BookRoomComponent implements OnInit {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Created order successfully.' });
           this.displayDialog = true;
           this.showContract = false;
+          this.loadingSubmit = false; 
         },
         error: (err) => {
+          this.loadingSubmit = false; 
           this.showErrorMessage(err);
         }
       }
