@@ -38,8 +38,6 @@ import { TermOfUseComponent } from './pages/term-of-use/term-of-use.component';
 import { CardModule } from 'primeng/card';
 import { FileUploadModule } from 'primeng/fileupload';
 import { BadgeModule } from 'primeng/badge';
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { PasswordModule } from 'primeng/password';
 import { FormsModule } from '@angular/forms';
 import { BookRoomComponent } from './pages/book-room/book-room.component';
@@ -65,6 +63,11 @@ import { AdminOrderComponent } from './pages/admin-dashboard/admin-order/admin-o
 import { ManageOrderComponent } from './pages/manage-order/manage-order.component';
 import { OrderDetailComponent } from './pages/order-detail/order-detail.component';
 import { ScrollService } from './core/services/scroll.service';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { AdminTransactionComponent } from './pages/admin-dashboard/admin-transaction/admin-transaction.component';
 
 @NgModule({
   imports: [
@@ -86,8 +89,6 @@ import { ScrollService } from './core/services/scroll.service';
     CardModule,
     BadgeModule,
     FileUploadModule,
-    InputGroupAddonModule,
-    InputGroupModule,
     PasswordModule,
     FormsModule,
     StyleClassModule,
@@ -97,6 +98,11 @@ import { ScrollService } from './core/services/scroll.service';
     TabViewModule,
     DialogModule,
     TooltipModule,
+    InputTextModule,
+    InputNumberModule,
+    InputTextareaModule,
+    RadioButtonModule,
+    
   ],
   declarations: [
     AppComponent,
@@ -135,6 +141,7 @@ import { ScrollService } from './core/services/scroll.service';
     AdminOrderComponent,
     ManageOrderComponent,
     OrderDetailComponent,
+    AdminTransactionComponent,
   ],
   providers: [
     {

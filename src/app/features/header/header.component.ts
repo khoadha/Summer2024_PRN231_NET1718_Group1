@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserStoreService } from '../../core/services/user-store.service';
+import { RoomCategoryService } from 'src/app/core/services/room-category.service';
+import { RoomCategory } from 'src/app/core/models/room';
 
 @Component({
   selector: 'app-header',
@@ -8,15 +10,19 @@ import { UserStoreService } from '../../core/services/user-store.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit{
-  constructor(private auth: AuthService, private userStore: UserStoreService) {}
+  constructor(private auth: AuthService, private userStore: UserStoreService, private categoriesService: RoomCategoryService) {}
 
   public username!: string;
   public userId!: string;
   public role!: string;
   imgPath!: string;
+  categories: RoomCategory[] = [];
 
   ngOnInit(): void {
     this.getSessionUserInformation();
+    this.categoriesService.getRoomCategories().subscribe(res => {
+      this.categories = res;
+    })
   }
 
   private getSessionUserInformation(){

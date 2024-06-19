@@ -2,10 +2,6 @@
 @import "primeng/resources/primeng.min.css";
 @import "primeicons/primeicons.css";
 
-body {
-  font-family: "Poppins", sans-serif;
-  color: #555555;
-}
 /**
 * Template Name: EstateAgency
 * Template URL: https://bootstrapmade.com/real-estate-agency-bootstrap-template/
@@ -17,8 +13,8 @@ body {
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
-body {
-  font-family: "Poppins", sans-serif;
+* {
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
   color: #555555;
 }
 

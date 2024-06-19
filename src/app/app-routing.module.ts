@@ -31,6 +31,7 @@ import { RoomPageComponent } from './pages/room-page/room-page.component';
 import { RoomDetailComponent } from './pages/room-detail/room-detail.component';
 import { ManageOrderComponent } from './pages/manage-order/manage-order.component';
 import { OrderDetailComponent } from './pages/order-detail/order-detail.component';
+import { AdminTransactionComponent } from './pages/admin-dashboard/admin-transaction/admin-transaction.component';
 const routes: Routes = [
   {
     path: 'home',
@@ -138,6 +139,12 @@ const routes: Routes = [
         path: 'manage-room-category',
         component: AdminRoomCategoryComponent,
         title: 'Manage Category',
+        canActivate: [adminGuard],
+      },
+      {
+        path: 'manage-transaction',
+        component: AdminTransactionComponent,
+        title: 'Manage Transaction',
         canActivate: [adminGuard],
       },
       {

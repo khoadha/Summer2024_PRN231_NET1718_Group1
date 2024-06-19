@@ -88,7 +88,7 @@ export class AdminRoomComponent implements OnInit {
   }
 
   clearForm() {
-    this.newRoom = { id:0, name:'', roomDescription:'', location: '', roomSize: 0, roomArea: 0, costPerDay: 0, categoryId: 0, isAvailable: false, roomFurniture:[], roomImages:[] };
+    this.newRoom = { id:0, name:'', roomDescription:'', location: '', roomSize: 0, roomArea: 0, costPerDay: 0, categoryId: 0, isAvailable: true, roomFurniture:[], roomImages:[] };
     this.roomImages = [];
   }
   
