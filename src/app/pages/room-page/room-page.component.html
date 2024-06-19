@@ -34,64 +34,67 @@
                     <div class="col-md-3">
                         <div class="grid-option">
                             <form (ngSubmit)="onSubmit()">
-                              <label for="search">Search</label>
-                              <input id="search" [(ngModel)]="search" name="search"/>
-                          
-                              <label for="category">Category</label>
-                              <select id="category" class="custom-select" [(ngModel)]="selectedCategory" name="category">
-                                <option value="">All</option>
-                                <option *ngFor="let category of categories" [value]="category.categoryName">{{ category.categoryName }}</option>
-                              </select>
-                          
-                              <label for="orderBy">Order By</label>
-                              <select id="orderBy" class="custom-select" [(ngModel)]="orderBy" name="orderBy">
-                                <option value="name">By Name</option>
-                                <option value="price">Cheap to Expensive</option>
-                              </select>
-                          
-                              <button type="submit">Search</button>
+                                <label for="search">Search</label>
+                                <input id="search" [(ngModel)]="search" name="search" />
+
+                                <label for="category">Category</label>
+                                <select id="category" class="custom-select" [(ngModel)]="selectedCategory"
+                                    name="category">
+                                    <option value="">All</option>
+                                    <option *ngFor="let category of categories" [value]="category.categoryName">{{
+                                        category.categoryName }}</option>
+                                </select>
+
+                                <label for="orderBy">Order By</label>
+                                <select id="orderBy" class="custom-select" [(ngModel)]="orderBy" name="orderBy">
+                                    <option value="name">By Name</option>
+                                    <option value="price">Cheap to Expensive</option>
+                                </select>
+
+                                <button type="submit">Search</button>
                             </form>
-                          </div>
+                        </div>
                     </div>
 
                     <div class="row col-md-9">
-                    <div *ngFor="let room of rooms" class="col-sm-4">
-                        <div class="card-box-a card-shadow">
-                            <div class="img-box-a">
-                                <img [src]="room.imgPath" alt="room-image" class="img-a img-fluid" />
-                            </div>
-                            <div class="card-overlay">
-                                <div class="card-overlay-a-content">
-                                    <div class="card-header-a">
-                                        <h2 class="card-title-a">
-                                            <a href="#">{{ room.name }}</a>
-                                        </h2>
-                                    </div>
-                                    <div class="card-body-a">
-                                        <div class="price-box d-flex">
-                                            <span class="price-a">rent | ${{ room.costPerDay }}</span>
+                        <div *ngFor="let room of rooms" class="col-sm-4">
+                            <div class="card-box-a card-shadow">
+                                <div class="img-box-a">
+                                    <img [src]="room.imgPath" alt="room-image" class="img-a img-fluid" />
+                                </div>
+                                <div class="card-overlay">
+                                    <div class="card-overlay-a-content">
+                                        <div class="card-header-a">
+                                            <h2 class="card-title-a">
+                                                <a href="#">{{ room.name }}</a>
+                                            </h2>
                                         </div>
-                                        <a [routerLink]="['/room-detail', room.id]" class="link-a">Click here to view
-                                            <span class="pi pi-chevron-right"></span>
-                                        </a>
-                                    </div>
-                                    <div class="card-footer-a">
-                                        <ul class="card-info d-flex justify-content-around">
-                                            <li>
-                                                <h4 class="card-info-title">Area</h4>
-                                                <span class="truncate">{{ room.roomArea }}m<sup>2</sup></span>
-                                            </li>
-                                            <li *ngFor="let furniture of room.roomFurniture; let i = index">
-                                                <h4 class="card-info-title">{{ furniture.furnitureName }}</h4>
-                                                <span>{{ furniture.quantity }}</span>
-                                            </li>
-                                        </ul>
+                                        <div class="card-body-a">
+                                            <div class="price-box d-flex">
+                                                <span class="price-a">rent | ${{ room.costPerDay }}</span>
+                                            </div>
+                                            <a [routerLink]="['/room-detail', room.id]" class="link-a">Click here to
+                                                view
+                                                <span class="pi pi-chevron-right"></span>
+                                            </a>
+                                        </div>
+                                        <div class="card-footer-a">
+                                            <ul class="card-info d-flex justify-content-around">
+                                                <li>
+                                                    <h4 class="card-info-title">Area</h4>
+                                                    <span class="truncate">{{ room.roomArea }}m<sup>2</sup></span>
+                                                </li>
+                                                <li *ngFor="let furniture of room.roomFurniture; let i = index">
+                                                    <h4 class="card-info-title">{{ furniture.furnitureName }}</h4>
+                                                    <span>{{ furniture.quantity }}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
 
                 </div>

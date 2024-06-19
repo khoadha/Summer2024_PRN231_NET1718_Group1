@@ -2,7 +2,7 @@
     <p-table [value]="orders" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped">
         <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
-                Orders
+                Orders Management
             </div>
         </ng-template>
         <ng-template pTemplate="header">
@@ -20,11 +20,11 @@
                 <td>{{order.userId}}</td>
                 <td>{{order.userName}}</td>
                 <td>{{order.roomName}}</td>
-                <td>{{order.orderDate}}</td>
-                <td>{{order.cancelDate}}</td>
+                <td>{{order.orderDate | date:'shortDate'}}</td>
+                <td>{{order.cancelDate | date:'shortDate'}}</td>
                 <td>
                     <a [routerLink]="['/order-detail', order.id]">
-                        <i class="pi pi-info"></i>
+                        <i class="pi pi-info"></i> Details
                     </a>
                 </td>
             </tr>

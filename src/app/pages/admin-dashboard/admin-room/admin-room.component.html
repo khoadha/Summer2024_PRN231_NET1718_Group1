@@ -1,5 +1,5 @@
 <p-toast />
-<div class="container-fluid mx-2">
+<div class="container-fluid">
   <div class="d-flex justify-content-between mb-3">
     <h2>Rooms Management</h2>
     <button type="button" class="btn btn-success" (click)="showCreateModal = true">Create new room</button>
@@ -10,14 +10,14 @@
         <th>ID</th>
         <th>Name</th>
         <th>Description</th>
-        <th>Size</th>
-        <th>Area</th>
-        <th>Cost Per Day</th>
+        <th>Size (person)</th>
+        <th>Area (m<sup>2</sup>)</th>
+        <th>Cost Per Day ($)</th>
         <th>Location</th>
         <th>Category</th>
         <th>Is Available</th>
         <th>Furniture </th>
-        <th>Actions</th>
+        <th>Add furniture</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-room>
@@ -30,16 +30,18 @@
         <td>{{ room.costPerDay }}</td>
         <td>{{ room.location }}</td>
         <td>{{ room.categoryName }}</td>
-        <td>{{ room.isAvailable }}</td>
         <td>
-          <ul>
-            <li *ngFor="let furniture of room.roomFurniture">
-              {{ furniture.furnitureName }} ({{ furniture.quantity }})
-            </li>
-          </ul>
+          <ng-container *ngIf="room.isAvailable; else notavail">
+            <p-tag severity="success" value="Available"></p-tag>
+          </ng-container>
+          <ng-template #notavail>
+            <p-tag severity="danger" value="Not available"></p-tag>
+          </ng-template>
+        <td>
+          <p-button (click)="showDialog(room.roomFurniture)" icon="pi pi-list" label="Show"></p-button>
         </td>
         <td>
-          <button type="button" class="btn btn-warning" (click)="openAddFurnitureModal(room)">Add Furniture</button>
+          <p-button icon="pi pi-plus" (click)="openAddFurnitureModal(room)" label="Add"></p-button>
         </td>
       </tr>
     </ng-template>
@@ -53,8 +55,8 @@
     </div>
     <div class="mb-3">
       <label for="roomSize" class="form-label">Size (Person)</label>
-      <p-inputNumber styleClass="w-100" class="w-100" id="roomSize" placeholder="Enter room size" [(ngModel)]="newRoom.roomSize"
-        class="w-100"></p-inputNumber>
+      <p-inputNumber styleClass="w-100" class="w-100" id="roomSize" placeholder="Enter room size"
+        [(ngModel)]="newRoom.roomSize" class="w-100"></p-inputNumber>
     </div>
     <div class="mb-3">
       <label for="roomDescription" class="form-label">Description</label>
@@ -68,8 +70,8 @@
     </div>
     <div class="mb-3">
       <label for="costPerDay" class="form-label">Cost Per Day ($)</label>
-      <p-inputNumber styleClass="w-100" id="costPerDay" placeholder="Enter room cost per day" [(ngModel)]="newRoom.costPerDay"
-        class="w-100" currency="USD"></p-inputNumber>
+      <p-inputNumber styleClass="w-100" id="costPerDay" placeholder="Enter room cost per day"
+        [(ngModel)]="newRoom.costPerDay" class="w-100" currency="USD"></p-inputNumber>
     </div>
     <div class="mb-3">
       <label for="location" class="form-label">Location</label>
@@ -78,15 +80,17 @@
     </div>
     <div class="mb-3 d-flex flex-column">
       <label for="categoryId" class="form-label">Select room category</label>
-      <p-dropdown styleClass="w-100" [options]="categories" optionLabel="categoryName" optionValue="id" [(ngModel)]="newRoom.categoryId"
-        placeholder="Select a category" class="w-100"></p-dropdown>
+      <p-dropdown styleClass="w-100" [options]="categories" optionLabel="categoryName" optionValue="id"
+        [(ngModel)]="newRoom.categoryId" placeholder="Select a category" class="w-100"></p-dropdown>
     </div>
     <div class="mb-3">
       <div class="d-flex flex-column">
         <label class="form-label">Is this room available now?</label>
         <div class="d-flex flex-row gap-2">
-          <p-radioButton name="availability" [value]="false" [(ngModel)]="newRoom.isAvailable" label="No"></p-radioButton>
-          <p-radioButton name="availability" [value]="true" [(ngModel)]="newRoom.isAvailable" label="Yes"></p-radioButton>
+          <p-radioButton name="availability" [value]="false" [(ngModel)]="newRoom.isAvailable"
+            label="No"></p-radioButton>
+          <p-radioButton name="availability" [value]="true" [(ngModel)]="newRoom.isAvailable"
+            label="Yes"></p-radioButton>
         </div>
       </div>
     </div>
@@ -94,7 +98,8 @@
       <label for="roomImages" class="form-label">Room Images</label>
       <input type="file" class="form-control" id="roomImages" multiple (change)="onFileChange($event)">
     </div>
-    <button ngClass="w-100" (click)="createRoom()" pButton pRipple label="Submit information" class="p-button-primary"></button>
+    <button ngClass="w-100" (click)="createRoom()" pButton pRipple label="Submit information"
+      class="p-button-primary"></button>
   </p-dialog>
 
 </div>
@@ -119,4 +124,28 @@
     </table>
   </div>
   <button type="button" class="btn btn-primary" (click)="addFurnitures()">Add</button>
+</p-dialog>
+
+<p-dialog header="List furniture" [(visible)]="listFurnVisible" [modal]="true" [style]="{width: '50vw'}">
+  <p-table [value]="displayRoomFurniture" [tableStyle]="{ 'min-width': '100%' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Quantity</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-furniture>
+      <tr>
+        <td>{{ furniture.furnitureId }}</td>
+        <td>{{ furniture.furnitureName }}</td>
+        <td>{{ furniture.quantity }}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7">This room has no furniture yet...</td>
+      </tr>
+    </ng-template>
+  </p-table>
 </p-dialog>

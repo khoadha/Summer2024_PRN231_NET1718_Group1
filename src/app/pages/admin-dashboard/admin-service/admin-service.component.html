@@ -10,7 +10,7 @@
           <th>ID</th>
           <th>Name</th>
           <th>Description</th>
-          <th>Current Price</th>
+          <th>Current Price ($)</th>
           <th>Actions</th>
         </tr>
       </ng-template>
@@ -21,22 +21,22 @@
           <td>{{ service.description }}</td>
           <td>{{ service.servicePriceNumber }}</td>
           <td>
-              <button type="button" class="btn btn-primary" (click)="openPriceModal(service)">Add Price</button>
+              <button type="button" class="btn btn-primary" (click)="openPriceModal(service)">Update price</button>
           </td>
         </tr>
       </ng-template>
     </p-table>
   
-    <p-dialog header="Create Service" [(visible)]="showCreateModal" [modal]="true">
+    <p-dialog header="Submit service information" [(visible)]="showCreateModal" [modal]="true"  [style]="{ width: '40%' }">
       <div class="mb-3">
-        <label for="name" class="form-label">Name</label>
-        <input type="text" class="form-control" id="name" [(ngModel)]="newService.name">
+        <label for="name" class="form-label">Service name</label>
+        <input placeholder="Enter service name" pInputText type="text" class="form-control" id="name" [(ngModel)]="newService.name">
       </div>
       <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea class="form-control" id="description" [(ngModel)]="newService.description"></textarea>
+        <label for="description" class="form-label">Service description</label>
+        <textarea placeholder="Enter service description" pInputTextarea class="form-control" id="description" [(ngModel)]="newService.description"></textarea>
       </div>
-      <button type="button" class="btn btn-primary" (click)="createService()">Create</button>
+      <button ngClass="w-100" class="btn btn-success" (click)="createService()">Submit information</button>
     </p-dialog>
     
   

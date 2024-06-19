@@ -68,6 +68,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { AdminTransactionComponent } from './pages/admin-dashboard/admin-transaction/admin-transaction.component';
+import { TagModule } from 'primeng/tag';
 
 @NgModule({
   imports: [
@@ -102,6 +103,7 @@ import { AdminTransactionComponent } from './pages/admin-dashboard/admin-transac
     InputNumberModule,
     InputTextareaModule,
     RadioButtonModule,
+    TagModule,
     
   ],
   declarations: [

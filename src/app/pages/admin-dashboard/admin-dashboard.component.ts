@@ -20,13 +20,13 @@ export class AdminDashboardComponent implements OnInit{
     { label: 'Dashboard', url: '/adashboard', icon: 'pi-chart-bar' },
     { label: 'Rooms', url: '/adashboard/manage-room', icon: 'pi-home' },
     { label: 'Furniture', url: '/adashboard/manage-furniture', icon: 'pi-desktop' },
-    { label: 'Orders', url: '/adashboard/manage-order', icon: 'pi-box' },
     { label: 'Services', url: '/adashboard/manage-service', icon: 'pi-shopping-bag' },
     { label: 'Room Categories', url: '/adashboard/manage-room-category', icon: 'pi-book' },
+    { label: 'Orders', url: '/adashboard/manage-order', icon: 'pi-box' },
     { label: 'Transactions', url: '/adashboard/manage-transaction', icon: 'pi-credit-card' },
   ];
 
-  constructor(private router: Router, private auth: AuthService, private userStore: UserStoreService) {
+  constructor(private router: Router) {
   }
 
   ngOnInit(): void {
