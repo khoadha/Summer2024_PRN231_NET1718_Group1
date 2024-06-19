@@ -1,7 +1,10 @@
 <p-toast />
-<section *ngIf="loading" class="intro-single text-center">
+<!-- <section *ngIf="loading" class="intro-single text-center">
     <div class="loading-spinner"></div>
-</section>
+</section> -->
+<app-loader [loader]="loadingSubmit"></app-loader>
+<app-loader [loader]="loading"></app-loader>
+
 <div *ngIf="!loading">
     <section class="intro-single text-center">
         <h2>{{ room.name }}</h2>
@@ -226,9 +229,6 @@
             [disabled]="loadingSubmit" 
             tabindex="-1" 
             (click)="submitForm()"></button>
-            <ng-container *ngIf="loadingSubmit">
-                <i class="pi pi-spin pi-spinner"></i>
-            </ng-container>
         </div>
     </p-dialog>
 </div>

@@ -12,6 +12,6 @@ export class BreadcrumbComponent implements OnInit{
   home: MenuItem | undefined;
 
   ngOnInit() {
-      this.home = { label: '', routerLink: '/home' };
+    this.home = { label: 'Home', routerLink: '/home' };
   }
 }

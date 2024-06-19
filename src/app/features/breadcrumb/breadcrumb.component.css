@@ -1,9 +1,47 @@
-:host >>> .p-breadcrumb {
-    background: #2eca6a !important;
-    padding: 10px 20px;
-    border-radius: 0 !important;
+.breadcrumb-custom {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem 0 0 0.5rem;
 }
 
-:host >>> .p-breadcrumb .p-breadcrumb-list li .p-menuitem-link:focus {
-    box-shadow: none;
+.breadcrumb-custom .p-breadcrumb {
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+::ng-deep .p-breadcrumb{
+    border: none;
+    font-size: x-large;
+}
+
+.breadcrumb-custom .p-breadcrumb li {
+    display: inline;
+}
+
+.breadcrumb-custom .p-breadcrumb li a {
+    color: inherit;
+    text-decoration: none;
+    padding: 0.5rem;
+}
+
+.breadcrumb-custom .p-breadcrumb li .p-menuitem-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.breadcrumb-custom .p-breadcrumb li .p-menuitem-link:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb-custom .p-breadcrumb li .p-breadcrumb-chevron {
+    margin: 0 0.5rem;
+}
+
+.breadcrumb-custom .p-breadcrumb li:last-child .p-menuitem-link {
+    font-weight: bold;
+    pointer-events: none;
 }
