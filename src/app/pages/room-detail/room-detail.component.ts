@@ -36,9 +36,8 @@ export class RoomDetailComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id !== null) {
-      this.roomService.getRoomById(+id).subscribe((room) => {
+      this.roomService.getRoomById(parseInt(id, 10)).subscribe((room) => {
         this.room = room;
-        console.log(this.room);
       });
     } else {
       // handle the case when id is null

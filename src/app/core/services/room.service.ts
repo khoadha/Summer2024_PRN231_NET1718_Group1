@@ -18,9 +18,7 @@ export class RoomService {
   constructor(private http: HttpClient) {}
 
   getRoomById(id: number): Observable<Room> {
-    return this.http.get<{value: Room[]}>(`${this.odataUrl}?$expand=RoomImages&$filter=Id eq ${id}`).pipe(
-      map(response => response.value[0])
-    );
+    return this.http.get<Room>(`${this.odataUrl}(${id})`);
   }
 
   getRooms(): Observable<Room[]> {
