@@ -22,7 +22,7 @@ export class AdminDashboardComponent implements OnInit{
     { name: 'Furniture', url: '/adashboard/manage-furniture', icon: 'pi-cart-arrow-down' },
     { name: 'Room', url: '/adashboard/manage-room', icon: 'pi-warehouse' },
     { name: 'Service', url: '/adashboard/manage-service', icon: 'pi-shopping-bag' },
-    { name: 'Order', url: '/adashboard/#', icon: 'pi-box' },
+    { name: 'Order', url: '/adashboard/manage-order', icon: 'pi-box' },
     { name: 'Transaction', url: '/adashboard/#', icon: 'pi-credit-card' },
   ];
 

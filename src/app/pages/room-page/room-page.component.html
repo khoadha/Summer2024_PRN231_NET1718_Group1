@@ -31,21 +31,31 @@
         <section class="property-grid grid">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-md-3">
                         <div class="grid-option">
-                            <form>
-                                <select class="custom-select">
-                                    <option selected>All</option>
-                                    <option value="1">New to Old</option>
-                                    <option value="2">For Rent</option>
-                                    <option value="3">For Sale</option>
-                                </select>
+                            <form (ngSubmit)="onSubmit()">
+                              <label for="search">Search</label>
+                              <input id="search" [(ngModel)]="search" name="search"/>
+                          
+                              <label for="category">Category</label>
+                              <select id="category" class="custom-select" [(ngModel)]="selectedCategory" name="category">
+                                <option value="">All</option>
+                                <option *ngFor="let category of categories" [value]="category.categoryName">{{ category.categoryName }}</option>
+                              </select>
+                          
+                              <label for="orderBy">Order By</label>
+                              <select id="orderBy" class="custom-select" [(ngModel)]="orderBy" name="orderBy">
+                                <option value="name">By Name</option>
+                                <option value="price">Cheap to Expensive</option>
+                              </select>
+                          
+                              <button type="submit">Search</button>
                             </form>
-                        </div>
+                          </div>
                     </div>
 
-
-                    <div *ngFor="let room of Rooms" class="col-md-4">
+                    <div class="row col-md-9">
+                    <div *ngFor="let room of rooms" class="col-sm-4">
                         <div class="card-box-a card-shadow">
                             <div class="img-box-a">
                                 <img [src]="room.imgPath" alt="room-image" class="img-a img-fluid" />
@@ -74,14 +84,14 @@
                                             <li *ngFor="let furniture of room.roomFurniture; let i = index">
                                                 <h4 class="card-info-title">{{ furniture.furnitureName }}</h4>
                                                 <span>{{ furniture.quantity }}</span>
-                                              </li>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                </div>
 
 
                 </div>
