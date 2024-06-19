@@ -43,15 +43,7 @@
     <p-dialog header="Create Service" [(visible)]="showPriceModal" [modal]="true">
       <div class="mb-3">
         <label for="amount" class="form-label">Amount</label>
-        <input type="number" class="form-control" id="amount" [(ngModel)]="newPrice.amount">
-      </div>
-      <div class="mb-3">
-        <label for="startDate" class="form-label">Start Date</label>
-        <input type="date" class="form-control" id="startDate" [(ngModel)]="newPrice.startDate">
-      </div>
-      <div class="mb-3">
-        <label for="endDate" class="form-label">End Date</label>
-        <input type="date" class="form-control" id="endDate" [(ngModel)]="newPrice.endDate">
+        <input type="number" class="form-control" id="amount" [(ngModel)]="newPrice">
       </div>
       <button type="button" class="btn btn-primary" (click)="createServicePrice()">Create</button>
     </p-dialog>
