@@ -13,7 +13,7 @@ export class AdminServiceComponent implements OnInit {
   showCreateModal = false;
   showPriceModal = false;
   newService: ServiceWithPrice = { name: '', description: '', servicePriceNumber:0 };
-  newPrice: ServicePrice = {};
+  newPrice: number = 0;
   selectedService: ServiceWithPrice | null = null;
   constructor(private serviceService: RoomServiceService, private messageService: MessageService) { }
 
@@ -58,9 +58,7 @@ export class AdminServiceComponent implements OnInit {
   createServicePrice() {
     const requestBody = {
       serviceId: this.selectedService!.id,
-      amount: this.newPrice.amount,
-      startDate: this.newPrice.startDate,
-      endDate: this.newPrice.endDate
+      amount: this.newPrice
     };
 
     this.serviceService.addServicePrice(requestBody).subscribe({

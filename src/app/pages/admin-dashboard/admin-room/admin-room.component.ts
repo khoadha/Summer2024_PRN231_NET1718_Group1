@@ -19,6 +19,8 @@ export class AdminRoomComponent implements OnInit {
   roomImages: File[] = [];
   allFurnitures: RoomFurniture[] = [];
   selectedRoom: Room | null = null;
+  displayRoomFurniture: RoomFurniture[] = [];
+  listFurnVisible: boolean = false;
 
   constructor(private roomService: RoomService,private categoryService: RoomCategoryService,
     private furnitureService: FurnitureService,private messageService: MessageService) { } // Updated service injection
@@ -51,6 +53,11 @@ export class AdminRoomComponent implements OnInit {
   
   onFileChange(event: any) {
     this.roomImages = event.target.files;
+  }
+
+  showDialog(roomFurnitures: RoomFurniture[]) {
+    this.displayRoomFurniture = roomFurnitures;
+    this.listFurnVisible = true;
   }
 
   loadCategories() {
@@ -88,7 +95,7 @@ export class AdminRoomComponent implements OnInit {
   }
 
   clearForm() {
-    this.newRoom = { id:0, name:'', roomDescription:'', location: '', roomSize: 0, roomArea: 0, costPerDay: 0, categoryId: 0, isAvailable: false, roomFurniture:[], roomImages:[] };
+    this.newRoom = { id:0, name:'', roomDescription:'', location: '', roomSize: 0, roomArea: 0, costPerDay: 0, categoryId: 0, isAvailable: true, roomFurniture:[], roomImages:[] };
     this.roomImages = [];
   }
   

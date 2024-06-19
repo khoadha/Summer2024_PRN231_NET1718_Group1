@@ -21,7 +21,7 @@ export class OrderService {
   }
 
   getOrderById(id: number): Observable<GetOrderDto> {
-    return this.http.get<GetOrderDto>(`${this.odataUrl}({${id}})`);
+    return this.http.get<GetOrderDto>(`${this.odataUrl}(${id})`);
   }
 
   createOrder(orderDto: CreateOrderDto): Observable<any> {

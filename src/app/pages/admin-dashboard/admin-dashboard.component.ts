@@ -17,16 +17,16 @@ export class AdminDashboardComponent implements OnInit{
 
   drawerVisible: boolean = true;
   items: MenuItem[] = [
-    { name: 'Dashboard', url: '/adashboard', icon: 'pi-home' },
-    { name: 'Room Category', url: '/adashboard/manage-room-category', icon: 'pi-book' },
-    { name: 'Furniture', url: '/adashboard/manage-furniture', icon: 'pi-cart-arrow-down' },
-    { name: 'Room', url: '/adashboard/manage-room', icon: 'pi-warehouse' },
-    { name: 'Service', url: '/adashboard/manage-service', icon: 'pi-shopping-bag' },
-    { name: 'Order', url: '/adashboard/#', icon: 'pi-box' },
-    { name: 'Transaction', url: '/adashboard/#', icon: 'pi-credit-card' },
+    { label: 'Dashboard', url: '/adashboard', icon: 'pi-chart-bar' },
+    { label: 'Rooms', url: '/adashboard/manage-room', icon: 'pi-home' },
+    { label: 'Furniture', url: '/adashboard/manage-furniture', icon: 'pi-desktop' },
+    { label: 'Services', url: '/adashboard/manage-service', icon: 'pi-shopping-bag' },
+    { label: 'Room Categories', url: '/adashboard/manage-room-category', icon: 'pi-book' },
+    { label: 'Orders', url: '/adashboard/manage-order', icon: 'pi-box' },
+    { label: 'Transactions', url: '/adashboard/manage-transaction', icon: 'pi-credit-card' },
   ];
 
-  constructor(private router: Router, private auth: AuthService, private userStore: UserStoreService) {
+  constructor(private router: Router) {
   }
 
   ngOnInit(): void {

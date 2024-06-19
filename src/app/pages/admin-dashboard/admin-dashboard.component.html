@@ -17,7 +17,7 @@
                 <a class="text-decoration-none d-flex flex-row align-items-center px-2" [routerLink]="item.url">
                     <i [ngClass]="{'icon-active': isLinkActive(item.url!)}" class="pi pi-fw {{item.icon}} text-secondary mt-0 px-1"></i>
                     <div [ngClass]="{'text-active': isLinkActive(item.url!)}" class="text-center web-font ps-3 text-secondary">
-                        {{item['name']}}
+                        {{item.label}}
                     </div>
                 </a>
             </li>

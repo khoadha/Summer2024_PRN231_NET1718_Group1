@@ -18,11 +18,19 @@ export class RoomService {
   constructor(private http: HttpClient) {}
 
   getRoomById(id: number): Observable<Room> {
-    return this.http.get<Room>(`${this.odataRoomDetailUrl}(${id})`);
+    return this.http.get<{value: Room[]}>(`${this.odataUrl}?$expand=RoomImages&$filter=Id eq ${id}`).pipe(
+      map(response => response.value[0])
+    );
   }
 
   getRooms(): Observable<Room[]> {
     return this.http.get<{value: Room[]}>(`${this.odataUrl}`).pipe(
+      map(response => response.value)
+    );
+  }
+
+  searchRoom(searchQuery: string): Observable<RoomDisplay[]> {
+    return this.http.get<{value: RoomDisplay[]}>(`${this.odataRoomDisplayUrl}?${searchQuery}`).pipe(
       map(response => response.value)
     );
   }

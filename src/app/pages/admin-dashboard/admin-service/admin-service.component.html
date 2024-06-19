@@ -1,7 +1,7 @@
 <p-toast/>
   <div class="container">
     <div class="d-flex justify-content-between mb-3">
-      <h2>Services</h2>  <button type="button" class="btn btn-primary" (click)="showCreateModal = true">Create Service</button>
+      <h2>Services Management</h2>  <button type="button" class="btn btn-success" (click)="showCreateModal = true">Create new service</button>
     </div>
   
     <p-table [value]="serviceData">
@@ -10,7 +10,7 @@
           <th>ID</th>
           <th>Name</th>
           <th>Description</th>
-          <th>Current Price</th>
+          <th>Current Price ($)</th>
           <th>Actions</th>
         </tr>
       </ng-template>
@@ -21,37 +21,29 @@
           <td>{{ service.description }}</td>
           <td>{{ service.servicePriceNumber }}</td>
           <td>
-              <button type="button" class="btn btn-primary" (click)="openPriceModal(service)">Add Price</button>
+              <button type="button" class="btn btn-primary" (click)="openPriceModal(service)">Update price</button>
           </td>
         </tr>
       </ng-template>
     </p-table>
   
-    <p-dialog header="Create Service" [(visible)]="showCreateModal" [modal]="true">
+    <p-dialog header="Submit service information" [(visible)]="showCreateModal" [modal]="true"  [style]="{ width: '40%' }">
       <div class="mb-3">
-        <label for="name" class="form-label">Name</label>
-        <input type="text" class="form-control" id="name" [(ngModel)]="newService.name">
+        <label for="name" class="form-label">Service name</label>
+        <input placeholder="Enter service name" pInputText type="text" class="form-control" id="name" [(ngModel)]="newService.name">
       </div>
       <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea class="form-control" id="description" [(ngModel)]="newService.description"></textarea>
+        <label for="description" class="form-label">Service description</label>
+        <textarea placeholder="Enter service description" pInputTextarea class="form-control" id="description" [(ngModel)]="newService.description"></textarea>
       </div>
-      <button type="button" class="btn btn-primary" (click)="createService()">Create</button>
+      <button ngClass="w-100" class="btn btn-success" (click)="createService()">Submit information</button>
     </p-dialog>
     
   
     <p-dialog header="Create Service" [(visible)]="showPriceModal" [modal]="true">
       <div class="mb-3">
         <label for="amount" class="form-label">Amount</label>
-        <input type="number" class="form-control" id="amount" [(ngModel)]="newPrice.amount">
-      </div>
-      <div class="mb-3">
-        <label for="startDate" class="form-label">Start Date</label>
-        <input type="date" class="form-control" id="startDate" [(ngModel)]="newPrice.startDate">
-      </div>
-      <div class="mb-3">
-        <label for="endDate" class="form-label">End Date</label>
-        <input type="date" class="form-control" id="endDate" [(ngModel)]="newPrice.endDate">
+        <input type="number" class="form-control" id="amount" [(ngModel)]="newPrice">
       </div>
       <button type="button" class="btn btn-primary" (click)="createServicePrice()">Create</button>
     </p-dialog>

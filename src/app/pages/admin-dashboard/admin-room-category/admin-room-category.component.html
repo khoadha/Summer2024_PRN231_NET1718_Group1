@@ -1,8 +1,8 @@
 <p-toast></p-toast>
 <div class="container">
     <div class="d-flex justify-content-between mb-3">
-      <h2>Room Categories</h2>
-      <button type="button" class="btn btn-primary" (click)="showModal = true">Create Category</button>
+      <h2>Room Categories Management</h2>
+      <button type="button" class="btn btn-success" (click)="showModal = true">Create new category</button>
     </div>
   
     <p-table [value]="roomCategories">
@@ -20,11 +20,11 @@
       </ng-template>
     </p-table>
   
-    <p-dialog header="Create Category" [(visible)]="showModal" [modal]="true">
+    <p-dialog header="Submit category information" [(visible)]="showModal" [modal]="true" [style]="{ width: '30%' }">
       <div class="mb-3">
-        <label for="categoryName" class="form-label">Name</label>
-        <input type="text" class="form-control" id="categoryName" [(ngModel)]="newCategoryName">
+        <label for="categoryName" class="form-label">Category Name</label>
+        <input placeholder="Enter category name" type="text" class="form-control" id="categoryName" [(ngModel)]="newCategoryName">
       </div>
-      <button type="button" class="btn btn-primary" (click)="createCategory()">Create</button>
+      <button ngClass="w-100" type="button" class="btn btn-success" (click)="createCategory()">Submit information</button>
     </p-dialog>
   </div>

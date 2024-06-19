@@ -1,8 +1,8 @@
 <p-toast/>
   <div class="container">
     <div class="d-flex justify-content-between mb-3">
-      <h2>Furniture</h2>
-      <button type="button" class="btn btn-primary" (click)="showCreateModal = true">Create Furniture</button>
+      <h2>Furniture Management</h2>
+      <button type="button" class="btn btn-success" (click)="showCreateModal = true">Create new furniture</button>
     </div>
   
     <p-table [value]="furnitureData">
@@ -11,7 +11,7 @@
           <th>ID</th>
           <th>Name</th>
           <th>Description</th>
-          <th>Cost</th>
+          <th>Cost per day ($)</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-furniture>
@@ -24,18 +24,18 @@
       </ng-template>
     </p-table>
 
-    <p-dialog header="Create Furniture" [(visible)]="showCreateModal" [modal]="true">
+    <p-dialog header="Submit furniture information form" [(visible)]="showCreateModal" [modal]="true" [style]="{ width: '40%' }">
       <div class="mb-3">
         <label for="name" class="form-label">Name</label>
-        <input type="text" class="form-control" id="name" [(ngModel)]="newFurniture.name">
+        <input placeholder="Enter furniture name" type="text" class="form-control" id="name" [(ngModel)]="newFurniture.name">
       </div>
       <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <textarea class="form-control" id="description" [(ngModel)]="newFurniture.description"></textarea>
+        <textarea placeholder="Enter furniture description" class="form-control" id="description" [(ngModel)]="newFurniture.description"></textarea>
       </div>
       <div class="mb-3">
-        <label for="cost" class="form-label">Cost</label>
-        <input type="number" class="form-control" id="cost" [(ngModel)]="newFurniture.cost">
+        <label for="cost" class="form-label">Cost per day ($)</label>
+        <input placeholder="Enter furniture cost per day" type="number" class="form-control" id="cost" [(ngModel)]="newFurniture.cost">
       </div>
-      <button type="button" class="btn btn-primary" (click)="createFurniture()">Create</button>
+      <button type="button" class="btn btn-primary w-100" (click)="createFurniture()">Submit information</button>
     </p-dialog>
