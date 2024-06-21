@@ -18,10 +18,13 @@ export class OrderDetailComponent implements OnInit {
 
   ngOnInit() {
     const orderId = this.route.snapshot.paramMap.get('id');
-  this.orderService
-    .getOrderById(parseInt(orderId!, 10))
-    .subscribe(res => {
-      this.order = res;
-    });
+    this.orderService
+      .getOrderById(parseInt(orderId!, 10))
+      .subscribe(res => {
+        this.order = res;
+        console.log(res);
+        
+      });
+    
   }
 }

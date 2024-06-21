@@ -2,18 +2,65 @@
     <h2>Order Details</h2>
     <div class="card">
         <div class="card-header">
-            Order ID: {{order.id}} <!--    -->
+            Order
         </div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item"><strong>Room ID:</strong> {{order.roomId}} <!--  --></li>
-            <li class="list-group-item"><strong>Order Date:</strong> {{order.orderDate | date}}
-                <!--   -->
+            <li class="list-group-item"><strong>Room Name:</strong> {{order.roomName}}</li>
+            <li class="list-group-item"><strong>Order Date:</strong> {{order.orderDate | date}}</li>
+            <li class="list-group-item">
+                <strong>Cancel Date:</strong>
+                {{ order.cancelDate ? (order.cancelDate | date) : 'None' }}
             </li>
-            <li class="list-group-item"><strong>Cancel Date:</strong>{{order.cancelDate | date}}
-                <!--  -->
+            <li class="list-group-item"><strong>User Name:</strong> {{order.userName}}</li>
+        </ul>
+    </div>
+
+    <!-- Display Room Services -->
+    <div class="card mt-3">
+        <div class="card-header">
+            Room Services
+        </div>
+        <ul class="list-group list-group-flush">
+            <li *ngFor="let service of order.roomServices" class="list-group-item">
+                {{ service.serviceName }}
             </li>
-            <li class="list-group-item"><strong>User Name:</strong> {{order.userName}} <!--   --></li>
-            <li class="list-group-item"><strong>Room Name:</strong>{{order.roomName}} <!--   -->
+            <li *ngIf="order.roomServices.length === 0" class="list-group-item">
+                No room services selected.
+            </li>
+        </ul>
+    </div>
+
+    <!-- Display Contracts -->
+    <div class="card mt-3">
+        <div class="card-header">
+            Contracts
+        </div>
+        <ul class="list-group list-group-flush">
+            <li *ngFor="let contract of order.contracts" class="list-group-item">
+                <strong>Type:</strong> {{ contract.contractTypeName }} <br>
+                <strong>Total Price:</strong> {{ contract.cost | currency:'USD':'symbol':'1.2-2' }} <br>
+                <strong>Start Date:</strong> {{ contract.startDate | date }} <br>
+                <strong>End Date:</strong> {{ contract.endDate | date }}
+            </li>
+            <li *ngIf="order.contracts.length === 0" class="list-group-item">
+                No contracts found.
+            </li>
+        </ul>
+    </div>
+
+    <!-- Display Guests -->
+    <div class="card mt-3">
+        <div class="card-header">
+            Guests
+        </div>
+        <ul class="list-group list-group-flush">
+            <li *ngFor="let guest of order.guests" class="list-group-item">
+                <strong>Name:</strong> {{ guest.fullname }} <br>
+                <strong>Phone Number:</strong> {{ guest.email }} <br>
+                <strong>Birthday:</strong> {{ guest.birthday | date }}
+            </li>
+            <li *ngIf="order.guests.length === 0" class="list-group-item">
+                No guests listed.
             </li>
         </ul>
     </div>

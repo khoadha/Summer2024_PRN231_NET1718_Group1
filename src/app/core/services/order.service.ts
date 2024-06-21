@@ -24,6 +24,18 @@ export class OrderService {
     return this.http.get<GetOrderDto>(`${this.odataUrl}(${id})`);
   }
 
+  /*getOrderById(id: number): Observable<GetOrderDto> {
+    return this.http.get<{ value: GetOrderDto[] }>(`${this.odataUrl}?$filter=id eq ${id}`)
+      .pipe(
+        map(response => {
+          if (response.value && response.value.length > 0) {
+            return response.value[0];
+          } else {
+            throw new Error('Order not found');
+          }
+        })
+      );
+  }*/
   createOrder(orderDto: CreateOrderDto): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
