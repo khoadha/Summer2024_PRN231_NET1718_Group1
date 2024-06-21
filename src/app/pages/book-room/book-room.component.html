@@ -77,8 +77,8 @@
                     </div>
                     <div class="col">
                         <input class="form-control" type="email" [(ngModel)]="newOccupant.email"
-                            [ngModelOptions]="{standalone: true}" placeholder="Email">
-                            <span class="text-danger" *ngIf="!isEmailValid() && newOccupant.email !== ''">Invalid email</span>
+                            [ngModelOptions]="{standalone: true}" placeholder="Phone Number">
+                            <span class="text-danger" *ngIf="!isPhoneNumberValid() && newOccupant.email !== ''">Invalid phone number</span>
                     </div>
                     <div class="col">
                         <input class="form-control" type="date" [(ngModel)]="newOccupant.birthday" [max]="today"
@@ -93,14 +93,16 @@
                 <div formArrayName="occupants" *ngIf="occupants.length > 0" class="mt-2">
                     <div class="row">
                         <div class="col"><strong>Full Name</strong></div>
-                        <div class="col"><strong>Email</strong></div>
+                        <div class="col"><strong>Phone Number</strong></div>
                         <div class="col"><strong>Birthday</strong></div>
                         <div class="col"><strong>Action</strong></div>
                     </div>
                     <div *ngFor="let occupant of occupants.controls; let i=index" class="row">
                         <div [formGroupName]="i" class="row mt-2">
                             <div class="col">{{ occupant.get('fullname')?.value }}</div>
-                            <div class="col">{{ occupant.get('email')?.value }}</div>
+                            <div class="col">
+                            {{ occupant.get('phonenumber')?.value !== '' ? occupant.get('phonenumber')?.value : 'none' }}
+                            </div>
                             <div class="col">{{ occupant.get('birthday')?.value }}</div>
                             <div class="col">
                                 <button type="button" class="btn btn-danger" (click)="removeOccupant(i)">Remove</button>

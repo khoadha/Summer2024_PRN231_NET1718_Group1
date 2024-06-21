@@ -79,14 +79,15 @@ export class BookRoomComponent implements OnInit {
       ...serviceControls
     }, { validators: this.dateRangeValidator() });
   }
-  isEmailValid(): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    var isEmailValid = false;
-    if (this.newOccupant.email) {
-      isEmailValid = emailRegex.test(this.newOccupant.email);
-    }
-    return isEmailValid;
+  
+  isPhoneNumberValid(): boolean {
+    // Regular expression to validate a phone number
+    const phoneRegex = /^\+?\d{1,3}[-\s]?\d{3,}$/;
+    
+    // Check if phone number is valid or if it's null
+    return !this.newOccupant.email || phoneRegex.test(this.newOccupant.email);
   }
+  
   isBirthdayValid(): boolean {
     const today = new Date();
     var isValid = false;
@@ -99,10 +100,10 @@ export class BookRoomComponent implements OnInit {
 
 
   isOccupantValid(): boolean {
-    var isEmailValid = this.isEmailValid();
+    var isPhoneNumberValid = this.isPhoneNumberValid();
     var isBirthdayValid = this.isBirthdayValid();
 
-    return !!this.newOccupant.fullname && isEmailValid && isBirthdayValid && !!this.newOccupant.birthday && this.occupants.length < this.room.roomSize;
+    return !!this.newOccupant.fullname && isPhoneNumberValid && isBirthdayValid && !!this.newOccupant.birthday && this.occupants.length < this.room.roomSize;
   }
 
 
