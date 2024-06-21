@@ -48,3 +48,11 @@ export interface ServicePrice {
   startDate?: Date;
   endDate?: Date;
 }
+
+export interface GetFeeDto {
+  id: number
+  feeCategoryName: string
+  amount: number
+  paymentDate: string
+  feeStatus: number
+}

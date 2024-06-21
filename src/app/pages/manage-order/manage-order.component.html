@@ -13,6 +13,7 @@
                 <th>Order Date</th>
                 <th>Cancel Date</th>
                 <th>Action</th>
+                <th>View Fee</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-order>
@@ -25,6 +26,11 @@
                 <td>
                     <a [routerLink]="['/order-detail', order.id]">
                         <i class="pi pi-info"></i> Details
+                    </a>
+                </td>
+                <td>
+                    <a [routerLink]="['/fee-detail', order.id]">
+                        <i class="pi pi-dollar"></i> Fees
                     </a>
                 </td>
             </tr>

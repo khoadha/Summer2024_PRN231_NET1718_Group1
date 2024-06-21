@@ -69,6 +69,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { AdminTransactionComponent } from './pages/admin-dashboard/admin-transaction/admin-transaction.component';
 import { TagModule } from 'primeng/tag';
+import { FeeDetailComponent } from './pages/fee-detail/fee-detail.component';
 
 @NgModule({
   imports: [
@@ -144,6 +145,7 @@ import { TagModule } from 'primeng/tag';
     ManageOrderComponent,
     OrderDetailComponent,
     AdminTransactionComponent,
+    FeeDetailComponent,
   ],
   providers: [
     {

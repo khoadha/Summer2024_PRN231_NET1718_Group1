@@ -32,6 +32,7 @@ import { RoomDetailComponent } from './pages/room-detail/room-detail.component';
 import { ManageOrderComponent } from './pages/manage-order/manage-order.component';
 import { OrderDetailComponent } from './pages/order-detail/order-detail.component';
 import { AdminTransactionComponent } from './pages/admin-dashboard/admin-transaction/admin-transaction.component';
+import { FeeDetailComponent } from './pages/fee-detail/fee-detail.component';
 const routes: Routes = [
   {
     path: 'home',
@@ -107,6 +108,11 @@ const routes: Routes = [
     path: 'order-detail/:id',
     component: OrderDetailComponent,
     title: 'Order Detail',
+  },
+  {
+    path: 'fee-detail/:id',
+    component: FeeDetailComponent,
+    title: 'Fee Detail',
   },
   {
     path: 'book-room/:id',
