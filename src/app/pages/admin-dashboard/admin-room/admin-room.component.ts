@@ -118,20 +118,21 @@ export class AdminRoomComponent implements OnInit {
       furnitures: [] as { furnitureId: number, quantity: number, furnitureName?: string }[]
     };
     this.allFurnitures.forEach(furniture => {
-      if (furniture.quantity > 0) {
         requestBody.furnitures.push({
           furnitureId: furniture.id,
           quantity: furniture.quantity,
           furnitureName: furniture.furnitureName
         });
-      }
     });
 
-    this.roomService.addFurnitureToRoom(requestBody).subscribe(() => {
+    this.roomService.addFurnitureToRoom(requestBody).subscribe((res) => {
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Furniture added successfully.' });
       this.showAddFurnitureModal = false;
       this.selectedRoom = null;
       this.initRooms();
+    },
+    (err) =>{
+      this.showErrorMessage(err);
     });
   }
 

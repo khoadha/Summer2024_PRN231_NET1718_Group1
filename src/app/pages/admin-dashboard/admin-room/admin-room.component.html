@@ -17,7 +17,7 @@
         <th>Category</th>
         <th>Is Available</th>
         <th>Furniture </th>
-        <th>Add furniture</th>
+        <th>Update furniture</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-room>
@@ -41,7 +41,7 @@
           <p-button (click)="showDialog(room.roomFurniture)" icon="pi pi-list" label="Show"></p-button>
         </td>
         <td>
-          <p-button icon="pi pi-plus" (click)="openAddFurnitureModal(room)" label="Add"></p-button>
+          <p-button icon="pi pi-pencil" (click)="openAddFurnitureModal(room)" label="Update"></p-button>
         </td>
       </tr>
     </ng-template>
@@ -104,7 +104,7 @@
 
 </div>
 
-<p-dialog header="Add Furniture" [(visible)]="showAddFurnitureModal" [modal]="true">
+<p-dialog header="Update Furniture" [(visible)]="showAddFurnitureModal" [modal]="true">
   <div>
     <table class="table">
       <thead>
@@ -123,7 +123,7 @@
       </tbody>
     </table>
   </div>
-  <button type="button" class="btn btn-primary" (click)="addFurnitures()">Add</button>
+  <button type="button" class="btn btn-primary" (click)="addFurnitures()">Update</button>
 </p-dialog>
 
 <p-dialog header="List furniture" [(visible)]="listFurnVisible" [modal]="true" [style]="{width: '50vw'}">

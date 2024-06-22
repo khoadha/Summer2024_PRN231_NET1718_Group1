@@ -11,7 +11,7 @@
           <th>ID</th>
           <th>Name</th>
           <th>Description</th>
-          <th>Cost per day ($)</th>
+          <th>Cost ($)</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-furniture>
@@ -34,7 +34,7 @@
         <textarea placeholder="Enter furniture description" class="form-control" id="description" [(ngModel)]="newFurniture.description"></textarea>
       </div>
       <div class="mb-3">
-        <label for="cost" class="form-label">Cost per day ($)</label>
+        <label for="cost" class="form-label">Cost ($)</label>
         <input placeholder="Enter furniture cost per day" type="number" class="form-control" id="cost" [(ngModel)]="newFurniture.cost">
       </div>
       <button type="button" class="btn btn-primary w-100" (click)="createFurniture()">Submit information</button>

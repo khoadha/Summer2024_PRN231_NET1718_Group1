@@ -7,8 +7,6 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th>User ID</th>
-                <th>User Name</th>
                 <th>Room Name</th>
                 <th>Order Date</th>
                 <th>Cancel Date</th>
@@ -18,8 +16,6 @@
         </ng-template>
         <ng-template pTemplate="body" let-order>
             <tr>
-                <td>{{order.userId}}</td>
-                <td>{{order.userName}}</td>
                 <td>{{order.roomName}}</td>
                 <td>{{order.orderDate | date:'shortDate'}}</td>
                 <td>{{order.cancelDate | date:'shortDate'}}</td>
