@@ -19,6 +19,10 @@ export class OrderService {
     return this.http.get<GetOrderDto[]>(`${this.odataUrl}`);
   }
 
+  getOrdersByUserId(userId: string): Observable<GetOrderDto[]> {
+    return this.http.get<GetOrderDto[]>(`${this.APIUrl}/get-user-id/${userId}`);
+  }
+
   getOrderById(id: number): Observable<GetOrderDto> {
     return this.http.get<GetOrderDto>(`${this.APIUrl}/${id}`);
   }

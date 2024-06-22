@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/core/services/order.service';
 import { GetOrderDto } from 'src/app/core/models/order';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-manage-order',
@@ -18,13 +19,15 @@ export class ManageOrderComponent implements OnInit {
     'orderDate',
     'cancelDate',
   ];
-  constructor(private orderService: OrderService) {}
+  constructor(private orderService: OrderService,
+    private authService: AuthService) {}
 
   ngOnInit(): void {
     this.getOrders();
   }
 
   getOrders(): void {
-    this.orderService.getOrders().subscribe((orders) => (this.orders = orders));
+    const userId = this.authService.getUserIdFromToken();
+    this.orderService.getOrdersByUserId(userId).subscribe((orders) => (this.orders = orders));
   }
 }
