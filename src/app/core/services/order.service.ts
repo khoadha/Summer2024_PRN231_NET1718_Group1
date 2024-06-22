@@ -10,6 +10,7 @@ import { CreateOrderDto, GetFeeDto, GetOrderDto } from '../models/order';
 export class OrderService {
   readonly baseUrl = environment.baseUrl;
   readonly APIUrl = this.baseUrl + 'order';
+  readonly paymentUrl = this.baseUrl + 'Payments';
   readonly odataUrl = environment.oDataUrl + "orders"
 
   constructor(private http: HttpClient) {}
@@ -33,5 +34,9 @@ export class OrderService {
       }),
     };
     return this.http.post<any>(this.APIUrl + '/create-day', orderDto, httpOptions);
+  }
+
+  createPayment(createPaymentRequest: any ,userId: string){
+    return this.http.post<any>(this.paymentUrl+`/create/${userId}`, createPaymentRequest);
   }
 }

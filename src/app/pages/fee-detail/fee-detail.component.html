@@ -1,29 +1,37 @@
 <div style="margin-top: 200px">
-    <p-table [value]="fees">
-        <ng-template pTemplate="header">
-          <tr>
-            <!-- <th>ID</th> -->
-            <th>cate</th>
-            <th>amount</th>
-            <th>due date</th>
-            <th>status</th>
-            <th>Pay</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-room>
-          <tr>
-            <!-- <td>{{ room.id }}</td> -->
-            <td>{{ room.feeCategoryName }}</td>
-            <td>{{ room.amount }}</td>
-            <td>{{ room.paymentDate }}</td>
-            <td>{{ room.feeStatus }}</td>
-            <td>
-              <a [routerLink]="['/order-detail', room.id]">
-                <i class="pi pi-info"></i> Pay
-            </a>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
+  <p-table [value]="fees">
+    <ng-template pTemplate="header">
+      <tr>
+        <!-- <th>ID</th> -->
+        <th>Category</th>
+        <th>Amount</th>
+        <th>Due Date</th>
+        <th>Status</th>
+        <th>Pay</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-fee>
+      <tr>
+        <!-- <td>{{ fee.id }}</td> -->
+        <td>{{ fee.feeCategoryName }}</td>
+        <td>{{ fee.amount }}</td>
+        <td>{{ fee.paymentDate }}</td>
+        <td>{{ fee.feeStatus }}</td>
+        <td>
+          <p-checkbox
+            [binary]="true"
+            [disabled]="fee.feeStatus === 1"
+            (onChange)="onFeeSelectionChange(fee.id, $event.checked)"
+          ></p-checkbox>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <button
+    pButton
+    type="button"
+    label="Pay Fee"
+    (click)="paySelectedFees()"
+    [disabled]="selectedFeeIds.length === 0"
+  ></button>
 </div>
-  

@@ -22,7 +22,6 @@ export class ManageOrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getOrders();
-    console.log(this.orders);
   }
 
   getOrders(): void {
