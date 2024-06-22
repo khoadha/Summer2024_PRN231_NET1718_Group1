@@ -72,6 +72,7 @@ import { TagModule } from 'primeng/tag';
 import { FeeDetailComponent } from './pages/fee-detail/fee-detail.component';
 import { PayFeeComponent } from './pages/pay-fee/pay-fee.component';
 import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
+import { PaymentRedirectComponent } from './features/payment-redirect/payment-redirect.component';
 
 @NgModule({
   imports: [
@@ -150,6 +151,7 @@ import { PaymentSuccessComponent } from './pages/payment-success/payment-success
     FeeDetailComponent,
     PayFeeComponent,
     PaymentSuccessComponent,
+    PaymentRedirectComponent,
   ],
   providers: [
     {

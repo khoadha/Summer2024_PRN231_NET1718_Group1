@@ -33,6 +33,8 @@ import { ManageOrderComponent } from './pages/manage-order/manage-order.componen
 import { OrderDetailComponent } from './pages/order-detail/order-detail.component';
 import { AdminTransactionComponent } from './pages/admin-dashboard/admin-transaction/admin-transaction.component';
 import { FeeDetailComponent } from './pages/fee-detail/fee-detail.component';
+import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
+import { PaymentRedirectComponent } from './features/payment-redirect/payment-redirect.component';
 const routes: Routes = [
   {
     path: 'home',
@@ -134,6 +136,17 @@ const routes: Routes = [
     path: 'manage-user-order',
     component: ManageOrderComponent,
     title: 'Manage Order',
+  },
+  {
+    path: 'payment-success',
+    component: PaymentSuccessComponent,
+    title: 'Payment Success',
+    canActivate: [authGuard],
+  },
+  {
+    path: 'pcb',
+    component: PaymentRedirectComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'adashboard',
