@@ -39,4 +39,8 @@ export class OrderService {
   createPayment(createPaymentRequest: any ,userId: string){
     return this.http.post<any>(this.paymentUrl+`/create/${userId}`, createPaymentRequest);
   }
+
+  handlePaymentSuccess(txnRef: string, userId: string) {
+    return this.http.put(`${this.paymentUrl}/payment-success/${txnRef}/${userId}`, {});
+  }
 }
