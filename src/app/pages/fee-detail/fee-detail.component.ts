@@ -42,7 +42,7 @@ export class FeeDetailComponent implements OnInit {
   paySelectedFees() {
     const userId = this.authService.getUserIdFromToken();
     if (this.selectedFeeIds.length > 0) {
-      const createPaymentRequest = { description: "", feeIds: this.selectedFeeIds };
+      const createPaymentRequest = { description: "string", feeIds: this.selectedFeeIds };
       this.orderService.createPayment(createPaymentRequest, userId).subscribe(
         res => {
           console.log('Payment successful', res);
