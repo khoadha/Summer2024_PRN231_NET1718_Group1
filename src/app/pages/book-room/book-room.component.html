@@ -72,16 +72,19 @@
                 <label>Occupants</label>
                 <div class="row">
                     <div class="col">
-                        <input class="form-control" type="text" [(ngModel)]="newOccupant.fullname"
+                        <label for="fullname">Full Name</label>
+                        <input id="fullname" class="form-control" type="text" [(ngModel)]="newOccupant.fullname"
                             [ngModelOptions]="{standalone: true}" placeholder="Full Name">
                     </div>
                     <div class="col">
-                        <input class="form-control" type="email" [(ngModel)]="newOccupant.email"
+                        <label for="email">Phone Number</label>
+                        <input id="email" class="form-control" type="email" [(ngModel)]="newOccupant.email"
                             [ngModelOptions]="{standalone: true}" placeholder="Phone Number">
-                            <span class="text-danger" *ngIf="!isPhoneNumberValid() && newOccupant.email !== ''">Invalid phone number</span>
+                        <span class="text-danger" *ngIf="!isPhoneNumberValid() && newOccupant.email !== ''">Invalid phone number</span>
                     </div>
                     <div class="col">
-                        <input class="form-control" type="date" [(ngModel)]="newOccupant.birthday" [max]="today"
+                        <label for="birthday">Birthday</label>
+                        <input id="birthday" class="form-control" type="date" [(ngModel)]="newOccupant.birthday" [max]="today"
                             [ngModelOptions]="{standalone: true}">
                         <span class="text-danger" *ngIf="!isBirthdayValid() && newOccupant.birthday !== undefined">Birthday must be before today</span>
                     </div>
@@ -90,6 +93,7 @@
                             [disabled]="!isOccupantValid()">Add Occupant</button>
                     </div>
                 </div>
+                
                 <div formArrayName="occupants" *ngIf="occupants.length > 0" class="mt-2">
                     <div class="row">
                         <div class="col"><strong>Full Name</strong></div>
@@ -101,7 +105,7 @@
                         <div [formGroupName]="i" class="row mt-2">
                             <div class="col">{{ occupant.get('fullname')?.value }}</div>
                             <div class="col">
-                            {{ occupant.get('phonenumber')?.value !== '' ? occupant.get('phonenumber')?.value : 'none' }}
+                            {{ occupant.get('email')?.value !== '' ? occupant.get('email')?.value : 'none' }}
                             </div>
                             <div class="col">{{ occupant.get('birthday')?.value }}</div>
                             <div class="col">
@@ -196,18 +200,44 @@
                         </tbody>
                     </table>
                 </section>
-
+                
                 <section class="mt-3">
                     <h4>3. Services Booked</h4>
+                    <ng-container *ngIf="selectedServices.length > 0; else noServices">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Service Name</th>
+                                    <th>Service Price</th>
+                                </tr>
+                                <tr *ngFor="let service of selectedServices">
+                                    <td>{{ service.name }}</td>
+                                    <td>${{ service.servicePriceNumber }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </ng-container>
+                    <ng-template #noServices>
+                        <p>No services booked.</p>
+                    </ng-template>
+                </section>
+                
+
+                <section class="mt-3">
+                    <h4>4. Occupants</h4>
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
-                                <th>Service Name</th>
-                                <th>Service Price</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Birthday</th>
                             </tr>
-                            <tr *ngFor="let service of selectedServices">
-                                <td>{{ service.name }}</td>
-                                <td>${{ service.servicePriceNumber }}</td>
+                            <tr *ngFor="let occupant of occupants.controls">
+                                <td class="col">{{ occupant.get('fullname')?.value }}</td>
+                                <td class="col">
+                                {{ occupant.get('email')?.value !== '' ? occupant.get('email')?.value : 'none' }}
+                                </td>
+                                <td class="col">{{ occupant.get('birthday')?.value }}</td>
                             </tr>
                         </tbody>
                     </table>
