@@ -11,43 +11,26 @@ import { Room, RoomDisplay } from '../models/room';
 export class RoomService {
   readonly baseUrl = environment.baseUrl;
   readonly APIUrl = this.baseUrl + 'Rooms';
-  readonly odataUrl = environment.odataUrl + "ORooms"
-  readonly odataRoomDisplayUrl = environment.odataUrl + "ORoomDisplays"
-  readonly odataRoomDetailUrl = environment.odataUrl + "ORoomDetails"
+  readonly odataUrl = environment.oDataUrl + "room";
 
   constructor(private http: HttpClient) {}
 
   getRoomById(id: number): Observable<Room> {
-    return this.http.get<Room>(`${this.odataRoomDetailUrl}(${id})`);
+    return this.http.get<Room>(`${this.APIUrl}/${id}`);
   }
 
   getRooms(): Observable<Room[]> {
-    return this.http.get<{value: Room[]}>(`${this.odataUrl}`).pipe(
-      map(response => response.value)
-    );
+    return this.http.get<Room[]>(`${this.odataUrl}`);
   }
 
-  searchRoom(searchQuery: string): Observable<RoomDisplay[]> {
-    return this.http.get<{value: RoomDisplay[]}>(`${this.odataRoomDisplayUrl}?${searchQuery}`).pipe(
-      map(response => response.value)
-    );
-  }
+  // searchRoom(searchQuery: string): Observable<RoomDisplay[]> {
+  //   return this.http.get<{value: RoomDisplay[]}>(`${this.odataRoomDisplayUrl}?${searchQuery}`).pipe(
+  //     map(response => response.value)
+  //   );
+  // }
 
   getRoomsDisplay(): Observable<RoomDisplay[]> {
-    return this.http.get<{value: RoomDisplay[]}>(`${this.odataRoomDisplayUrl}`).pipe(
-      map(response => response.value)
-    );
-  }
-
-  getRoomsOData(page: number): Observable<Room[]> {
-    const skip = (page - 1) * 3;
-    const top = 3;
-    return this.http.get<Room[]>(
-      `${this.APIUrl}/get-room/?$skip=${skip}&$top=${top}`
-    );
-  }
-  searchRoomByQuery(query: string): Observable<any> {
-    return this.http.get<any>(`${this.APIUrl}/search-room/${query}`);
+    return this.http.get<RoomDisplay[]>(`${this.odataUrl}-display`);
   }
 
   addRoom(formData: any) {

@@ -11,8 +11,7 @@ export class RoomServiceService {
 
   readonly baseUrl = environment.baseUrl;
   readonly APIUrl = this.baseUrl + "Services";
-  readonly odataUrl = environment.odataUrl + "OServices"
-  readonly odataServicePriceUrl = environment.odataUrl + "OServicePrices" 
+  readonly odataUrl = environment.oDataUrl + "services"
 
   constructor(private http: HttpClient) { }
 
@@ -26,9 +25,9 @@ export class RoomServiceService {
     );
   }
 
-  getServicePrice(id: number): Observable<ServicePrice> {
-    return this.http.get<ServicePrice>(`${this.odataServicePriceUrl}({${id}})`);
-  }
+  // getServicePrice(id: number): Observable<ServicePrice> {
+  //   return this.http.get<ServicePrice>(`${this.odataServicePriceUrl}({${id}})`);
+  // }
   
   addService(formData: any) {
     const httpOptions = {

@@ -11,15 +11,12 @@ export class RoomCategoryService {
 
   readonly baseUrl = environment.baseUrl;
   readonly APIUrl = this.baseUrl + "RoomCategories";
-  readonly odataUrl = environment.odataUrl + "ORoomCategories"
+  readonly odataUrl = environment.oDataUrl + "room-categories"
 
   constructor(private http: HttpClient) { }
 
   getRoomCategories(): Observable<RoomCategory[]> {
-    return this.http.get<{ value: RoomCategory[] }>(`${this.odataUrl}`)
-      .pipe(
-        map(response => response.value)
-      );
+    return this.http.get<RoomCategory[]>(`${this.odataUrl}`);
   }
 
   addRoomCategories(formData: FormData) {

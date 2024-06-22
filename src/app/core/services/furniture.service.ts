@@ -11,14 +11,12 @@ export class FurnitureService {
 
   readonly baseUrl = environment.baseUrl;
   readonly APIUrl = this.baseUrl + "Furnitures";
-  readonly odataUrl = environment.odataUrl + "OFurnitures"
+  readonly odataUrl = environment.oDataUrl + "product"
 
   constructor(private http: HttpClient) { }
 
   getFurnitures(): Observable<Furniture[]> {
-    return this.http.get<{ value: Furniture[]}>(`${this.odataUrl}`).pipe(
-      map(response => response.value)
-    );
+    return this.http.get<Furniture[]>(`${this.odataUrl}`);
   }
 
   addFurnitures(formData: any) {

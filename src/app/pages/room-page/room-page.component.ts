@@ -28,12 +28,12 @@ export class RoomPageComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    const searchQuery = this.constructSearchQuery();
-    this.roomService.searchRoom(searchQuery).subscribe(rooms => {
-      this.rooms = rooms;
-    });
-  }
+  // onSubmit() {
+  //   const searchQuery = this.constructSearchQuery();
+  //   this.roomService.searchRoom(searchQuery).subscribe(rooms => {
+  //     this.rooms = rooms;
+  //   });
+  // }
 
   constructSearchQuery(): string {
     let query = '';
