@@ -22,7 +22,6 @@ export class OrderDetailComponent implements OnInit {
       .getOrderById(parseInt(orderId!, 10))
       .subscribe(res => {
         this.order = res;
-        console.log(res);
         
       });
     

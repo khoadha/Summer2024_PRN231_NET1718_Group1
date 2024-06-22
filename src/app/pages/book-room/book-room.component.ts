@@ -79,14 +79,14 @@ export class BookRoomComponent implements OnInit {
       ...serviceControls
     }, { validators: this.dateRangeValidator() });
   }
-  
+
   isPhoneNumberValid(): boolean {
-    // Regular expression to validate a phone number
-    const phoneRegex = /^\+?\d{1,3}[-\s]?\d{3,}$/;
+    // Regular expression to validate a phone number with at least 9 or 10 digits
+  const phoneRegex = /^\d{9,10}$/;
     
     // Check if phone number is valid or if it's null
     return !this.newOccupant.email || phoneRegex.test(this.newOccupant.email);
-  }
+  }  
   
   isBirthdayValid(): boolean {
     const today = new Date();
