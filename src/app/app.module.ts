@@ -70,6 +70,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { AdminTransactionComponent } from './pages/admin-dashboard/admin-transaction/admin-transaction.component';
 import { TagModule } from 'primeng/tag';
 import { FeeDetailComponent } from './pages/fee-detail/fee-detail.component';
+import { PayFeeComponent } from './pages/pay-fee/pay-fee.component';
+import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
 
 @NgModule({
   imports: [
@@ -146,6 +148,8 @@ import { FeeDetailComponent } from './pages/fee-detail/fee-detail.component';
     OrderDetailComponent,
     AdminTransactionComponent,
     FeeDetailComponent,
+    PayFeeComponent,
+    PaymentSuccessComponent,
   ],
   providers: [
     {
