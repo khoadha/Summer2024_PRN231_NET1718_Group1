@@ -20,10 +20,14 @@ export class RoomServiceService {
   }
 
   getServiceWithNewestPrice(): Observable<ServiceWithPrice[]> {
-    return this.http.get<{value: ServiceWithPrice[]}>(`${this.odataUrl}/NewestPrice`).pipe(
-      map(response => response.value)
-    );
+    return this.http.get<ServiceWithPrice[]>(`${this.APIUrl}/newest-price`);
   }
+
+  // getServiceWithNewestPrice(): Observable<ServiceWithPrice[]> {
+  //   return this.http.get<{value: ServiceWithPrice[]}>(`${this.odataUrl}/NewestPrice`).pipe(
+  //     map(response => response.value)
+  //   );
+  // }
 
   // getServicePrice(id: number): Observable<ServicePrice> {
   //   return this.http.get<ServicePrice>(`${this.odataServicePriceUrl}({${id}})`);

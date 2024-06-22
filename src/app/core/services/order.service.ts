@@ -32,6 +32,6 @@ export class OrderService {
         'Content-Type': 'application/json',
       }),
     };
-    return this.http.post<any>(this.APIUrl + '/create', orderDto, httpOptions);
+    return this.http.post<any>(this.APIUrl + '/create-day', orderDto, httpOptions);
   }
 }
