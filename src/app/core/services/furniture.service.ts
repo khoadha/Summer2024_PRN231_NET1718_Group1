@@ -11,7 +11,7 @@ export class FurnitureService {
 
   readonly baseUrl = environment.baseUrl;
   readonly APIUrl = this.baseUrl + "Furnitures";
-  readonly odataUrl = environment.oDataUrl + "product"
+  readonly odataUrl = environment.oDataUrl + "furniture"
 
   constructor(private http: HttpClient) { }
 
