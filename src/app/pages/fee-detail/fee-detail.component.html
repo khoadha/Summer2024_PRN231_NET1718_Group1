@@ -16,7 +16,19 @@
         <td>{{ fee.feeCategoryName }}</td>
         <td>{{ fee.amount }}</td>
         <td>{{ fee.paymentDate }}</td>
-        <td>{{ fee.feeStatus }}</td>
+        <td>
+          <ng-container [ngSwitch]="fee.feeStatus">
+            <ng-container *ngSwitchCase="0">
+                <p-tag severity="warning" value="Unpaid"></p-tag>
+            </ng-container>
+            <ng-container *ngSwitchCase="2">
+                <p-tag severity="danger" value="Overdue"></p-tag>
+            </ng-container>
+            <ng-container *ngSwitchCase="1">
+                <p-tag severity="success" value="Paid"></p-tag>
+            </ng-container>
+        </ng-container>
+        </td>
         <td>
           <p-checkbox
             [binary]="true"
