@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RoomService } from 'src/app/core/services/room.service';
 import { Room, RoomCategory, RoomDisplay } from 'src/app/core/models/room';
 import { RoomCategoryService } from 'src/app/core/services/room-category.service';
+import { QueryModel } from 'src/app/core/models/queryModel';
 
 @Component({
   selector: 'app-room-page',
@@ -28,12 +29,18 @@ export class RoomPageComponent implements OnInit {
     });
   }
 
-  // onSubmit() {
-  //   const searchQuery = this.constructSearchQuery();
-  //   this.roomService.searchRoom(searchQuery).subscribe(rooms => {
-  //     this.rooms = rooms;
-  //   });
-  // }
+  onSubmit() {
+    var query: QueryModel = {
+      filter: this.search,
+      orderBy: this.orderBy === 'price' ? 'costPerDay' : 'name',
+      top: 12,
+      skip: 0,
+      selectedDropdownValue: this.selectedCategory
+    };
+    this.roomService.searchRoomDisplay(query).subscribe(rooms => {
+      this.rooms = rooms;
+    });
+  }
 
   constructSearchQuery(): string {
     let query = '';
@@ -49,7 +56,6 @@ export class RoomPageComponent implements OnInit {
     if (this.orderBy) {
       query += `$orderby=${this.orderBy === 'price' ? 'costPerDay' : 'name'}&`;
     }
-
     return query.slice(0, -1);
   }
 }

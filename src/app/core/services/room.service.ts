@@ -4,6 +4,8 @@ import { Observable, map } from 'rxjs';
 import { environment } from 'src/environment/environment';
 import { CreateOrderDto } from '../models/order';
 import { Room, RoomDisplay } from '../models/room';
+import { QueryModel } from '../models/queryModel';
+import { ConvertQueryModelToRequestQuery } from '../utilities/ConvertQueryModel';
 
 @Injectable({
   providedIn: 'root',
@@ -23,11 +25,10 @@ export class RoomService {
     return this.http.get<Room[]>(`${this.odataUrl}`);
   }
 
-  // searchRoom(searchQuery: string): Observable<RoomDisplay[]> {
-  //   return this.http.get<{value: RoomDisplay[]}>(`${this.odataRoomDisplayUrl}?${searchQuery}`).pipe(
-  //     map(response => response.value)
-  //   );
-  // }
+  searchRoomDisplay(query: QueryModel): Observable<RoomDisplay[]> {
+    var requestQuery = ConvertQueryModelToRequestQuery(query);
+    return this.http.get<RoomDisplay[]>(`${this.odataUrl}-display${requestQuery}`)
+  }
 
   getRoomsDisplay(): Observable<RoomDisplay[]> {
     return this.http.get<RoomDisplay[]>(`${this.odataUrl}-display`);
