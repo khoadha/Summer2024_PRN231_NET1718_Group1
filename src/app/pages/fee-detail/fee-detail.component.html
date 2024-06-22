@@ -3,6 +3,7 @@
     <ng-template pTemplate="header">
       <tr>
         <!-- <th>ID</th> -->
+        <th>Fee Name</th>
         <th>Category</th>
         <th>Amount</th>
         <th>Due Date</th>
@@ -13,6 +14,7 @@
     <ng-template pTemplate="body" let-fee>
       <tr>
         <!-- <td>{{ fee.id }}</td> -->
+        <td>{{ fee.name }}</td>
         <td>{{ fee.feeCategoryName }}</td>
         <td>{{ fee.amount }}</td>
         <td>{{ fee.paymentDate }}</td>

@@ -65,6 +65,7 @@ export interface ServicePrice {
 
 export interface GetFeeDto {
   id: number
+  name: string
   feeCategoryName: string
   amount: number
   paymentDate: string
