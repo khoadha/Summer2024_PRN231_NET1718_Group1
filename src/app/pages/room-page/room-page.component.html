@@ -1,113 +1,98 @@
-<div class="container">
-    <main id="main">
-
-        <!-- ======= Intro Single ======= -->
-        <section class="intro-single">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 col-lg-8">
-                        <div class="title-single-box">
-                            <h1 class="title-single">Our Amazing Rooms</h1>
-                            <span class="color-text-a">Welcome to our available room</span>
+<div class="bg-soft">
+    <div class="container">
+        <main id="main">
+    
+            <!-- ======= Intro Single ======= -->
+            <section class="intro-single">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-8">
+                            <div class="title-single-box">
+                                <h1 class="title-single">Our Amazing Rooms</h1>
+                                <span class="color-text-a">Welcome to our available room</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-12 col-lg-4">
-                        <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item">
-                                    <a href="#">Home</a>
-                                </li>
-                                <li class="breadcrumb-item active" aria-current="page">
-                                    Rooms Grid
-                                </li>
-                            </ol>
-                        </nav>
                     </div>
                 </div>
-            </div>
-        </section><!-- End Intro Single-->
-
-        <!-- ======= Property Grid ======= -->
-        <section class="property-grid grid">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="grid-option">
-                            <form (ngSubmit)="onSubmit()">
-                                <label for="search">Search</label>
-                                <input id="search" [(ngModel)]="search" name="search" />
-
-                                <label for="category">Category</label>
-                                <select id="category" class="custom-select" [(ngModel)]="selectedCategory"
-                                    name="category">
-                                    <option value="">All</option>
-                                    <option *ngFor="let category of categories" [value]="category.categoryName">{{
-                                        category.categoryName }}</option>
-                                </select>
-
-                                <label for="orderBy">Order By</label>
-                                <select id="orderBy" class="custom-select" [(ngModel)]="orderBy" name="orderBy">
-                                    <option value="name">By Name</option>
-                                    <option value="price">Cheap to Expensive</option>
-                                </select>
-
-                                <button type="submit">Search</button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div class="row col-md-9">
-                        <div *ngFor="let room of rooms" class="col-sm-4">
-                            <div class="card-box-a card-shadow">
-                                <div class="img-box-a">
-                                    <img [src]="room.imgPath" alt="room-image" class="img-a img-fluid" />
+            </section><!-- End Intro Single-->
+    
+            <section class="property-grid grid">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="grid-option">
+                                
+                                <div class="d-flex flex-column gap-2">
+                                    <h5 class="text-start">Filter</h5>
+                                    <input placeholder="Enter room name here" type="text" pInputText [(ngModel)]="search"
+                                        name="search" />
                                 </div>
-                                <div class="card-overlay">
-                                    <div class="card-overlay-a-content">
-                                        <div class="card-header-a">
-                                            <h2 class="card-title-a">
-                                                <a href="#">{{ room.name }}</a>
-                                            </h2>
-                                        </div>
-                                        <div class="card-body-a">
-                                            <div class="price-box d-flex">
-                                                <span class="price-a">rent | ${{ room.costPerDay }}</span>
+                                <div class="d-flex flex-column gap-2 mt-3">
+                                    <p-dropdown [options]="categories" [(ngModel)]="selectedCategory"
+                                        optionValue="categoryName" optionLabel="categoryName" [showClear]="true"
+                                        placeholder="Select room category"></p-dropdown>
+                                </div>
+                                <div class="d-flex flex-column gap-2 mt-3">
+                                    <p-dropdown [options]="orderByOptions" [(ngModel)]="orderBy" name="orderBy"
+                                        optionValue="value" optionLabel="label" placeholder="Sort By"></p-dropdown>
+                                </div>
+                                <button ngClass="mt-3 bg-success w-100"  icon="pi pi-search" pButton label="Search" (click)="onSubmit()"></button>
+                            </div>
+                        </div>
+    
+                        <div class="row col-md-9">
+                            <div *ngFor="let room of rooms" class="col-sm-4">
+                                <div class="card-box-a card-shadow">
+                                    <div class="img-box-a">
+                                        <img [src]="room.imgPath" alt="room-image" class="img-a img-fluid" />
+                                    </div>
+                                    <div class="card-overlay">
+                                        <div class="card-overlay-a-content">
+                                            <div class="card-header-a">
+                                                <h2 class="card-title-a">
+                                                    <a href="#">{{ room.name }}</a>
+                                                </h2>
                                             </div>
-                                            <a [routerLink]="['/room-detail', room.id]" class="link-a">Click here to
-                                                view
-                                                <span class="pi pi-chevron-right"></span>
-                                            </a>
-                                        </div>
-                                        <div class="card-footer-a">
-                                            <ul class="card-info d-flex justify-content-around">
-                                                <li>
-                                                    <h4 class="card-info-title">Area</h4>
-                                                    <span class="truncate">{{ room.roomArea }}m<sup>2</sup></span>
-                                                </li>
-                                                <li *ngFor="let furniture of room.roomFurniture; let i = index">
-                                                    <h4 class="card-info-title">{{ furniture.furnitureName }}</h4>
-                                                    <span>{{ furniture.quantity }}</span>
-                                                </li>
-                                            </ul>
+                                            <div class="card-body-a">
+                                                <div class="price-box d-flex">
+                                                    <span class="price-a">rent | ${{ room.costPerDay }}</span>
+                                                </div>
+                                                <a [routerLink]="['/room-detail', room.id]" class="link-a">Click here to
+                                                    view
+                                                    <span class="pi pi-chevron-right"></span>
+                                                </a>
+                                            </div>
+                                            <div class="card-footer-a">
+                                                <ul class="card-info d-flex justify-content-around">
+                                                    <li>
+                                                        <h4 class="card-info-title">Area</h4>
+                                                        <span class="truncate">{{ room.roomArea }}m<sup>2</sup></span>
+                                                    </li>
+                                                    <li *ngFor="let furniture of room.roomFurniture; let i = index">
+                                                        <h4 class="card-info-title">{{ furniture.furnitureName }}</h4>
+                                                        <span>{{ furniture.quantity }}</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="flex justify-content-center w-100 align-items-center mt-5">
+                                <p-paginator
+                                  [showCurrentPageReport]="true"
+                                  #paginator
+                                  [first]="0"
+                                  [rows]="6"
+                                  [totalRecords]="totalRooms"
+                                  (onPageChange)="onPageChange($event)"
+                                ></p-paginator>
+                              </div>
                         </div>
                     </div>
-
-
                 </div>
-                <!-- <div class="row">
-                    <div class="col-sm-12 text-center">
-                        <button class="btn btn-primary" (click)="previousPage()"
-                            [disabled]="currentPage === 1">Previous</button>
-                        <button class="btn btn-primary" (click)="nextPage()">Next</button>
-                    </div>
-                </div> -->
-                <!-- <pagination-controls (pageChange)="currentPage = $event"></pagination-controls> -->
-            </div>
-        </section><!-- End Property Grid Single-->
-
-    </main><!-- End #main -->
+            </section>
+    
+        </main>
+    </div>
 </div>

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors }
 import { Router } from '@angular/router';
 import { MenuItem, MessageService } from 'primeng/api';
 import { Profile, UpdateUsernameDto, UpdatePasswordDto } from 'src/app/core/models/profile';
+import { PaymentTransaction } from 'src/app/core/models/transaction';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ProfileService } from 'src/app/core/services/profile.service';
 import { UserStoreService } from 'src/app/core/services/user-store.service';
@@ -18,7 +19,7 @@ export class ProfileComponent implements OnInit{
   loginMethod: string | null = null;
   breadcrumbItems: MenuItem[] | undefined;
   isLoading: boolean = false;
-  
+  transactions!: PaymentTransaction[];
   // form
   updatePasswordForm!: FormGroup; 
 
@@ -47,7 +48,6 @@ export class ProfileComponent implements OnInit{
   };
 
   constructor(
-    private router: Router,
     private authService: AuthService,
     private userService: ProfileService,
     private messageService: MessageService,
@@ -59,11 +59,13 @@ export class ProfileComponent implements OnInit{
     this.breadcrumbItems = [{ label: 'Profile' }];
     const role = this.authService.getRoleFromToken();
     const userId = this.authService.getUserIdFromToken();
-
+    
     this.userService.getProfileByUserId(userId).subscribe(res => {
       this.profile = res;
     });
-
+    this.userService.getTransactionByUserId(userId).subscribe(res => {
+      this.transactions = res;
+    })
     this.userService.checkLoginMethod(userId).subscribe(res => {
       this.loginMethod = res.loginMethod;
     }, error => {

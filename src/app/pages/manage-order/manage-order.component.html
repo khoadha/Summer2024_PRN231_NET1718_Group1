@@ -1,36 +1,43 @@
-<div class="container" style="margin-top: 200px; min-height: 60vh;">
-    <h1 class="text-center my-5">My Orders</h1>
-    <p-table [value]="orders" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped">
-        <ng-template pTemplate="caption">
-            <div class="flex align-items-center justify-content-between">
-                Orders Management
-            </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr>
-                <th>Room Name</th>
-                <th>Order Date</th>
-                <th>Cancel Date</th>
-                <th>Action</th>
-                <th>View Fee</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-order>
-            <tr>
-                <td>{{order.roomName}}</td>
-                <td>{{order.orderDate | date:'shortDate'}}</td>
-                <td>{{order.cancelDate | date:'shortDate'}}</td>
-                <td>
-                    <a [routerLink]="['/order-detail', order.id]">
-                        <i class="pi pi-info"></i> Details
-                    </a>
-                </td>
-                <td>
-                    <a [routerLink]="['/fee-detail', order.id]">
-                        <i class="pi pi-dollar"></i> Fees
-                    </a>
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
+<div class="bg-soft">
+    <div class="container" style="padding: 120px 0; min-height: 60vh;">
+        <h1 class="text-center my-5">My Orders</h1>
+        <p-table [value]="orders" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped">
+            <!-- <ng-template pTemplate="caption">
+                <div class="flex align-items-center justify-content-between">
+                    Orders Management
+                </div>
+            </ng-template> -->
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Room Name</th>
+                    <th>Order Date</th>
+                    <th>Cancel Date</th>
+                    <th>Action</th>
+                    <th>View Fee</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-order>
+                <tr>
+                    <td>{{order.roomName}}</td>
+                    <td>{{order.orderDate | date:'shortDate'}}</td>
+                    <ng-container *ngIf="order.cancelDate; else nodata">
+                        <td>{{order.cancelDate | date:'shortDate'}}</td>
+                    </ng-container>
+                    <ng-template #nodata>
+                        <td>No data</td>
+                    </ng-template>
+                    <td>
+                        <a [routerLink]="['/order-detail', order.id]">
+                            <i class="pi pi-info"></i> Details
+                        </a>
+                    </td>
+                    <td>
+                        <a [routerLink]="['/fee-detail', order.id]">
+                            <i class="pi pi-dollar"></i> Fees
+                        </a>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
 </div>

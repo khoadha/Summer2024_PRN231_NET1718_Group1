@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environment/environment';
 import { Profile, UpdateUsernameDto, UpdatePasswordDto } from '../models/profile';
+import { PaymentTransaction } from '../models/transaction';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ export class ProfileService {
 
   readonly baseUrl = environment.baseUrl;
   readonly APIUrl = this.baseUrl + 'profiles';
+  readonly paymentUrl = this.baseUrl + 'Payments';
 
   constructor(private http: HttpClient) {}
 
@@ -36,5 +38,9 @@ export class ProfileService {
 
   getProfileByEmail(email: string): Observable<Profile> {
     return this.http.get<Profile>(this.APIUrl + '/profile-img/' + email);
+  }
+
+  getTransactionByUserId(userId: string): Observable<PaymentTransaction[]> {
+    return this.http.get<PaymentTransaction[]>(this.paymentUrl + '/transactions/'+ userId)
   }
 }

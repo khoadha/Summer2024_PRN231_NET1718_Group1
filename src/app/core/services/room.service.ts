@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from 'src/environment/environment';
 import { CreateOrderDto } from '../models/order';
-import { Room, RoomDisplay } from '../models/room';
+import { PaginationRoomDisplay, Room, RoomDisplay } from '../models/room';
 import { QueryModel } from '../models/queryModel';
 import { ConvertQueryModelToRequestQuery } from '../utilities/ConvertQueryModel';
 
@@ -25,9 +25,9 @@ export class RoomService {
     return this.http.get<Room[]>(`${this.odataUrl}`);
   }
 
-  searchRoomDisplay(query: QueryModel): Observable<RoomDisplay[]> {
+  searchRoomDisplay(query: QueryModel): Observable<PaginationRoomDisplay> {
     var requestQuery = ConvertQueryModelToRequestQuery(query);
-    return this.http.get<RoomDisplay[]>(`${this.odataUrl}-display${requestQuery}`)
+    return this.http.get<PaginationRoomDisplay>(`${this.odataUrl}-display${requestQuery}`)
   }
 
   getRoomsDisplay(): Observable<RoomDisplay[]> {

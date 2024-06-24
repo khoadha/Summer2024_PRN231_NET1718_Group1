@@ -31,9 +31,8 @@ export const adminGuard: CanActivateFn = (route, state) => {
   if (storeRoleFromToken === "Admin") {
     return true;
   } else {
-    // _route.navigate(['home']);
-    // return false;
-    return true;
+    _route.navigate(['home']);
+    return false;
   }
 }
 

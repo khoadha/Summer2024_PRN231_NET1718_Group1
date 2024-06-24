@@ -73,6 +73,7 @@ import { FeeDetailComponent } from './pages/fee-detail/fee-detail.component';
 import { PayFeeComponent } from './pages/pay-fee/pay-fee.component';
 import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
 import { PaymentRedirectComponent } from './features/payment-redirect/payment-redirect.component';
+import { PaginatorModule } from 'primeng/paginator';
 
 @NgModule({
   imports: [
@@ -108,6 +109,7 @@ import { PaymentRedirectComponent } from './features/payment-redirect/payment-re
     InputTextareaModule,
     RadioButtonModule,
     TagModule,
+    PaginatorModule,
     
   ],
   declarations: [

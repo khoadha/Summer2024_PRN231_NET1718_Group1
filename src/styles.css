@@ -32,6 +32,11 @@
   background-repeat: no-repeat;
   min-height: 100vh; /* Make the div take up at least the full viewport height */
 }
+
+.bg-soft {
+  background-color: #55555524;
+}
+
 .truncate {
   white-space: nowrap;
   overflow: hidden;
@@ -2145,7 +2150,6 @@ a:hover {
   --------------------------------------------------------------*/
 .section-footer {
   padding-top: 60px;
-  margin-top: 60px;
   background: #f3f3f3;
 }
 

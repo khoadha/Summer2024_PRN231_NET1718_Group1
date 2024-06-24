@@ -36,6 +36,11 @@ export interface RoomDisplay {
   costPerDay: number
   roomFurniture: RoomFurniture[];
 }
+
+export interface PaginationRoomDisplay {
+  total: number
+  data: RoomDisplay[]
+}
 export interface RoomFurniture {
   id: number;
   furnitureId?: number;
