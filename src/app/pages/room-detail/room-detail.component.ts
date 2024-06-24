@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RoomService } from 'src/app/core/services/room.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Room } from 'src/app/core/models/room';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-room-detail',
@@ -29,7 +30,9 @@ export class RoomDetailComponent implements OnInit {
   ];
 
   constructor(
+    private authService: AuthService,
     private route: ActivatedRoute,
+    private router: Router,
     private roomService: RoomService
   ) {}
 
@@ -41,6 +44,15 @@ export class RoomDetailComponent implements OnInit {
       });
     } else {
       // handle the case when id is null
+    }
+  }
+
+  onClickBookRoom(id: number) {
+    const isLogged = this.authService.isLoggedIn();
+    if(isLogged) {
+      this.router.navigate([`/book-room/${id}`]);
+    } else {
+      this.router.navigate(['sign-in'], {queryParams: { redirectUrl: `/book-room/${id}`}});
     }
   }
 }

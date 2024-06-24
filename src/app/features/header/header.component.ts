@@ -9,9 +9,11 @@ import { RoomCategory } from 'src/app/core/models/room';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit{
-  constructor(private auth: AuthService, private userStore: UserStoreService, private categoriesService: RoomCategoryService) {}
-
+export class HeaderComponent implements OnInit {
+  constructor(private auth: AuthService,
+    private userStore: UserStoreService,
+    private categoriesService: RoomCategoryService) { }
+    
   public username!: string;
   public userId!: string;
   public role!: string;
@@ -25,12 +27,12 @@ export class HeaderComponent implements OnInit{
     })
   }
 
-  private getSessionUserInformation(){
+  private getSessionUserInformation() {
     this.userStore.getUsernameFromStore()
-    .subscribe(val => {
-      let usernameFromToken = this.auth.getUsernameFromToken();
-      this.username = val || usernameFromToken
-    })
+      .subscribe(val => {
+        let usernameFromToken = this.auth.getUsernameFromToken();
+        this.username = val || usernameFromToken
+      })
 
     this.userStore.getRoleFromStore().subscribe(val => {
       const roleFromToken = this.auth.getRoleFromToken();
@@ -41,7 +43,7 @@ export class HeaderComponent implements OnInit{
       const imgPath = this.auth.getImgPathFromToken();
       this.imgPath = val || imgPath;
     })
-    if(this.role=="User"){
+    if (this.role == "User") {
       this.userStore.getUserIdFromStore().subscribe(val => {
         const usId = this.auth.getUserIdFromToken();
         this.userId = val || usId;

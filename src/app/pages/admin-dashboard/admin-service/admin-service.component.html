@@ -19,7 +19,7 @@
           <td>{{ service.id }}</td>
           <td>{{ service.name }}</td>
           <td>{{ service.description }}</td>
-          <td>{{ service.servicePriceNumber }}</td>
+          <td>{{ service.servicePriceNumber | currency }}</td>
           <td>
               <button type="button" class="btn btn-primary" (click)="openPriceModal(service)">Update price</button>
           </td>
@@ -40,10 +40,10 @@
     </p-dialog>
     
   
-    <p-dialog header="Create Service" [(visible)]="showPriceModal" [modal]="true">
+    <p-dialog header="Update service price" [(visible)]="showPriceModal" [modal]="true">
       <div class="mb-3">
         <label for="amount" class="form-label">Amount</label>
         <input type="number" class="form-control" id="amount" [(ngModel)]="newPrice">
       </div>
-      <button type="button" class="btn btn-primary" (click)="createServicePrice()">Create</button>
+      <button type="button" class="btn btn-primary" (click)="createServicePrice()">Update price</button>
     </p-dialog>

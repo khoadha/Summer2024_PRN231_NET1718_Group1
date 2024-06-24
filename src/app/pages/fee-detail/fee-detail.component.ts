@@ -12,17 +12,17 @@ import { OrderService } from 'src/app/core/services/order.service';
 export class FeeDetailComponent implements OnInit {
   fees: GetFeeDto[] = [];
   selectedFeeIds: number[] = [];
-
+  orderId: string ='';
   constructor(
     private route: ActivatedRoute,
     private orderService: OrderService,
     private authService: AuthService,
-    private router: Router
   ) {}
 
   ngOnInit() {
     const userId = this.authService.getUserIdFromToken();
     const orderId = this.route.snapshot.paramMap.get('id');
+    this.orderId = orderId!;
     this.orderService.getFeeByOrderId(parseInt(orderId!, 10), userId).subscribe(res => {
       this.fees = res;
     });
@@ -45,9 +45,6 @@ export class FeeDetailComponent implements OnInit {
       const createPaymentRequest = { description: "string", feeIds: this.selectedFeeIds };
       this.orderService.createPayment(createPaymentRequest, userId).subscribe(
         res => {
-          console.log('Payment successful', res);
-          console.log('Payment ss', res.url);
-          // Redirect to the URL provided in the response
           window.location.href = res.url;
         },
         err => {

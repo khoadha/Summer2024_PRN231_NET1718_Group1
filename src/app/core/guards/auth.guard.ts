@@ -6,7 +6,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   let _route = inject(Router);
   const authService = ɵɵinject(AuthService);
   if (!authService.isLoggedIn()) {
-    _route.navigate(['sign-in']);
+    _route.navigate(['sign-in'], { queryParams: { redirectUrl: state.url } });
     return false;
   } else {
     return true;
@@ -36,7 +36,6 @@ export const adminGuard: CanActivateFn = (route, state) => {
     return true;
   }
 }
-
 
 export const userGuard: CanActivateFn = (route, state) => {
   let _route = inject(Router);

@@ -12,7 +12,7 @@
         <th>Description</th>
         <th>Size (person)</th>
         <th>Area (m<sup>2</sup>)</th>
-        <th>Cost Per Day ($)</th>
+        <th>Cost</th>
         <th>Location</th>
         <th>Category</th>
         <th>Is Available</th>
@@ -27,7 +27,7 @@
         <td>{{ room.roomDescription }}</td>
         <td>{{ room.roomSize }}</td>
         <td>{{ room.roomArea }}</td>
-        <td>{{ room.costPerDay }}</td>
+        <td>{{ room.costPerDay | currency }}</td>
         <td>{{ room.location }}</td>
         <td>{{ room.categoryName }}</td>
         <td>
@@ -69,8 +69,8 @@
         class="w-100"></p-inputNumber>
     </div>
     <div class="mb-3">
-      <label for="costPerDay" class="form-label">Cost Per Day ($)</label>
-      <p-inputNumber styleClass="w-100" id="costPerDay" placeholder="Enter room cost per day"
+      <label for="costPerDay" class="form-label">Cost</label>
+      <p-inputNumber styleClass="w-100" id="costPerDay" placeholder="Enter room cost ($)"
         [(ngModel)]="newRoom.costPerDay" class="w-100" currency="USD"></p-inputNumber>
     </div>
     <div class="mb-3">

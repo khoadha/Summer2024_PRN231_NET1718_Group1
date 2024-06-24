@@ -19,8 +19,8 @@
           <td>{{ order.id }}</td>
           <td>{{ order.userName }}</td>
           <td>{{ order.roomName }}</td>
-          <td>{{ order.orderDate }}</td>
-          <td>{{ order.cancelDate }}</td>
+          <td>{{ order.orderDate | date }}</td>
+          <td>{{ order.cancelDate | date }}</td>
         </tr>
       </ng-template>
     </p-table>

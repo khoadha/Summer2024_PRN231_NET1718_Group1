@@ -121,7 +121,7 @@
                                 {{room.roomFurniture.length}} items.
                             </p>
                             <div>
-                                <button class="text-light primary-color-bg mt-2 btn shadow" routerLink="/book-room/{{ room.id }}">
+                                <button class="text-light primary-color-bg mt-2 btn shadow" (click)="onClickBookRoom(room.id)" routerLink="/book-room/{{ room.id }}">
                                     Book Now
                                 </button>
                             </div>

@@ -8,7 +8,7 @@
               <h2 class="title-a">Our Rooms</h2>
             </div>
             <div class="title-link">
-              <a routerLink="/all-room">All Property
+              <a routerLink="/all-room">See all rooms
                 <span class="pi pi-chevron-right"></span>
               </a>
             </div>
@@ -35,7 +35,7 @@
 
               <div class="card-header-a">
                 <h2 class="card-title-a">
-                  <a [routerLink]="['/property-single', property.id]">{{property.name}}</a>
+                  <a [routerLink]="['/room-detail', property.id]">{{property.name}}</a>
                 </h2>
               </div>
 

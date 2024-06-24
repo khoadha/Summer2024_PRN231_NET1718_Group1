@@ -17,7 +17,7 @@ export class AuthService {
 
   readonly baseUrl = environment.baseAuthUrl;
   readonly APIUrl = this.baseUrl + "auth";
-
+  private redirectUrl: string | null = null;
   private userPayload: any;
 
   constructor(private http: HttpClient, private router: Router, private userStoreService: UserStoreService) {
@@ -187,4 +187,15 @@ export class AuthService {
   getSecureClientId(): Observable<string> {
     return this.getEnvironmentData().pipe(map(x => x.secure_client));
   }
+
+  setRedirectUrl(url: string) {
+    this.redirectUrl = url;
+  }
+
+  getRedirectUrl(): string | null {
+    const url = this.redirectUrl;
+    this.redirectUrl = null;
+    return url;
+  }
+
 }

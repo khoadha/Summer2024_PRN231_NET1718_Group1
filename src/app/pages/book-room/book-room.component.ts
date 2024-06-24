@@ -56,7 +56,6 @@ export class BookRoomComponent implements OnInit {
     }
   }
 
-
   async initServicesAndForm() {
     const res = await this.serviceService.getServiceWithNewestPrice().toPromise();
     if (res) {

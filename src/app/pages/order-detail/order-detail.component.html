@@ -1,37 +1,53 @@
-<div class="container" style="margin-top: 200px">
-    <h2>Order Details</h2>
-    <div class="card">
-        <div class="card-header">
-            Order
+<div class="container" style="margin-top: 10%">
+    <h2 class="text-center mb-5">Order Details</h2>
+    <div class="d-flex flex-row justify-content-between">
+        <div class="card col-5">
+            <div class="card-header">
+                Overview information
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Room Name:</strong> {{order.roomName}}</li>
+                <li class="list-group-item"><strong>Order Date:</strong> {{order.orderDate | date}}</li>
+                <li class="list-group-item">
+                    <strong>Cancel Date:</strong>
+                    {{ order.cancelDate ? (order.cancelDate | date) : 'None' }}
+                </li>
+                <li class="list-group-item"><strong>User Name:</strong> {{order.userName}}</li>
+            </ul>
         </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item"><strong>Room Name:</strong> {{order.roomName}}</li>
-            <li class="list-group-item"><strong>Order Date:</strong> {{order.orderDate | date}}</li>
-            <li class="list-group-item">
-                <strong>Cancel Date:</strong>
-                {{ order.cancelDate ? (order.cancelDate | date) : 'None' }}
-            </li>
-            <li class="list-group-item"><strong>User Name:</strong> {{order.userName}}</li>
-        </ul>
-    </div>
+        <div class="card col-3">
+            <div class="card-header">
+                Guests Information
+            </div>
+            <ul class="list-group list-group-flush">
+                <li *ngFor="let guest of order.guests" class="list-group-item">
+                    <strong>Name:</strong> {{ guest.fullname }} <br>
+                    <strong>Phone Number:</strong> {{ guest.email }} <br>
+                    <strong>Birthday:</strong> {{ guest.birthday | date }}
+                </li>
+                <li *ngIf="order.guests.length === 0" class="list-group-item">
+                    No guests listed.
+                </li>
+            </ul>
+        </div>
+        <div class="card col-3">
+            <div class="card-header">
+                Room Services
+            </div>
+            <ul class="list-group list-group-flush">
+                <li *ngFor="let service of order.roomServices" class="list-group-item">
+                    {{ service.serviceName }}
+                </li>
+                <li *ngIf="order.roomServices.length === 0" class="list-group-item">
+                    No room services selected.
+                </li>
+            </ul>
+        </div>
 
-    <!-- Display Room Services -->
-    <div class="card mt-3">
-        <div class="card-header">
-            Room Services
-        </div>
-        <ul class="list-group list-group-flush">
-            <li *ngFor="let service of order.roomServices" class="list-group-item">
-                {{ service.serviceName }}
-            </li>
-            <li *ngIf="order.roomServices.length === 0" class="list-group-item">
-                No room services selected.
-            </li>
-        </ul>
     </div>
 
     <!-- Display Contracts -->
-    <div class="card mt-3">
+    <div class="card mt-4 ">
         <div class="card-header">
             Contracts
         </div>
@@ -49,19 +65,5 @@
     </div>
 
     <!-- Display Guests -->
-    <div class="card mt-3">
-        <div class="card-header">
-            Guests
-        </div>
-        <ul class="list-group list-group-flush">
-            <li *ngFor="let guest of order.guests" class="list-group-item">
-                <strong>Name:</strong> {{ guest.fullname }} <br>
-                <strong>Phone Number:</strong> {{ guest.email }} <br>
-                <strong>Birthday:</strong> {{ guest.birthday | date }}
-            </li>
-            <li *ngIf="order.guests.length === 0" class="list-group-item">
-                No guests listed.
-            </li>
-        </ul>
-    </div>
+
 </div>

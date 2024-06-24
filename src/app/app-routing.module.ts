@@ -131,11 +131,13 @@ const routes: Routes = [
     path: 'manage-profile',
     component: ProfileComponent,
     title: 'Manage Profile',
+    canActivate: [authGuard],
   },
   {
     path: 'manage-user-order',
     component: ManageOrderComponent,
     title: 'Manage Order',
+    canActivate: [authGuard],
   },
   {
     path: 'payment-success',
@@ -200,4 +202,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
