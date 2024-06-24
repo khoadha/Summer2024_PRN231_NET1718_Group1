@@ -62,7 +62,7 @@ export class RoomPageComponent implements OnInit {
   }
 
   onPageChange(e: PageEvent) {
-    this.offset = e.page;
+    this.offset = e.page!;
     this.handleSearch();
   }
 
