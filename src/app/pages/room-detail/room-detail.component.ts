@@ -47,10 +47,14 @@ export class RoomDetailComponent implements OnInit {
     }
   }
 
-  onClickBookRoom(id: number) {
+  onClickBookRoom(id: number, isMonthly: boolean) {
     const isLogged = this.authService.isLoggedIn();
     if(isLogged) {
-      this.router.navigate([`/book-room/${id}`]);
+      if(isMonthly==true){
+        this.router.navigate([`/book-room-monthly/${id}`]);
+      } else {
+        this.router.navigate([`/book-room/${id}`]);
+      }
     } else {
       this.router.navigate(['sign-in'], {queryParams: { redirectUrl: `/book-room/${id}`}});
     }

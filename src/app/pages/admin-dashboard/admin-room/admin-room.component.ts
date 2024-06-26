@@ -21,6 +21,7 @@ export class AdminRoomComponent implements OnInit {
   selectedRoom: Room | null = null;
   displayRoomFurniture: RoomFurniture[] = [];
   listFurnVisible: boolean = false;
+  isLoading: boolean = false;
 
   constructor(private roomService: RoomService,private categoryService: RoomCategoryService,
     private furnitureService: FurnitureService,private messageService: MessageService) { } // Updated service injection
@@ -66,6 +67,7 @@ export class AdminRoomComponent implements OnInit {
     });
   }
   createRoom() {
+    this.isLoading = true;
     const formData = new FormData();
     formData.append('name', this.newRoom.name);
     formData.append('roomSize', this.newRoom.roomSize.toString());
@@ -87,6 +89,7 @@ export class AdminRoomComponent implements OnInit {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Created successfully!' });
         this.initRooms();
         this.clearForm();
+        this.isLoading=false;
       },
       error: (err) =>{
         this.showErrorMessage(err);

@@ -12,9 +12,11 @@ export class AdminServiceComponent implements OnInit {
   serviceData!: ServiceWithPrice[];
   showCreateModal = false;
   showPriceModal = false;
-  newService: ServiceWithPrice = { name: '', description: '', servicePriceNumber:0 };
+  newService: ServiceWithPrice = { name: '', description: '', servicePriceNumber: 0, isCountPerCapita: false };
   newPrice: number = 0;
   selectedService: ServiceWithPrice | null = null;
+  image: File | undefined;
+  isLoading: boolean = false;
   constructor(private serviceService: RoomServiceService, private messageService: MessageService) { }
 
   ngOnInit(): void {
@@ -28,21 +30,29 @@ export class AdminServiceComponent implements OnInit {
   }
 
   createService() {
-    const serviceDto = {
-      name: this.newService.name,
-      description: this.newService.description,
-    };
-
-    this.serviceService.addService(serviceDto).subscribe({
-      next: (res) =>{
+    this.isLoading = true;
+    const formData = new FormData();
+    formData.append('name', this.newService.name);
+    formData.append('description', this.newService.description);
+    formData.append('image', this.image!);
+    formData.append('isCountPerCapita', this.newService.isCountPerCapita.toString());
+  
+    this.serviceService.addService(formData).subscribe({
+      next: (res) => {
         this.initServices();
         this.showCreateModal = false;
-        this.messageService.add({severity:'success', summary:'Success', detail:'Created successfully!'});
+        this.isLoading=false;
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Created successfully!' });
       },
-      error: (err) =>{
+      error: (err) => {
         this.showErrorMessage(err);
       }
     });
+  }
+  
+  onSelect(event: any) {
+    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'Add image successfully!' });
+    this.image = event.currentFiles[0];
   }
 
   showErrorMessage(err: any) {
@@ -55,6 +65,9 @@ export class AdminServiceComponent implements OnInit {
     this.selectedService = service;
     this.showPriceModal = true;
   }
+
+ 
+
   createServicePrice() {
     const requestBody = {
       serviceId: this.selectedService!.id,
@@ -62,13 +75,13 @@ export class AdminServiceComponent implements OnInit {
     };
 
     this.serviceService.addServicePrice(requestBody).subscribe({
-      next: (res) =>{
+      next: (res) => {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Service Price added successfully.' });
         this.showPriceModal = false;
         this.selectedService = null;
         this.initServices();
       },
-      error: (err) =>{
+      error: (err) => {
         this.showErrorMessage(err);
       }
     });

@@ -1,4 +1,5 @@
 <p-toast/>
+<app-loader [loader]="isLoading"></app-loader>
   <div class="container">
     <div class="d-flex justify-content-between mb-3">
       <h2>Services Management</h2>  <button type="button" class="btn btn-success" (click)="showCreateModal = true">Create new service</button>
@@ -11,6 +12,7 @@
           <th>Name</th>
           <th>Description</th>
           <th>Current Price ($)</th>
+          <th>Count per capita</th>
           <th>Actions</th>
         </tr>
       </ng-template>
@@ -20,6 +22,14 @@
           <td>{{ service.name }}</td>
           <td>{{ service.description }}</td>
           <td>{{ service.servicePriceNumber | currency }}</td>
+          <td>
+            <ng-container *ngIf="service.isCountPerCapita==true; else nocapita">
+              <p-tag severity="success" value="Yes"></p-tag>
+            </ng-container>
+            <ng-template #nocapita>
+              <p-tag severity="danger" value="No"></p-tag>
+            </ng-template>
+          </td>
           <td>
               <button type="button" class="btn btn-primary" (click)="openPriceModal(service)">Update price</button>
           </td>
@@ -36,9 +46,24 @@
         <label for="description" class="form-label">Service description</label>
         <textarea placeholder="Enter service description" pInputTextarea class="form-control" id="description" [(ngModel)]="newService.description"></textarea>
       </div>
+      <div class="mb-3">
+        <div class="d-flex flex-column">
+          <label class="form-label">Is this service count per capita?</label>
+          <div class="d-flex flex-row gap-2">
+            <p-radioButton name="availability" [value]="false" [(ngModel)]="newService.isCountPerCapita"
+              label="No"></p-radioButton>
+            <p-radioButton name="availability" [value]="true" [(ngModel)]="newService.isCountPerCapita"
+              label="Yes"></p-radioButton>
+          </div>
+        </div>
+      </div>
+      <div class="my-5">
+        <div class="d-flex justify-content-center">
+          <p-fileUpload mode="basic" chooseLabel="Choose service image" accept="image/*" (onSelect)="onSelect($event)"></p-fileUpload>
+      </div>
+      </div>
       <button ngClass="w-100" class="btn btn-success" (click)="createService()">Submit information</button>
     </p-dialog>
-    
   
     <p-dialog header="Update service price" [(visible)]="showPriceModal" [modal]="true">
       <div class="mb-3">

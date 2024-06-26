@@ -75,7 +75,7 @@ import { PaymentSuccessComponent } from './pages/payment-success/payment-success
 import { PaymentRedirectComponent } from './features/payment-redirect/payment-redirect.component';
 import { PaginatorModule } from 'primeng/paginator';
 import { CalendarModule } from 'primeng/calendar';
-
+import { BookRoomMonthlyComponent } from './pages/book-room-monthly/book-room-monthly.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -156,6 +156,7 @@ import { CalendarModule } from 'primeng/calendar';
     PayFeeComponent,
     PaymentSuccessComponent,
     PaymentRedirectComponent,
+    BookRoomMonthlyComponent,
   ],
   providers: [
     {

@@ -35,6 +35,7 @@ import { AdminTransactionComponent } from './pages/admin-dashboard/admin-transac
 import { FeeDetailComponent } from './pages/fee-detail/fee-detail.component';
 import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
 import { PaymentRedirectComponent } from './features/payment-redirect/payment-redirect.component';
+import { BookRoomMonthlyComponent } from './pages/book-room-monthly/book-room-monthly.component';
 const routes: Routes = [
   {
     path: 'home',
@@ -120,6 +121,12 @@ const routes: Routes = [
     path: 'book-room/:id',
     component: BookRoomComponent,
     title: 'Book Room',
+    canActivate: [userGuard],
+  },
+  {
+    path: 'book-room-monthly/:id',
+    component: BookRoomMonthlyComponent,
+    title: 'Book Room Monthly',
     canActivate: [userGuard],
   },
   {

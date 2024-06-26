@@ -50,7 +50,7 @@
                                 <div class="card-title-c align-self-center">
                                     <h5 class="title-c">{{room.costPerDay}}</h5>
                                 </div>
-                                
+
                             </div>
                         </div>
                         <div class="property-summary">
@@ -112,14 +112,22 @@
                                 {{room.roomDescription}}
                             </p>
                             <p class="description color-text-a no-margin">
-                                {{room.categoryName}} is a {{room.roomSize}}-slot room with {{room.roomArea}}m<sup>2</sup>
-                                area. It is located in {{room.location}}. The cost per day is {{room.costPerDay | currency}}. The
+                                {{room.categoryName}} is a {{room.roomSize}}-slot room with
+                                {{room.roomArea}}m<sup>2</sup>
+                                area. It is located in {{room.location}}. The cost per day is {{room.costPerDay |
+                                currency}}. The
                                 room is {{room.isAvailable ? 'Available' : 'Not Available'}}. The room is furnished with
                                 {{room.roomFurniture.length}} items.
                             </p>
-                            <div>
-                                <button class="w-100 text-light primary-color-bg mt-5 btn shadow" (click)="onClickBookRoom(room.id)" routerLink="/book-room/{{ room.id }}">
-                                    Book Now
+                            <div class="d-flex flex-row align-items-baseline gap-3">
+                                <button pTooltip="Best for short-term vacation!" tooltipPosition="bottom" class="w-50 text-light primary-color-bg mt-5 btn shadow"
+                                    (click)="onClickBookRoom(room.id, false)">
+                                    BOOK NOW
+                                </button>
+                                <p>or</p>
+                                <button pTooltip="Best for price!" tooltipPosition="bottom" class="w-50 text-light bg-info mt-5 btn shadow"
+                                    (click)="onClickBookRoom(room.id, true)">
+                                    REGISTER MONTHLY RENTALS
                                 </button>
                             </div>
                         </div>

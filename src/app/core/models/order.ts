@@ -45,6 +45,8 @@ export interface ServiceWithPrice {
   name: string;
   description: string;
   servicePriceNumber: number;
+  isCountPerCapita: boolean;
+  image?: File;
 }
 export interface RoomServiceDto {
   serviceId?: number;
