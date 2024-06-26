@@ -36,10 +36,19 @@ export class RoomPageComponent implements OnInit {
   constructor(private roomService: RoomService, private categoryService: RoomCategoryService) { }
 
   ngOnInit(): void {
-    this.handleSearch();
     this.categoryService.getRoomCategories().subscribe(res => {
       this.categories = res;
     });
+    this.handleSelectedCategoryFromHeader();
+    this.handleSearch();
+  }
+
+  handleSelectedCategoryFromHeader(){
+    var sessionSelectedCategory = sessionStorage.getItem('selectedHeaderCategory');
+    if(sessionSelectedCategory != null && sessionSelectedCategory != undefined) {
+      this.selectedCategory = sessionSelectedCategory;
+      sessionStorage.removeItem('selectedHeaderCategory');
+    }
   }
 
   handleSearch() {
@@ -52,6 +61,9 @@ export class RoomPageComponent implements OnInit {
     };
     this.roomService.searchRoomDisplay(query).subscribe(res => {
       this.rooms = res.data;
+      if(res.data == null) {
+        this.rooms = [];
+      }
       this.totalRooms = res.total;
     });
   }

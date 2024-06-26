@@ -5,6 +5,7 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { Profile, UpdateUsernameDto, UpdatePasswordDto } from 'src/app/core/models/profile';
 import { PaymentTransaction } from 'src/app/core/models/transaction';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { PaymentService } from 'src/app/core/services/payment.service';
 import { ProfileService } from 'src/app/core/services/profile.service';
 import { UserStoreService } from 'src/app/core/services/user-store.service';
 
@@ -51,6 +52,7 @@ export class ProfileComponent implements OnInit{
     private authService: AuthService,
     private userService: ProfileService,
     private messageService: MessageService,
+    private paymentService: PaymentService,
     private fb: FormBuilder,
     private userStore: UserStoreService) { }
 
@@ -63,7 +65,7 @@ export class ProfileComponent implements OnInit{
     this.userService.getProfileByUserId(userId).subscribe(res => {
       this.profile = res;
     });
-    this.userService.getTransactionByUserId(userId).subscribe(res => {
+    this.paymentService.getTransactionByUserId(userId).subscribe(res => {
       this.transactions = res;
     })
     this.userService.checkLoginMethod(userId).subscribe(res => {

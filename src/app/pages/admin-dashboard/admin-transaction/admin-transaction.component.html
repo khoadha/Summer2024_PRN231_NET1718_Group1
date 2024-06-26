@@ -1,1 +1,34 @@
-<p>admin-transaction works!</p>
+<ng-container *ngIf="transactions">
+    <div class="container">
+        <p-table [paginator]="true" [rows]="5" [showCurrentPageReport]="true" [value]="transactions">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Created Date</th>
+                    <th>Status</th>
+                    <th>Amount</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-transaction>
+                <tr>
+                    <td>{{ transaction.vnPayTransactionId }}</td>
+                    <td>{{ transaction.createdDate | date }}</td>
+                    <td>
+                        <ng-container [ngSwitch]="transaction.transactionStatus">
+                            <ng-container *ngSwitchCase="0">
+                                <p-tag severity="danger" value="Failed"></p-tag>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="1">
+                                <p-tag severity="success" value="Paid"></p-tag>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="2">
+                                <p-tag severity="danger" value="Failed"></p-tag>
+                            </ng-container>
+                        </ng-container>
+                    </td>
+                    <td>{{ transaction.amount | currency }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</ng-container>

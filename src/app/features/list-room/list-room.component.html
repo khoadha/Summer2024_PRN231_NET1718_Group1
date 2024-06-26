@@ -1,33 +1,26 @@
 <section class="section-property section-t8">
 
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="title-wrap d-flex justify-content-between">
-            <div class="title-box">
-              <h2 class="title-a">Our Rooms</h2>
-            </div>
-            <div class="title-link">
-              <a routerLink="/all-room">See all rooms
-                <span class="pi pi-chevron-right"></span>
-              </a>
-            </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="title-wrap d-flex justify-content-between">
+          <div class="title-box">
+            <h2 class="title-a">Our Rooms</h2>
+          </div>
+          <div class="title-link">
+            <a routerLink="/all-room">See all rooms
+              <span class="pi pi-chevron-right"></span>
+            </a>
           </div>
         </div>
       </div>
-  
-      <p-carousel 
-        [value]="properties"
-        [numVisible]="3" 
-        [numScroll]="1" 
-        [circular]="true" 
-        [autoplayInterval]="5000">
+    </div>
 
-        <ng-template pTemplate="item" let-property>
-          <div class="card-box-a card-shadow mx-2">
-
+    <p-carousel [value]="properties" [numVisible]="3" [numScroll]="1" [circular]="true" [autoplayInterval]="5000">
+      <ng-template pTemplate="item" let-property>
+        <div class="card-box-a card-shadow mx-2">
           <div class="img-box-a">
-            <img [src]="property.imgPath" alt="" class="img-a img-fluid">
+            <img [src]="property.imgPath" alt="" class="w-100" style="height: 400px;">
           </div>
 
           <div class="card-overlay">
@@ -48,23 +41,22 @@
                 </a>
               </div>
 
-                <div class="card-footer-a">
-                  <ul class="card-info d-flex justify-content-around">
-                    <li>
-                      <h4 class="card-info-title">Area</h4>
-                      <span>{{ property.roomArea }}m<sup>2</sup></span>
-                    </li>
-                    <li *ngFor="let furniture of property.roomFurniture; let i = index">
-                      <h4 class="card-info-title">{{ furniture.furnitureName }}</h4>
-                      <span>{{ furniture.quantity }}</span>
-                    </li>
-                  </ul>
-                </div>                
+              <div class="card-footer-a">
+                <ul class="card-info d-flex justify-content-around">
+                  <li>
+                    <h4 class="card-info-title">Area</h4>
+                    <span>{{ property.roomArea }}m<sup>2</sup></span>
+                  </li>
+                  <li *ngFor="let furniture of property.roomFurniture; let i = index">
+                    <h4 class="card-info-title">{{ furniture.furnitureName }}</h4>
+                    <span>{{ furniture.quantity }}</span>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
-        </ng-template>
-      </p-carousel>
-    </div>
-  </section>
-  
+        </div>
+      </ng-template>
+    </p-carousel>
+  </div>
+</section>

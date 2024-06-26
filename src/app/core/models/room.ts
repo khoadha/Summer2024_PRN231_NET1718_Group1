@@ -33,6 +33,7 @@ export interface RoomDisplay {
   name: string
   imgPath: string
   roomArea: number
+  categoryName: string
   costPerDay: number
   roomFurniture: RoomFurniture[];
 }

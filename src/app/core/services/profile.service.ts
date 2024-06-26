@@ -39,8 +39,4 @@ export class ProfileService {
   getProfileByEmail(email: string): Observable<Profile> {
     return this.http.get<Profile>(this.APIUrl + '/profile-img/' + email);
   }
-
-  getTransactionByUserId(userId: string): Observable<PaymentTransaction[]> {
-    return this.http.get<PaymentTransaction[]>(this.paymentUrl + '/transactions/'+ userId)
-  }
 }

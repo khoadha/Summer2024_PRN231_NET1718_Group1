@@ -16,14 +16,14 @@
           <a class="nav-link active" routerLink="/home">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " routerLink="/all-room">Rooms</a>
+          <a class="nav-link" (click)="onClickAllRooms()">Rooms</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">Categories</a>
           <div class="dropdown-menu">
             <ng-container *ngFor="let cate of categories">
-              <a class="dropdown-item" href="property-single.html">{{cate.categoryName}}</a>
+              <a class="dropdown-item" (click)="onClickHeaderCategory(cate.categoryName)">{{cate.categoryName}}</a>
             </ng-container>
           </div>
         </li>

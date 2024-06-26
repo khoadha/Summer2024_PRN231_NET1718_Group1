@@ -4,3 +4,8 @@
         text-align: justify;
     }
 }
+
+.empty-cart-msg {
+    font-size: 40px;
+    line-height: 50px;
+  }

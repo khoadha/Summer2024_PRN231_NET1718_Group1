@@ -89,18 +89,12 @@ export class AuthService {
     window.location.reload();
   }
 
-  storeToken(tokenValue: string, expiryDays: number = 0.0104) {
-    const expiryDate = new Date();
-    expiryDate.setTime(expiryDate.getTime() + expiryDays * 24 * 60 * 60 * 1000);
-    const expires = `expires=${expiryDate.toUTCString()}`;
-    document.cookie = `__Secure_a=${this.encrypt(tokenValue, this.getSecureKey())}; ${expires}; secure`;
+  storeToken(tokenValue: string) {
+    document.cookie = `__Secure_a=${this.encrypt(tokenValue, this.getSecureKey())}; secure; SameSite=Strict`;
   }
 
-  storeRefreshToken(tokenValue: string, expiryDays: number = 7) {
-    const expiryDate = new Date();
-    expiryDate.setTime(expiryDate.getTime() + expiryDays * 24 * 60 * 60 * 1000);
-    const expires = `expires=${expiryDate.toUTCString()}`;
-    document.cookie = `__Secure_r=${this.encrypt(tokenValue, this.getSecureKey())}; ${expires}; secure`;
+  storeRefreshToken(tokenValue: string) {
+    document.cookie = `__Secure_r=${this.encrypt(tokenValue, this.getSecureKey())}; secure; SameSite=Strict`;
   }
 
   getToken() {

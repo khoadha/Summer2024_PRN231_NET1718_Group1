@@ -39,55 +39,60 @@
                                 <button ngClass="mt-3 bg-success w-100"  icon="pi pi-search" pButton label="Search" (click)="onSubmit()"></button>
                             </div>
                         </div>
-    
+                        
                         <div class="row col-md-9">
-                            <div *ngFor="let room of rooms" class="col-sm-4">
-                                <div class="card-box-a card-shadow">
-                                    <div class="img-box-a">
-                                        <img [src]="room.imgPath" alt="room-image" class="img-a img-fluid" />
-                                    </div>
-                                    <div class="card-overlay">
-                                        <div class="card-overlay-a-content">
-                                            <div class="card-header-a">
-                                                <h2 class="card-title-a">
-                                                    <a href="#">{{ room.name }}</a>
-                                                </h2>
-                                            </div>
-                                            <div class="card-body-a">
-                                                <div class="price-box d-flex">
-                                                    <span class="price-a">rent | ${{ room.costPerDay }}</span>
+                            <ng-container *ngIf="rooms.length > 0; else nodata">
+                                <div *ngFor="let room of rooms" class="col-sm-4">
+                                    <div class="card-box-a card-shadow">
+                                        <div class="img-box-a">
+                                            <img [src]="room.imgPath" alt="room-image" class="w-100" style="height: 320px;"/>
+                                        </div>
+                                        <div class="card-overlay">
+                                            <div class="card-overlay-a-content">
+                                                <div class="card-header-a">
+                                                    <h2 class="card-title-a">
+                                                        <a>{{ room.name }}</a>
+                                                    </h2>
                                                 </div>
-                                                <a [routerLink]="['/room-detail', room.id]" class="link-a">Click here to
-                                                    view
-                                                    <span class="pi pi-chevron-right"></span>
-                                                </a>
-                                            </div>
-                                            <div class="card-footer-a">
-                                                <ul class="card-info d-flex justify-content-around">
-                                                    <li>
-                                                        <h4 class="card-info-title">Area</h4>
-                                                        <span class="truncate">{{ room.roomArea }}m<sup>2</sup></span>
-                                                    </li>
-                                                    <li *ngFor="let furniture of room.roomFurniture; let i = index">
-                                                        <h4 class="card-info-title">{{ furniture.furnitureName }}</h4>
-                                                        <span>{{ furniture.quantity }}</span>
-                                                    </li>
-                                                </ul>
+                                                <div class="card-body-a">
+                                                    <div class="price-box d-flex">
+                                                        <span class="price-a">rent | ${{ room.costPerDay }}</span>
+                                                    </div>
+                                                    <a [routerLink]="['/room-detail', room.id]" class="link-a">Click here to
+                                                        view
+                                                        <span class="pi pi-chevron-right"></span>
+                                                    </a>
+                                                </div>
+                                                <div class="card-footer-a">
+                                                    <ul class="card-info d-flex justify-content-around">
+                                                        <li>
+                                                            <h4 class="card-info-title">Area</h4>
+                                                            <span class="truncate">{{ room.roomArea }}m<sup>2</sup></span>
+                                                        </li>
+                                                        <li>
+                                                            <h4 class="card-info-title">Category</h4>
+                                                            <span class="truncate">{{ room.categoryName }}</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="flex justify-content-center w-100 align-items-center mt-5">
-                                <p-paginator
-                                  [showCurrentPageReport]="true"
-                                  #paginator
-                                  [first]="0"
-                                  [rows]="6"
-                                  [totalRecords]="totalRooms"
-                                  (onPageChange)="onPageChange($event)"
-                                ></p-paginator>
-                              </div>
+                                <div class="flex justify-content-center w-100 align-items-center my-5">
+                                    <p-paginator [showCurrentPageReport]="true" #paginator [first]="0" [rows]="6" [totalRecords]="totalRooms"
+                                        (onPageChange)="onPageChange($event)"></p-paginator>
+                                </div>
+                            </ng-container>
+                            <ng-template #nodata>
+                                <div class="row">
+                                    <div class="col-3"></div>
+                                    <div class="col-6">
+                                        <h1 class="text-center text-dark empty-cart-msg">No rooms matching your criteria were found!</h1>
+                                    </div>
+                                    <div class="col-3"></div>
+                                </div>
+                            </ng-template>
                         </div>
                     </div>
                 </div>

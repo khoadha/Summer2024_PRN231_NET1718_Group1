@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { QueryModel } from 'src/app/core/models/queryModel';
 import { Room, RoomDisplay } from 'src/app/core/models/room';
 import { RoomService } from 'src/app/core/services/room.service';
 
@@ -17,8 +18,11 @@ export class ListRoomComponent implements OnInit{
   }
 
   initRooms() {
-    this.roomService.getRoomsDisplay().subscribe(res => {
-      this.properties = res;
+    var query: QueryModel = {
+      top: 8,
+    };
+    this.roomService.searchRoomDisplay(query).subscribe(res => {
+      this.properties = res.data;
     });
   }
 }

@@ -8,7 +8,6 @@ import { RoomService } from 'src/app/core/services/room.service';
 import { Room } from 'src/app/core/models/room';
 import { RoomServiceService } from 'src/app/core/services/room-service.service';
 import { MessageService } from 'primeng/api';
-import { CalendarModule } from 'primeng/calendar';
 
 @Component({
   selector: 'app-book-room',
@@ -26,7 +25,7 @@ export class BookRoomComponent implements OnInit {
   allServices: ServiceWithPrice[] = [];
   today: string;
   username: string;
-  @ViewChild('feeText') feeText!: ElementRef;
+  totalDays: number = 0;
 
   constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef,
     private orderService: OrderService, private authService: AuthService,
@@ -42,7 +41,6 @@ export class BookRoomComponent implements OnInit {
       await this.initServicesAndForm();
       await this.initRoom();
       this.loading = false;
-      this.updateTotalFee();
     } catch (error) {
       console.error("Error during initialization:", error);
     }
@@ -76,17 +74,17 @@ export class BookRoomComponent implements OnInit {
       endDate: [this.today, [Validators.required, this.dateValidator()]],
       occupants: this.fb.array([], [this.validateOccupants]),
       ...serviceControls
-    }, { validators: this.dateRangeValidator() });
+    }, { validators: [this.dateRangeValidator(),this.dateRangeLimitValidator()] });
   }
 
   isPhoneNumberValid(): boolean {
     // Regular expression to validate a phone number with at least 9 or 10 digits
-  const phoneRegex = /^\d{9,10}$/;
-    
+    const phoneRegex = /^\d{9,10}$/;
+
     // Check if phone number is valid or if it's null
     return !this.newOccupant.email || phoneRegex.test(this.newOccupant.email);
-  }  
-  
+  }
+
   isBirthdayValid(): boolean {
     const today = new Date();
     var isValid = false;
@@ -117,7 +115,7 @@ export class BookRoomComponent implements OnInit {
   dateValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const inputDate = control.value;
-      
+
       return inputDate >= this.today ? null : { 'dateInvalid': true };
     };
   }
@@ -127,6 +125,20 @@ export class BookRoomComponent implements OnInit {
       const startDate = formGroup.get('startDate')?.value;
       const endDate = formGroup.get('endDate')?.value;
       return new Date(startDate) <= new Date(endDate) ? null : { 'dateRangeInvalid': true };
+    };
+  }
+
+  dateRangeLimitValidator(): ValidatorFn {
+    return (formGroup: AbstractControl): { [key: string]: any } | null => {
+      const startDate = formGroup.get('startDate')?.value;
+      const endDate = formGroup.get('endDate')?.value;
+      const startDateObj = startDate instanceof Date ? startDate : new Date(startDate);
+      const endDateObj = endDate instanceof Date ? endDate : new Date(endDate);
+      if (isNaN(startDateObj.getTime()) || isNaN(endDateObj.getTime())) {
+        return null;
+      }
+      const diffInDays = Math.ceil(Math.abs(endDateObj.getTime() - startDateObj.getTime()) / (1000 * 60 * 60 * 24));
+      return diffInDays <= 29 ? null : { 'dateRangeLimit': true };
     };
   }
 
@@ -158,43 +170,37 @@ export class BookRoomComponent implements OnInit {
     this.newOccupant.email = '';
     this.newOccupant.birthday = undefined;
   }
+
   calculateDays() {
     const startDateString = this.bookingForm.get('startDate')?.value;
     const endDateString = this.bookingForm.get('endDate')?.value;
-
     if (startDateString && endDateString) {
       const startDate = new Date(startDateString);
       const endDate = new Date(endDateString);
       const totalDays = 1 + Math.ceil(Math.abs((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)));
+      this.totalDays = totalDays;
       return totalDays;
     }
     return 0;
   }
+
   calculateTotalFee() {
-    const baseFee = this.room.costPerDay;
-    let totalFee = baseFee;
+    let feePerDay = this.room.costPerDay;
+
     this.allServices.forEach(service => {
       const serviceControl = this.bookingForm.get(service.name);
-
       if (serviceControl && serviceControl.value) {
-        totalFee += service.servicePriceNumber;
+        feePerDay += service.servicePriceNumber;
       }
     });
     const totalDays = this.calculateDays();
-    totalFee *= totalDays;
+    var totalFee = feePerDay *= totalDays;
     return totalFee;
   }
 
-  updateTotalFee() {
-    const totalFee = this.calculateTotalFee();
-    if (this.feeText) {
-      this.feeText.nativeElement.textContent = totalFee;
-    }
-  }
   submitForm() {
     if (this.bookingForm.valid) {
-      this.loadingSubmit = true; 
-
+      this.loadingSubmit = true;
       const userId = this.authService.getUserIdFromToken();
       const guests = this.bookingForm.get('occupants')?.value.map((occupant: any) => ({
         fullname: occupant.fullname,
@@ -221,10 +227,10 @@ export class BookRoomComponent implements OnInit {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Created order successfully.' });
           this.displayDialog = true;
           this.showContract = false;
-          this.loadingSubmit = false; 
+          this.loadingSubmit = false;
         },
         error: (err) => {
-          this.loadingSubmit = false; 
+          this.loadingSubmit = false;
           this.showErrorMessage(err);
         }
       }

@@ -74,6 +74,7 @@ import { PayFeeComponent } from './pages/pay-fee/pay-fee.component';
 import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
 import { PaymentRedirectComponent } from './features/payment-redirect/payment-redirect.component';
 import { PaginatorModule } from 'primeng/paginator';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   imports: [
@@ -110,6 +111,7 @@ import { PaginatorModule } from 'primeng/paginator';
     RadioButtonModule,
     TagModule,
     PaginatorModule,
+    CalendarModule,
     
   ],
   declarations: [
