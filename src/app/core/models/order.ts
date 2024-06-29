@@ -8,6 +8,7 @@ export interface CreateOrderDto {
   startDate: Date | null;
   endDate: Date | null;
   roomServices: RoomServiceDto[];
+  isMonthly?: boolean;
 }
 export interface GetOrderDto {
   id?: number;

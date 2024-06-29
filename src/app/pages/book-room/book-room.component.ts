@@ -219,7 +219,8 @@ export class BookRoomComponent implements OnInit {
         endDate: this.bookingForm.get('endDate')!.value,
         cost: this.calculateTotalFee(),
         guests: guests,
-        roomServices: roomServices
+        roomServices: roomServices,
+        isMonthly: false
       };
 
       this.orderService.createOrder(orderDto).subscribe({

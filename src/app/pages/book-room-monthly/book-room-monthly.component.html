@@ -1,4 +1,5 @@
-<p-toast />
+<ng-container *ngIf="room">
+    <p-toast />
 <app-loader [loader]="loadingSubmit"></app-loader>
 <app-loader [loader]="loading"></app-loader>
 
@@ -28,31 +29,32 @@
                 <div class="form-container">
                     <p-table [value]="room.roomFurniture" [tableStyle]="{ 'min-width': '100%' }">
                         <ng-template pTemplate="header">
-                          <tr>
-                            <th>Name</th>
-                            <th>Quantity</th>
-                          </tr>
+                            <tr>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                            </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-furniture>
-                          <tr>
-                            <td>{{ furniture.furnitureName }}</td>
-                            <td>{{ furniture.quantity }}</td>
-                          </tr>
+                            <tr>
+                                <td>{{ furniture.furnitureName }}</td>
+                                <td>{{ furniture.quantity }}</td>
+                            </tr>
                         </ng-template>
                         <ng-template pTemplate="emptymessage">
-                          <tr>
-                            <td colspan="7">This room has no furniture yet...</td>
-                          </tr>
+                            <tr>
+                                <td colspan="7">This room has no furniture yet...</td>
+                            </tr>
                         </ng-template>
-                      </p-table>
+                    </p-table>
                 </div>
             </div>
 
-            <div class="d-flex justify-content-evenly my-5">
+            <div class="d-flex justify-content-evenly mt-5 mb-2">
                 <div class="form-group col-6 pe-2"
                     [ngClass]="{'has-error': bookingForm.get('startDate')?.invalid && (bookingForm.get('startDate')?.dirty || bookingForm.get('startDate')?.touched)}">
-                    <label class="fs-5">Choose start date</label>
-                    <input class="form-control" [min]="today" type="date" formControlName="startDate">
+                    <label class="fs-5 mb-2">Choose start date</label>
+                    <input style="min-height: 49.33px;" class="form-control" [min]="today" type="date"
+                        formControlName="startDate">
                     <div
                         *ngIf="bookingForm.get('startDate')?.invalid && (bookingForm.get('startDate')?.dirty || bookingForm.get('startDate')?.touched)">
                         <small class="text-danger" *ngIf="bookingForm.get('startDate')?.errors?.['dateInvalid']">
@@ -60,30 +62,28 @@
                         </small>
                     </div>
                 </div>
-                <div class="form-group col-6 ps-2"
-                    [ngClass]="{'has-error': bookingForm.get('endDate')?.invalid && (bookingForm.get('endDate')?.dirty || bookingForm.get('endDate')?.touched)}">
-                    <label class="fs-5">Choose end date</label>
-                    <input class="form-control" [min]="today" type="date" formControlName="endDate">
-                    <div
-                        *ngIf="bookingForm.get('endDate')?.invalid || bookingForm.get('endDate')?.dirty || bookingForm.get('endDate')?.touched">
-                        <small class="text-danger" *ngIf="bookingForm.get('endDate')?.errors?.['dateInvalid']">
-                            End date cannot be in the past.
-                        </small>
-                        <small class="text-danger" *ngIf="bookingForm.errors?.['dateRangeInvalid']">
-                            End date must be after start date.
-                        </small>
-                        <small class="text-danger" *ngIf="bookingForm.errors?.['dateRangeLimit']">
-                            The period from the start date to the end date must not exceed 30 days
-                        </small>
-                    </div>
+                <div class="form-group col-6 ps-2">
+                    <label class="fs-5 mb-2">How many month(s) will be last from start date?</label>
+                    <p-inputNumber formControlName="monthLast" [showButtons]="true" [min]="1" [max]="60"></p-inputNumber>
                 </div>
             </div>
+
+            <div class="d-flex justify-content-evenly">
+                <div class="form-group col-6 pe-2">
+                    <label class="fs-5 mb-2">End date (estimated)</label>
+                    <input formControlName="estimatedEndDate" style="min-height: 49.33px;" class="form-control" type="date">
+                </div>
+                <div class="col-6"></div>
+            </div>  
             <div class="form-group">
                 <label class="mb-1 fs-3">Services - Each services chosen will increase the rate per day</label>
                 <div class="form-container">
                     <div class="form-check" *ngFor="let service of allServices">
                         <input class="form-check-input me-2" type="checkbox" [formControlName]="service.name">
-                        <label class="form-check-label">{{ service.name }} - ${{ service.servicePriceNumber}}</label>
+                        <label class="form-check-label">{{ service.name }} - ${{ service.servicePriceNumber}} - 
+                            <ng-container *ngIf="service.isCountPerCapita===true; else perRoom">Per capita</ng-container>
+                            <ng-template #perRoom>Per room</ng-template>
+                        </label>
                     </div>
                 </div>
             </div>
@@ -288,4 +288,5 @@
                 tabindex="-1" (click)="submitForm()"></button>
         </div>
     </p-dialog>
-</div>
+</div>  
+</ng-container>

@@ -23,44 +23,44 @@ export class BookRoomMonthlyComponent implements OnInit {
   bookingForm!: FormGroup;
   newOccupant: GuestDto = { fullname: '', email: '', birthday: undefined };
   allServices: ServiceWithPrice[] = [];
-  today: string;
-  username: string;
+  today!: string;
+  todayObj!: Date;
+  username!: string;
   totalDays: number = 0;
-
+  estimatedEndDate!: string
   constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef,
     private orderService: OrderService, private authService: AuthService,
     private router: Router, private roomService: RoomService,
     private route: ActivatedRoute, private serviceService: RoomServiceService, private messageService: MessageService) {
-    const todayDate = new Date();
-    this.today = todayDate.toISOString().split('T')[0]; // format the date to 'YYYY-MM-DD' 
-    this.username = this.authService.getUsernameFromToken();
+
   }
 
-  async ngOnInit() {
-    try {
-      await this.initServicesAndForm();
-      await this.initRoom();
-      this.loading = false;
-    } catch (error) {
-      console.error("Error during initialization:", error);
-    }
+  ngOnInit() {
+    const todayDate = new Date();
+    this.todayObj = new Date();
+    this.today = todayDate.toISOString().split('T')[0];
+    this.username = this.authService.getUsernameFromToken();
+    this.loading = true;
+    this.initServicesAndForm();
+    this.initRoom();
+    this.loading = false;
   }
-  async initRoom() {
+
+  initRoom() {
     const idFromRoute = this.route.snapshot.paramMap.get('id')!;
     const orderId = parseInt(idFromRoute, 10);
-    const res = await this.roomService.getRoomById(orderId).toPromise();
-    if (res) {
+    this.roomService.getRoomById(orderId).subscribe(res => {
       this.room = res;
-    }
+    });
   }
 
-  async initServicesAndForm() {
-    const res = await this.serviceService.getServiceWithNewestPrice().toPromise();
-    if (res) {
+  initServicesAndForm() {
+    this.serviceService.getServiceWithNewestPrice().subscribe(res => {
       this.allServices = res;
       this.initForm();
-    }
+    });
   }
+
   initForm() {
     const serviceControls: { [key: string]: any } = {};
     this.allServices.forEach(service => {
@@ -71,17 +71,15 @@ export class BookRoomMonthlyComponent implements OnInit {
       userId: [''],
       cost: [''],
       startDate: [this.today, [Validators.required, this.dateValidator()]],
-      endDate: [this.today, [Validators.required, this.dateValidator()]],
+      monthLast: [1, [Validators.required]],
+      estimatedEndDate: [{ value: this.estimatedEndDate, disabled: true }],
       occupants: this.fb.array([], [this.validateOccupants]),
       ...serviceControls
-    }, { validators: [this.dateRangeValidator(),this.dateRangeLimitValidator()] });
+    })
   }
 
   isPhoneNumberValid(): boolean {
-    // Regular expression to validate a phone number with at least 9 or 10 digits
     const phoneRegex = /^\d{9,10}$/;
-
-    // Check if phone number is valid or if it's null
     return !this.newOccupant.email || phoneRegex.test(this.newOccupant.email);
   }
 
@@ -95,14 +93,12 @@ export class BookRoomMonthlyComponent implements OnInit {
     return isValid;
   }
 
-
   isOccupantValid(): boolean {
     var isPhoneNumberValid = this.isPhoneNumberValid();
     var isBirthdayValid = this.isBirthdayValid();
 
     return !!this.newOccupant.fullname && isPhoneNumberValid && isBirthdayValid && !!this.newOccupant.birthday && this.occupants.length < this.room.roomSize;
   }
-
 
   validateOccupants(control: AbstractControl): ValidationErrors | null {
     const occupantsArray = control as FormArray;
@@ -117,28 +113,6 @@ export class BookRoomMonthlyComponent implements OnInit {
       const inputDate = control.value;
 
       return inputDate >= this.today ? null : { 'dateInvalid': true };
-    };
-  }
-
-  dateRangeValidator(): ValidatorFn {
-    return (formGroup: AbstractControl): { [key: string]: any } | null => {
-      const startDate = formGroup.get('startDate')?.value;
-      const endDate = formGroup.get('endDate')?.value;
-      return new Date(startDate) <= new Date(endDate) ? null : { 'dateRangeInvalid': true };
-    };
-  }
-
-  dateRangeLimitValidator(): ValidatorFn {
-    return (formGroup: AbstractControl): { [key: string]: any } | null => {
-      const startDate = formGroup.get('startDate')?.value;
-      const endDate = formGroup.get('endDate')?.value;
-      const startDateObj = startDate instanceof Date ? startDate : new Date(startDate);
-      const endDateObj = endDate instanceof Date ? endDate : new Date(endDate);
-      if (isNaN(startDateObj.getTime()) || isNaN(endDateObj.getTime())) {
-        return null;
-      }
-      const diffInDays = Math.ceil(Math.abs(endDateObj.getTime() - startDateObj.getTime()) / (1000 * 60 * 60 * 24));
-      return diffInDays <= 29 ? null : { 'dateRangeLimit': true };
     };
   }
 
@@ -171,30 +145,42 @@ export class BookRoomMonthlyComponent implements OnInit {
     this.newOccupant.birthday = undefined;
   }
 
-  calculateDays() {
+  calculateEndDate(startDate: Date, months: number): Date {
+    const endDate = new Date(startDate);
+    endDate.setMonth(endDate.getMonth() + months);
+    return endDate;
+  }
+
+  calculateDays(): void {
     const startDateString = this.bookingForm.get('startDate')?.value;
-    const endDateString = this.bookingForm.get('endDate')?.value;
-    if (startDateString && endDateString) {
+    const months = this.bookingForm.get('monthLast')?.value;
+    if (startDateString && months) {
       const startDate = new Date(startDateString);
-      const endDate = new Date(endDateString);
+      const endDate = this.calculateEndDate(startDate, parseInt(months, 10));
+      this.estimatedEndDate = endDate.toISOString().split('T')[0];
+      this.bookingForm.get('estimatedEndDate')?.setValue(this.estimatedEndDate, { emitEvent: false });
       const totalDays = 1 + Math.ceil(Math.abs((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)));
       this.totalDays = totalDays;
-      return totalDays;
+    } else {
+      this.totalDays = 0;
     }
-    return 0;
   }
 
   calculateTotalFee() {
     let feePerDay = this.room.costPerDay;
+    const occupantsCount = this.occupants.length;
 
     this.allServices.forEach(service => {
       const serviceControl = this.bookingForm.get(service.name);
       if (serviceControl && serviceControl.value) {
-        feePerDay += service.servicePriceNumber;
+        if (service.isCountPerCapita) {
+          feePerDay += service.servicePriceNumber * occupantsCount;
+        } else {
+          feePerDay += service.servicePriceNumber;
+        }
       }
     });
-    const totalDays = this.calculateDays();
-    var totalFee = feePerDay *= totalDays;
+    const totalFee = feePerDay * this.totalDays;
     return totalFee;
   }
 
@@ -216,10 +202,11 @@ export class BookRoomMonthlyComponent implements OnInit {
         userId: userId,
         roomId: this.room.id,
         startDate: this.bookingForm.get('startDate')!.value,
-        endDate: this.bookingForm.get('endDate')!.value,
+        endDate: this.bookingForm.get('estimatedEndDate')!.value,
         cost: this.calculateTotalFee(),
         guests: guests,
-        roomServices: roomServices
+        roomServices: roomServices,
+        isMonthly: true
       };
 
       this.orderService.createOrder(orderDto).subscribe({

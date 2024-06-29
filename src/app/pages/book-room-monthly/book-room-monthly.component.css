@@ -1,116 +1,133 @@
 .container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.list-group-item {
+  background-color: transparent;
+  border: none;
+}
+
+.form-check {
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.btn-danger {
+  margin-left: 5px;
+}
+
+.btn-primary {
+  margin-top: 10px;
+}
+
+.btn-success {
+  margin-top: 10px;
+}
+
+.contract {
+  padding: 2rem;
+  border: 1px solid #ddd;
+  border-radius: .5rem;
+}
+
+.contract h2 {
+  text-align: center;
+}
+
+.contract table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.contract table th,
+.contract table td {
+  padding: .75rem;
+  border: 1px solid #ddd;
+}
+
+.contract table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.contract-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.contract-checkbox {
+  margin-right: 1rem;
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  border-top-color: #333;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  .form-group {
-    margin-bottom: 20px;
+
+  100% {
+    transform: rotate(360deg);
   }
-  
-  .list-group-item {
-    background-color: transparent;
-    border: none;
-  }
-  
-  .form-check {
-    margin-bottom: 10px;
-    display: flex;
-  }
-  
-  .btn-danger {
-    margin-left: 5px;
-  }
-  
-  .btn-primary {
-    margin-top: 10px;
-  }
-  
-  .btn-success {
-    margin-top: 10px;
-  }
-  
-  .contract {
-    padding: 2rem;
-    border: 1px solid #ddd;
-    border-radius: .5rem;
-  }
-  
-  .contract h2 {
-    text-align: center;
-  }
-  
-  .contract table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .contract table th,
-  .contract table td {
-    padding: .75rem;
-    border: 1px solid #ddd;
-  }
-  
-  .contract table tr:nth-child(even) {
-    background-color: #f8f9fa;
-  }
-  
-  .contract-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
-  
-  .contract-checkbox {
-    margin-right: 1rem;
-  }
-  .loading-spinner {
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-    border: 3px solid rgba(0, 0, 0, 0.3);
-    border-radius: 50%;
-    border-top-color: #333;
-    animation: spin 1s ease-in-out infinite;
-  }
-  
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
-  .form-label {
-    font-weight: bold;
-  }
-  .form-group {
-    margin-bottom: 20px;
-  }
-  .form-control-static {
-    border: none;
-    background-color: transparent;
-    font-size: 1rem;
-    margin-top: 10px;
-  }
-  .list-group-item {
-    border: none;
-    background-color: transparent;
-  }
-  .btn-add-occupant {
-    margin-top: 10px;
-  }
-  #rate-text {
-    font-weight: bold;
-  }
-  #fee-text {
-    font-weight: bold;
-    font-size: 1.2rem;
-  }
-  .form-container {
-      border: 1px solid #000;
-      padding: 20px;
-      border-radius: 10px;
-  }
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-control-static {
+  border: none;
+  background-color: transparent;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+.list-group-item {
+  border: none;
+  background-color: transparent;
+}
+
+.btn-add-occupant {
+  margin-top: 10px;
+}
+
+#rate-text {
+  font-weight: bold;
+}
+
+#fee-text {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.form-container {
+  border: 1px solid #000;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+
+:host>>> {
+  p-inputnumber, .p-inputnumber {
+    display: inline-flex;
+    width: 100% !important;
+}
+}
