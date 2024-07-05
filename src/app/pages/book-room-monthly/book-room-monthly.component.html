@@ -220,7 +220,7 @@
                             </tr>
                             <tr>
                                 <th>Departure Date</th>
-                                <td>{{ bookingForm.get('endDate')?.value }}</td>
+                                <td>{{ bookingForm.get('estimatedEndDate')?.value }}</td>
                             </tr>
                             <tr>
                                 <th>Number of Nights</th>
@@ -238,10 +238,19 @@
                                 <tr>
                                     <th>Service Name</th>
                                     <th>Service Price</th>
+                                    <th>Count By</th>
                                 </tr>
                                 <tr *ngFor="let service of selectedServices">
                                     <td>{{ service.name }}</td>
                                     <td>${{ service.servicePriceNumber }}</td>
+                                    <td>
+                                        <ng-container *ngIf="service.isCountPerCapita===true;else nocapita">
+                                            Capita
+                                        </ng-container>
+                                        <ng-template #nocapita>
+                                            Room
+                                        </ng-template>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

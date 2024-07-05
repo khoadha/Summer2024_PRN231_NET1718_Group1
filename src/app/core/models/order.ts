@@ -46,6 +46,7 @@ export interface ServiceWithPrice {
   name: string;
   description: string;
   servicePriceNumber: number;
+  serviceType: number;
   isCountPerCapita: boolean;
   image?: File;
 }
@@ -73,4 +74,5 @@ export interface GetFeeDto {
   amount: number
   paymentDate: string
   feeStatus: number
+  usedKWh?: number
 }

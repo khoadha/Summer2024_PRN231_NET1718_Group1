@@ -1,0 +1,71 @@
+<p-toast/>
+<ng-container *ngIf="fees">
+    <div class="container">
+      <h2 class="text-center my-3">Admin Manage Fee</h2>
+      <p-table [value]="fees" dataKey="id">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>ID</th>
+            <th>Order ID</th>
+            <th>Name</th>
+            <th>Room</th>
+            <th>Due date</th>
+            <th>Status</th>
+            <th>Used kWh</th>
+            <th>Amount</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-fee let-editing="editing">
+          <tr>
+            <td>{{ fee.id }}</td>
+            <td>{{ fee.orderId }}</td>
+            <td>{{ fee.name }}</td>
+            <td>{{ fee.roomName }}</td>
+            <td>{{ fee.paymentDate | date }}</td>
+            <td>
+              <ng-container [ngSwitch]="fee.feeStatus">
+                <ng-container *ngSwitchCase="0">
+                  <p-tag severity="warning" value="Unpaid"></p-tag>
+                </ng-container>
+                <ng-container *ngSwitchCase="2">
+                  <p-tag severity="info" value="Deferred"></p-tag>
+                </ng-container>
+                <ng-container *ngSwitchCase="1">
+                  <p-tag severity="success" value="Paid"></p-tag>
+                </ng-container>
+              </ng-container>
+            </td>
+            <td>
+              <input pInputText type="number" [(ngModel)]="fee.usedKWh" (ngModelChange)="updateAmount(fee, fee.usedKWh)" />
+            </td>
+            <td>
+                  {{ fee.amount | currency }}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+      <button ngClass="w-100" (click)="onSubmitFees()" pButton pRipple label="Submit fees"
+      class="p-button-primary"></button>
+    </div>
+  
+    <div class="container my-5">
+      <h2 class="text-center my-3">Electricity Prices</h2>
+      <p-table [value]="electricityPrices">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Step</th>
+            <th>Range (kWh)</th>
+            <th>Price (USD/kWh)</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-price>
+          <tr>
+            <td>{{ price.step }}</td>
+            <td>{{ price.range }}</td>
+            <td>{{ price.priceUSD }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </ng-container>

@@ -31,13 +31,26 @@ export class OrderService {
     return this.http.get<GetFeeDto[]>(`${this.APIUrl}/get-fee/${orderId}?userId=${userId}`);
   }
 
+  getDeferredElectricityFee(): Observable<GetFeeDto[]> {
+    return this.http.get<GetFeeDto[]>(`${this.APIUrl}/deferred-electricity-fee`);
+  }
+
+  updateAmountFees(dto: any): Observable<GetFeeDto[]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    return this.http.post<GetFeeDto[]>(`${this.APIUrl}/update-amount-fee`,dto, httpOptions)
+  }
+
   createOrder(orderDto: CreateOrderDto): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
     };
-    return this.http.post<any>(this.APIUrl + '/create-day', orderDto, httpOptions);
+    return this.http.post<any>(this.APIUrl, orderDto, httpOptions);
   }
 
   createPayment(createPaymentRequest: any ,userId: string){

@@ -18,12 +18,13 @@ export class AdminDashboardComponent implements OnInit{
   drawerVisible: boolean = true;
   items: MenuItem[] = [
     { label: 'Dashboard', url: '/adashboard', icon: 'pi-chart-bar' },
-    { label: 'Rooms', url: '/adashboard/manage-room', icon: 'pi-home' },
-    { label: 'Furniture', url: '/adashboard/manage-furniture', icon: 'pi-desktop' },
-    { label: 'Services', url: '/adashboard/manage-service', icon: 'pi-shopping-bag' },
-    { label: 'Room Categories', url: '/adashboard/manage-room-category', icon: 'pi-book' },
-    { label: 'Orders', url: '/adashboard/manage-order', icon: 'pi-box' },
-    { label: 'Transactions', url: '/adashboard/manage-transaction', icon: 'pi-credit-card' },
+    { label: 'Manage Rooms', url: '/adashboard/manage-room', icon: 'pi-home' },
+    { label: 'Manage Furniture', url: '/adashboard/manage-furniture', icon: 'pi-desktop' },
+    { label: 'Manage Services', url: '/adashboard/manage-service', icon: 'pi-shopping-bag' },
+    { label: 'Manage Room Categories', url: '/adashboard/manage-room-category', icon: 'pi-book' },
+    { label: 'Manage Orders', url: '/adashboard/manage-order', icon: 'pi-box' },
+    { label: 'Manage Transactions', url: '/adashboard/manage-transaction', icon: 'pi-credit-card' },
+    { label: 'Manage Fees', url: '/adashboard/manage-fee', icon: 'pi-money-bill' },
   ];
 
   constructor(private router: Router) {

@@ -56,7 +56,7 @@ export class BookRoomMonthlyComponent implements OnInit {
 
   initServicesAndForm() {
     this.serviceService.getServiceWithNewestPrice().subscribe(res => {
-      this.allServices = res;
+      this.allServices = res.filter(service => service.serviceType === 0|| service.serviceType === 2);
       this.initForm();
     });
   }

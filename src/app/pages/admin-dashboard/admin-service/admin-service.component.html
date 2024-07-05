@@ -13,6 +13,7 @@
           <th>Description</th>
           <th>Current Price ($)</th>
           <th>Count per capita</th>
+          <th>Service Type</th>
           <th>Actions</th>
         </tr>
       </ng-template>
@@ -31,6 +32,17 @@
             </ng-template>
           </td>
           <td>
+            <ng-container *ngIf="service.serviceType==0">
+              All rental type
+            </ng-container>
+            <ng-container *ngIf="service.serviceType==1">
+              Only daily rental
+            </ng-container>
+            <ng-container *ngIf="service.serviceType==2">
+              Only monthly rental
+            </ng-container>
+          </td>
+          <td>
               <button type="button" class="btn btn-primary" (click)="openPriceModal(service)">Update price</button>
           </td>
         </tr>
@@ -45,6 +57,17 @@
       <div class="mb-3">
         <label for="description" class="form-label">Service description</label>
         <textarea placeholder="Enter service description" pInputTextarea class="form-control" id="description" [(ngModel)]="newService.description"></textarea>
+      </div>
+      <div class="mb-3">
+        <div class="d-flex flex-column">
+          <label class="form-label">Where can this service be applied?</label>
+          <p-dropdown 
+        [options]="serviceOptions" 
+        [(ngModel)]="newService.serviceType" 
+        optionLabel="name"
+        optionValue="code"
+        placeholder="Select service type" />
+        </div>
       </div>
       <div class="mb-3">
         <div class="d-flex flex-column">

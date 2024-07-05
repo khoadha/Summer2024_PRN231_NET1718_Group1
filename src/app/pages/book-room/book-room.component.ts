@@ -45,21 +45,19 @@ export class BookRoomComponent implements OnInit {
       console.error("Error during initialization:", error);
     }
   }
-  async initRoom() {
+  initRoom() {
     const idFromRoute = this.route.snapshot.paramMap.get('id')!;
     const orderId = parseInt(idFromRoute, 10);
-    const res = await this.roomService.getRoomById(orderId).toPromise();
-    if (res) {
+    this.roomService.getRoomById(orderId).subscribe(res => {
       this.room = res;
-    }
+    })
   }
 
-  async initServicesAndForm() {
-    const res = await this.serviceService.getServiceWithNewestPrice().toPromise();
-    if (res) {
-      this.allServices = res;
+  initServicesAndForm() {
+    this.serviceService.getServiceWithNewestPrice().subscribe(res => {
+      this.allServices = res.filter(service => service.serviceType === 0 || service.serviceType === 1);
       this.initForm();
-    }
+    });
   }
   initForm() {
     const serviceControls: { [key: string]: any } = {};

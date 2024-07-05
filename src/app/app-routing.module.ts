@@ -36,6 +36,7 @@ import { FeeDetailComponent } from './pages/fee-detail/fee-detail.component';
 import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
 import { PaymentRedirectComponent } from './features/payment-redirect/payment-redirect.component';
 import { BookRoomMonthlyComponent } from './pages/book-room-monthly/book-room-monthly.component';
+import { AdminFeeComponent } from './pages/admin-dashboard/admin-fee/admin-fee.component';
 const routes: Routes = [
   {
     path: 'home',
@@ -196,6 +197,12 @@ const routes: Routes = [
       {
         path: 'manage-room',
         component: AdminRoomComponent,
+        title: 'Manage Room',
+        canActivate: [adminGuard],
+      },
+      {
+        path: 'manage-fee',
+        component: AdminFeeComponent,
         title: 'Manage Room',
         canActivate: [adminGuard],
       },

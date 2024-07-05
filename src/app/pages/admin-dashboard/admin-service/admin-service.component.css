@@ -1,0 +1,6 @@
+:host >>> {
+    .p-dropdown {
+        width: 100% !important;
+        text-align: justify;
+    }
+}

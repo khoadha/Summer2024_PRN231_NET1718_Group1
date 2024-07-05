@@ -12,11 +12,17 @@ export class AdminServiceComponent implements OnInit {
   serviceData!: ServiceWithPrice[];
   showCreateModal = false;
   showPriceModal = false;
-  newService: ServiceWithPrice = { name: '', description: '', servicePriceNumber: 0, isCountPerCapita: false };
+  newService: ServiceWithPrice = { name: '', description: '', servicePriceNumber: 0, isCountPerCapita: false, serviceType: 0 };
   newPrice: number = 0;
   selectedService: ServiceWithPrice | null = null;
   image: File | undefined;
   isLoading: boolean = false;
+  serviceOptions = [
+    { name: 'All', code: '0' },
+    { name: 'Only daily rental', code: '1' },
+    { name: 'Only monthly rental', code: '2' },
+  ]
+
   constructor(private serviceService: RoomServiceService, private messageService: MessageService) { }
 
   ngOnInit(): void {
@@ -35,13 +41,14 @@ export class AdminServiceComponent implements OnInit {
     formData.append('name', this.newService.name);
     formData.append('description', this.newService.description);
     formData.append('image', this.image!);
+    formData.append('serviceType', this.newService.serviceType.toString());
     formData.append('isCountPerCapita', this.newService.isCountPerCapita.toString());
-  
+
     this.serviceService.addService(formData).subscribe({
       next: (res) => {
         this.initServices();
         this.showCreateModal = false;
-        this.isLoading=false;
+        this.isLoading = false;
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Created successfully!' });
       },
       error: (err) => {
@@ -49,7 +56,9 @@ export class AdminServiceComponent implements OnInit {
       }
     });
   }
-  
+
+
+
   onSelect(event: any) {
     this.messageService.add({ severity: 'info', summary: 'Success', detail: 'Add image successfully!' });
     this.image = event.currentFiles[0];
@@ -66,7 +75,7 @@ export class AdminServiceComponent implements OnInit {
     this.showPriceModal = true;
   }
 
- 
+
 
   createServicePrice() {
     const requestBody = {

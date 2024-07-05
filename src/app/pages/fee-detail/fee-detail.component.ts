@@ -13,6 +13,16 @@ export class FeeDetailComponent implements OnInit {
   fees: GetFeeDto[] = [];
   selectedFeeIds: number[] = [];
   orderId: string ='';
+  electricityPrices: any[] = [
+    { step: 'First 50 kWh', range: '0 - 50 kWh', priceUSD: 0.078 },
+    { step: 'Next 50 kWh', range: '51 - 100 kWh', priceUSD: 0.081 },
+    { step: 'Next 100 kWh', range: '101 - 200 kWh', priceUSD: 0.094 },
+    { step: 'Next 100 kWh', range: '201 - 300 kWh', priceUSD: 0.119 },
+    { step: 'Next 100 kWh', range: '301 - 400 kWh', priceUSD: 0.133 },
+    { step: 'Above 400 kWh', range: '401+ kWh', priceUSD: 0.137 },
+  ];
+
+  
   constructor(
     private route: ActivatedRoute,
     private orderService: OrderService,

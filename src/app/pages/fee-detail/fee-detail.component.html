@@ -1,6 +1,7 @@
 <div class="bg-soft">
   <div class="container" style="padding: 14% 0; min-height: 60vh;">
-    <h1 class="text-center mb-5">Fees to pay (Order ID #{{orderId}})</h1>
+    <h1 class="text-center mb-2">Fees to pay (Order ID #{{orderId}})</h1>
+    <h4 class="text-center mb-5 text-danger">For monthly booking, the booking fee will be automatically generated on the 15th of each month</h4>
     <p-table [value]="fees">
       <ng-template pTemplate="header">
         <tr>
@@ -26,7 +27,7 @@
                   <p-tag severity="warning" value="Unpaid"></p-tag>
               </ng-container>
               <ng-container *ngSwitchCase="2">
-                  <p-tag severity="danger" value="Overdue"></p-tag>
+                  <p-tag severity="danger" value="Deferred"></p-tag>
               </ng-container>
               <ng-container *ngSwitchCase="1">
                   <p-tag severity="success" value="Paid"></p-tag>
@@ -51,6 +52,26 @@
       (click)="paySelectedFees()"
       [disabled]="selectedFeeIds.length === 0"
     ></button>
+
+    <div class="container">
+      <h2 class="text-center my-3">Electricity Prices</h2>
+      <p-table [value]="electricityPrices">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Step</th>
+            <th>Range (kWh)</th>
+            <th>Price (USD/kWh)</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-price>
+          <tr>
+            <td>{{ price.step }}</td>
+            <td>{{ price.range }}</td>
+            <td>{{ price.priceUSD }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
   </div>
   
 </div>

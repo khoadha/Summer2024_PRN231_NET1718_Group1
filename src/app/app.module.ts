@@ -76,6 +76,7 @@ import { PaymentRedirectComponent } from './features/payment-redirect/payment-re
 import { PaginatorModule } from 'primeng/paginator';
 import { CalendarModule } from 'primeng/calendar';
 import { BookRoomMonthlyComponent } from './pages/book-room-monthly/book-room-monthly.component';
+import { AdminFeeComponent } from './pages/admin-dashboard/admin-fee/admin-fee.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -157,6 +158,7 @@ import { BookRoomMonthlyComponent } from './pages/book-room-monthly/book-room-mo
     PaymentSuccessComponent,
     PaymentRedirectComponent,
     BookRoomMonthlyComponent,
+    AdminFeeComponent,
   ],
   providers: [
     {

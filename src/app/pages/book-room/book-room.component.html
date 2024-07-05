@@ -1,290 +1,297 @@
-<p-toast />
-<app-loader [loader]="loadingSubmit"></app-loader>
-<app-loader [loader]="loading"></app-loader>
+<ng-container *ngIf="room && allServices">
+    <p-toast />
+    <app-loader [loader]="loadingSubmit"></app-loader>
+    <app-loader [loader]="loading"></app-loader>
 
-<div *ngIf="!loading" class="mb-5">
-    <section class="intro-single text-center">
-        <h2>{{ room.name }}</h2>
-    </section>
-    <div class="container form-container" style="min-width: 80vw;">
-        <div class="row row-cols-1 row-cols-md-4 mb-5">
-            <ng-container *ngFor="let img of room.roomImages">
-                <div class="card text-bg-transparent border-0 px-2 mb-3">
-                    <img [src]="img.imgPath" class="card-img w-100" style="max-height: 300px;" alt="...">
-                </div>
-            </ng-container>
-        </div>
-        <div class="form-group">
-            <h3 class="text-center">Room Details</h3>
-            <div class="form-container">
-                <p class="form-control-static">Area: {{ room.roomArea }} m²</p>
-                <p class="form-control-static">Maximum Occupancy: {{ room.roomSize }} people</p>
-                <p class="form-control-static">Description: {{ room.roomDescription }}</p>
-            </div>
-        </div>
-        <form #form="ngForm" [formGroup]="bookingForm" (ngSubmit)="submitForm()">
-            <div class="form-group">
-                <h3 class="text-center mb-2 mt-5">Furniture in this room</h3>
-                <div class="form-container">
-                    <p-table [value]="room.roomFurniture" [tableStyle]="{ 'min-width': '100%' }">
-                        <ng-template pTemplate="header">
-                          <tr>
-                            <th>Name</th>
-                            <th>Quantity</th>
-                          </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-furniture>
-                          <tr>
-                            <td>{{ furniture.furnitureName }}</td>
-                            <td>{{ furniture.quantity }}</td>
-                          </tr>
-                        </ng-template>
-                        <ng-template pTemplate="emptymessage">
-                          <tr>
-                            <td colspan="7">This room has no furniture yet...</td>
-                          </tr>
-                        </ng-template>
-                      </p-table>
-                </div>
-            </div>
-            <div class="d-flex justify-content-evenly my-5">
-                <div class="form-group col-6 pe-2"
-                    [ngClass]="{'has-error': bookingForm.get('startDate')?.invalid && (bookingForm.get('startDate')?.dirty || bookingForm.get('startDate')?.touched)}">
-                    <label class="fs-5">Choose start date</label>
-                    <input class="form-control" [min]="today" type="date" formControlName="startDate">
-                    <div
-                        *ngIf="bookingForm.get('startDate')?.invalid && (bookingForm.get('startDate')?.dirty || bookingForm.get('startDate')?.touched)">
-                        <small class="text-danger" *ngIf="bookingForm.get('startDate')?.errors?.['dateInvalid']">
-                            Start date cannot be in the past.
-                        </small>
+    <div *ngIf="!loading" class="mb-5">
+        <section class="intro-single text-center">
+            <h2>{{ room.name }}</h2>
+        </section>
+        <div class="container form-container" style="min-width: 80vw;">
+            <div class="row row-cols-1 row-cols-md-4 mb-5">
+                <ng-container *ngFor="let img of room.roomImages">
+                    <div class="card text-bg-transparent border-0 px-2 mb-3">
+                        <img [src]="img.imgPath" class="card-img w-100" style="max-height: 300px;" alt="...">
                     </div>
-                </div>
-                <div class="form-group col-6 ps-2"
-                    [ngClass]="{'has-error': bookingForm.get('endDate')?.invalid && (bookingForm.get('endDate')?.dirty || bookingForm.get('endDate')?.touched)}">
-                    <label class="fs-5">Choose end date</label>
-                    <input class="form-control" [min]="today" type="date" formControlName="endDate">
-                    <div
-                        *ngIf="bookingForm.get('endDate')?.invalid || bookingForm.get('endDate')?.dirty || bookingForm.get('endDate')?.touched">
-                        <small class="text-danger" *ngIf="bookingForm.get('endDate')?.errors?.['dateInvalid']">
-                            End date cannot be in the past.
-                        </small>
-                        <small class="text-danger" *ngIf="bookingForm.errors?.['dateRangeInvalid']">
-                            End date must be after start date.
-                        </small>
-                        <small class="text-danger" *ngIf="bookingForm.errors?.['dateRangeLimit']">
-                            The period from the start date to the end date must not exceed 30 days
-                        </small>
-                    </div>
-                </div>
+                </ng-container>
             </div>
             <div class="form-group">
-                <label class="mb-1 fs-3">Services - Each services chosen will increase the rate per day</label>
+                <h3 class="text-center">Room Details</h3>
                 <div class="form-container">
-                    <div class="form-check" *ngFor="let service of allServices">
-                        <input class="form-check-input me-2" type="checkbox" [formControlName]="service.name">
-                        <label class="form-check-label">{{ service.name }} - ${{ service.servicePriceNumber}}</label>
-                    </div>
+                    <p class="form-control-static">Area: {{ room.roomArea }} m²</p>
+                    <p class="form-control-static">Maximum Occupancy: {{ room.roomSize }} people</p>
+                    <p class="form-control-static">Description: {{ room.roomDescription }}</p>
                 </div>
             </div>
-            <p-table [value]="occupants.controls" [tableStyle]="{ 'margin-top': '2%' }">
-                <ng-template pTemplate="caption">
-                    <label class="mb-1">Occupancy information</label>
-                    <div class="row d-flex flex-row align-items-end">
-                        <div class="col">
-                            <input id="fullname" class="form-control" type="text" [(ngModel)]="newOccupant.fullname"
-                                [ngModelOptions]="{standalone: true}" placeholder="Enter occupant full name">
-                        </div>
-                        <div class="col">
-                            <input id="email" class="form-control" type="email" [(ngModel)]="newOccupant.email"
-                                [ngModelOptions]="{standalone: true}" placeholder="Enter occupant phone number">
-                            <span class="text-danger" *ngIf="!isPhoneNumberValid() && newOccupant.email !== ''">Invalid
-                                phone number</span>
-                        </div>
-                        <div class="col">
-                            <input ngClass="h-100" id="birthday" class="form-control" type="date"
-                                [(ngModel)]="newOccupant.birthday" [max]="today" [ngModelOptions]="{standalone: true}"
-                                placeholder="Choose occupant birthday">
-                            <span class="text-danger"
-                                *ngIf="!isBirthdayValid() && newOccupant.birthday !== undefined">Birthday must be
-                                before
-                                today</span>
-                        </div>
-                        <div class="col">
-                            <button [type]="'button'" class="btn btn-success w-100" (click)="addOccupant()"
-                                [disabled]="!isOccupantValid()">Add
-                                Occupant</button>
+            <form #form="ngForm" [formGroup]="bookingForm" (ngSubmit)="submitForm()">
+                <div class="form-group">
+                    <h3 class="text-center mb-2 mt-5">Furniture in this room</h3>
+                    <div class="form-container">
+                        <p-table [value]="room.roomFurniture" [tableStyle]="{ 'min-width': '100%' }">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-furniture>
+                                <tr>
+                                    <td>{{ furniture.furnitureName }}</td>
+                                    <td>{{ furniture.quantity }}</td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr>
+                                    <td colspan="7">This room has no furniture yet...</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-evenly my-5">
+                    <div class="form-group col-6 pe-2"
+                        [ngClass]="{'has-error': bookingForm.get('startDate')?.invalid && (bookingForm.get('startDate')?.dirty || bookingForm.get('startDate')?.touched)}">
+                        <label class="fs-5">Choose start date</label>
+                        <input class="form-control" [min]="today" type="date" formControlName="startDate">
+                        <div
+                            *ngIf="bookingForm.get('startDate')?.invalid && (bookingForm.get('startDate')?.dirty || bookingForm.get('startDate')?.touched)">
+                            <small class="text-danger" *ngIf="bookingForm.get('startDate')?.errors?.['dateInvalid']">
+                                Start date cannot be in the past.
+                            </small>
                         </div>
                     </div>
-                </ng-template>
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th>Full Name</th>
-                        <th>Phone Number</th>
-                        <th>Birthday</th>
-                        <th>Action</th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-occupant let-i="rowIndex">
-                    <tr [formGroupName]="i">
-                        <td>{{ occupant.get('fullname')?.value }}</td>
-                        <td>
-                            {{ occupant.get('email')?.value !== '' ? occupant.get('email')?.value : 'none' }}
-                        </td>
-                        <td>{{ occupant.get('birthday')?.value }}</td>
-                        <td>
-                            <p-button severity="secondary" ngClass="bg-danger" label="Remove occupant"
-                                icon="pi pi-trash " (click)="removeOccupant(i)"></p-button>
-                        </td>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="emptymessage">
-                    <tr>
-                        <td colspan="7">No occupant yet.</td>
-                    </tr>
-                </ng-template>
-            </p-table>
-            <div class="d-flex flex-row align-items-baseline gap-5 my-3 justify-content-center">
-                <p class="fs-6" style="color: rgb(0, 128, 128);">Rate per day: $<span id="fee-text">
-                        {{(calculateTotalFee()/totalDays)}}</span>
-                </p>
-                <p class="fs-6" style="color: rgb(0, 128, 128);">Total day(s) rented:<span id="fee-text">
-                        {{totalDays}}</span>
-                </p>
-                <p class="fs-6" style="color: rgb(0, 128, 0);">Total Fee: $<span
-                        id="fee-text">{{calculateTotalFee()}}</span>
-                </p>
-            </div>
-            <div class="mb-3">
-                <button pButton type="button" label="Show Contract" class="w-100 px-5" [disabled]="!bookingForm.valid"
-                    (click)="openContractModal()"></button>
-            </div>
-        </form>
-    </div>
+                    <div class="form-group col-6 ps-2"
+                        [ngClass]="{'has-error': bookingForm.get('endDate')?.invalid && (bookingForm.get('endDate')?.dirty || bookingForm.get('endDate')?.touched)}">
+                        <label class="fs-5">Choose end date</label>
+                        <input class="form-control" [min]="today" type="date" formControlName="endDate">
+                        <div
+                            *ngIf="bookingForm.get('endDate')?.invalid || bookingForm.get('endDate')?.dirty || bookingForm.get('endDate')?.touched">
+                            <small class="text-danger" *ngIf="bookingForm.get('endDate')?.errors?.['dateInvalid']">
+                                End date cannot be in the past.
+                            </small>
+                            <small class="text-danger" *ngIf="bookingForm.errors?.['dateRangeInvalid']">
+                                End date must be after start date.
+                            </small>
+                            <small class="text-danger" *ngIf="bookingForm.errors?.['dateRangeLimit']">
+                                The period from the start date to the end date must not exceed 30 days
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="mb-1 fs-3">Services - Each services chosen will increase the rate per day</label>
+                    <div class="form-container">
+                        <div class="form-check" *ngFor="let service of allServices">
+                            <input class="form-check-input me-2" type="checkbox" [formControlName]="service.name">
+                            <label class="form-check-label">{{ service.name }} - ${{
+                                service.servicePriceNumber}}</label>
+                        </div>
+                    </div>
+                </div>
+                <p-table [value]="occupants.controls" [tableStyle]="{ 'margin-top': '2%' }">
+                    <ng-template pTemplate="caption">
+                        <label class="mb-1">Occupancy information</label>
+                        <div class="row d-flex flex-row align-items-end">
+                            <div class="col">
+                                <input id="fullname" class="form-control" type="text" [(ngModel)]="newOccupant.fullname"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Enter occupant full name">
+                            </div>
+                            <div class="col">
+                                <input id="email" class="form-control" type="email" [(ngModel)]="newOccupant.email"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Enter occupant phone number">
+                                <span class="text-danger"
+                                    *ngIf="!isPhoneNumberValid() && newOccupant.email !== ''">Invalid
+                                    phone number</span>
+                            </div>
+                            <div class="col">
+                                <input ngClass="h-100" id="birthday" class="form-control" type="date"
+                                    [(ngModel)]="newOccupant.birthday" [max]="today"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Choose occupant birthday">
+                                <span class="text-danger"
+                                    *ngIf="!isBirthdayValid() && newOccupant.birthday !== undefined">Birthday must be
+                                    before
+                                    today</span>
+                            </div>
+                            <div class="col">
+                                <button [type]="'button'" class="btn btn-success w-100" (click)="addOccupant()"
+                                    [disabled]="!isOccupantValid()">Add
+                                    Occupant</button>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Phone Number</th>
+                            <th>Birthday</th>
+                            <th>Action</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-occupant let-i="rowIndex">
+                        <tr [formGroupName]="i">
+                            <td>{{ occupant.get('fullname')?.value }}</td>
+                            <td>
+                                {{ occupant.get('email')?.value !== '' ? occupant.get('email')?.value : 'none' }}
+                            </td>
+                            <td>{{ occupant.get('birthday')?.value }}</td>
+                            <td>
+                                <p-button severity="secondary" ngClass="bg-danger" label="Remove occupant"
+                                    icon="pi pi-trash " (click)="removeOccupant(i)"></p-button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="7">No occupant yet.</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <div class="d-flex flex-row align-items-baseline gap-5 my-3 justify-content-center">
+                    <p class="fs-6" style="color: rgb(0, 128, 128);">Rate per day: $<span id="fee-text">
+                            {{(calculateTotalFee()/totalDays)}}</span>
+                    </p>
+                    <p class="fs-6" style="color: rgb(0, 128, 128);">Total day(s) rented:<span id="fee-text">
+                            {{totalDays}}</span>
+                    </p>
+                    <p class="fs-6" style="color: rgb(0, 128, 0);">Total Fee: $<span
+                            id="fee-text">{{calculateTotalFee()}}</span>
+                    </p>
+                </div>
+                <div class="mb-3">
+                    <button pButton type="button" label="Show Contract" class="w-100 px-5"
+                        [disabled]="!bookingForm.valid" (click)="openContractModal()"></button>
+                </div>
+            </form>
+        </div>
 
-    <p-dialog header="Order Created Successfully" [(visible)]="displayDialog" [modal]="true" [closable]="false">
-        <p>Order has been created successfully!</p>
-        <button type="button" class="btn btn-primary" (click)="closeDialogAndReturn()">Close</button>
-    </p-dialog>
+        <p-dialog header="Order Created Successfully" [(visible)]="displayDialog" [modal]="true" [closable]="false">
+            <p>Order has been created successfully!</p>
+            <button type="button" class="btn btn-primary" (click)="closeDialogAndReturn()">Close</button>
+        </p-dialog>
 
-    <p-dialog header="Display Contract" [(visible)]="showContract" [modal]="true"
-        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true">
-        <div class="container mt-5">
-            <div class="contract">
-                <h2>Hosteland Booking Contract</h2>
-                <p>This contract is made and entered into as of {{today}} by and between:</p>
-                <ul>
-                    <li><strong>Hosteland</strong> ("Hostel")</li>
-                    <li><strong>{{ username }}</strong> ("Guest")</li>
-                </ul>
-                <p><strong>Witnesseth:</strong></p>
-                <p>WHEREAS, Guest desires to reserve accommodations at Hostel; and</p>
-                <p>WHEREAS, Hostel desires to provide such accommodations to Guest subject to the terms and conditions
-                    set
-                    forth herein.</p>
-                <p><strong>NOW, THEREFORE, in consideration of the mutual covenants contained herein, the parties agree
-                        as
-                        follows:</strong></p>
+        <p-dialog header="Display Contract" [(visible)]="showContract" [modal]="true"
+            [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true">
+            <div class="container mt-5">
+                <div class="contract">
+                    <h2>Hosteland Booking Contract</h2>
+                    <p>This contract is made and entered into as of {{today}} by and between:</p>
+                    <ul>
+                        <li><strong>Hosteland</strong> ("Hostel")</li>
+                        <li><strong>{{ username }}</strong> ("Guest")</li>
+                    </ul>
+                    <p><strong>Witnesseth:</strong></p>
+                    <p>WHEREAS, Guest desires to reserve accommodations at Hostel; and</p>
+                    <p>WHEREAS, Hostel desires to provide such accommodations to Guest subject to the terms and
+                        conditions
+                        set
+                        forth herein.</p>
+                    <p><strong>NOW, THEREFORE, in consideration of the mutual covenants contained herein, the parties
+                            agree
+                            as
+                            follows:</strong></p>
 
-                <section class="mt-3">
-                    <h4>1. Room Details and Cost</h4>
-                    <table class="table table-bordered">
-                        <tbody>
-                            <tr>
-                                <th>Room Name</th>
-                                <td>{{ room.name }}</td>
-                            </tr>
-                            <tr>
-                                <th>Room Rate</th>
-                                <td>{{ room.costPerDay }}$</td>
-                            </tr>
-                            <tr>
-                                <th>Number of Occupants</th>
-                                <td>{{ occupants.length }} people</td>
-                            </tr>
-                            <tr>
-                                <th>Total Cost</th>
-                                <td>{{ calculateTotalFee() }}$</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </section>
-
-                <section class="mt-3">
-                    <h4>2. Dates of Stay</h4>
-                    <table class="table table-bordered">
-                        <tbody>
-                            <tr>
-                                <th>Arrival Date</th>
-                                <td>{{ bookingForm.get('startDate')?.value }}</td>
-                            </tr>
-                            <tr>
-                                <th>Departure Date</th>
-                                <td>{{ bookingForm.get('endDate')?.value }}</td>
-                            </tr>
-                            <tr>
-                                <th>Number of Nights</th>
-                                <td>{{this.calculateDays()}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </section>
-
-                <section class="mt-3">
-                    <h4>3. Services Booked</h4>
-                    <ng-container *ngIf="selectedServices.length > 0; else noServices">
+                    <section class="mt-3">
+                        <h4>1. Room Details and Cost</h4>
                         <table class="table table-bordered">
                             <tbody>
                                 <tr>
-                                    <th>Service Name</th>
-                                    <th>Service Price</th>
+                                    <th>Room Name</th>
+                                    <td>{{ room.name }}</td>
                                 </tr>
-                                <tr *ngFor="let service of selectedServices">
-                                    <td>{{ service.name }}</td>
-                                    <td>${{ service.servicePriceNumber }}</td>
+                                <tr>
+                                    <th>Room Rate</th>
+                                    <td>{{ room.costPerDay }}$</td>
+                                </tr>
+                                <tr>
+                                    <th>Number of Occupants</th>
+                                    <td>{{ occupants.length }} people</td>
+                                </tr>
+                                <tr>
+                                    <th>Total Cost</th>
+                                    <td>{{ calculateTotalFee() }}$</td>
                                 </tr>
                             </tbody>
                         </table>
-                    </ng-container>
-                    <ng-template #noServices>
-                        <p>No services booked.</p>
-                    </ng-template>
-                </section>
+                    </section>
+
+                    <section class="mt-3">
+                        <h4>2. Dates of Stay</h4>
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Arrival Date</th>
+                                    <td>{{ bookingForm.get('startDate')?.value }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Departure Date</th>
+                                    <td>{{ bookingForm.get('endDate')?.value }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Number of Nights</th>
+                                    <td>{{this.calculateDays()}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <section class="mt-3">
+                        <h4>3. Services Booked</h4>
+                        <ng-container *ngIf="selectedServices.length > 0; else noServices">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th>Service Name</th>
+                                        <th>Service Price</th>
+                                    </tr>
+                                    <tr *ngFor="let service of selectedServices">
+                                        <td>{{ service.name }}</td>
+                                        <td>${{ service.servicePriceNumber }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </ng-container>
+                        <ng-template #noServices>
+                            <p>No services booked.</p>
+                        </ng-template>
+                    </section>
 
 
-                <section class="mt-3">
-                    <h4>4. Occupants</h4>
-                    <table class="table table-bordered">
-                        <tbody>
-                            <tr>
-                                <th>Full Name</th>
-                                <th>Email</th>
-                                <th>Birthday</th>
-                            </tr>
-                            <tr *ngFor="let occupant of occupants.controls">
-                                <td class="col">{{ occupant.get('fullname')?.value }}</td>
-                                <td class="col">
-                                    {{ occupant.get('email')?.value !== '' ? occupant.get('email')?.value : 'none' }}
-                                </td>
-                                <td class="col">{{ occupant.get('birthday')?.value }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </section>
+                    <section class="mt-3">
+                        <h4>4. Occupants</h4>
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Full Name</th>
+                                    <th>Email</th>
+                                    <th>Birthday</th>
+                                </tr>
+                                <tr *ngFor="let occupant of occupants.controls">
+                                    <td class="col">{{ occupant.get('fullname')?.value }}</td>
+                                    <td class="col">
+                                        {{ occupant.get('email')?.value !== '' ? occupant.get('email')?.value : 'none'
+                                        }}
+                                    </td>
+                                    <td class="col">{{ occupant.get('birthday')?.value }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
 
-                <p><strong>IN WITNESS WHEREOF, the parties have executed this Contract as of the date first written
-                        above.</strong></p>
-                <br>
-                <p><strong>Hosteland</strong></p>
-                <p>By: Do Hoang Anh Khoa</p>
-                <p>Title: CEO</p>
-                <br>
-                <p><strong>Guest:</strong></p>
-                <p></p>
-                <p>Signature: ________________________</p>
+                    <p><strong>IN WITNESS WHEREOF, the parties have executed this Contract as of the date first written
+                            above.</strong></p>
+                    <br>
+                    <p><strong>Hosteland</strong></p>
+                    <p>By: Do Hoang Anh Khoa</p>
+                    <p>Title: CEO</p>
+                    <br>
+                    <p><strong>Guest:</strong></p>
+                    <p></p>
+                    <p>Signature: ________________________</p>
+                </div>
+                <button pButton type="button" class="rounded"
+                    [label]="loadingSubmit ? 'Signing...' : 'Sign Contract and Confirm Book'" [disabled]="loadingSubmit"
+                    tabindex="-1" (click)="submitForm()"></button>
             </div>
-            <button pButton type="button" class="rounded"
-                [label]="loadingSubmit ? 'Signing...' : 'Sign Contract and Confirm Book'" [disabled]="loadingSubmit"
-                tabindex="-1" (click)="submitForm()"></button>
-        </div>
-    </p-dialog>
-</div>
+        </p-dialog>
+    </div>
+</ng-container>
