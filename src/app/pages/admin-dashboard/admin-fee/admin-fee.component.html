@@ -66,6 +66,11 @@
             <td>{{ price.priceUSD }}</td>
           </tr>
         </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+              <td colspan="7">No fees found.</td>
+          </tr>
+      </ng-template>
       </p-table>
     </div>
   </ng-container>
