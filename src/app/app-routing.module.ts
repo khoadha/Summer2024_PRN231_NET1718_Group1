@@ -37,6 +37,7 @@ import { PaymentSuccessComponent } from './pages/payment-success/payment-success
 import { PaymentRedirectComponent } from './features/payment-redirect/payment-redirect.component';
 import { BookRoomMonthlyComponent } from './pages/book-room-monthly/book-room-monthly.component';
 import { AdminFeeComponent } from './pages/admin-dashboard/admin-fee/admin-fee.component';
+import { ServicePageComponent } from './pages/service-page/service-page.component';
 const routes: Routes = [
   {
     path: 'home',
@@ -136,6 +137,11 @@ const routes: Routes = [
     title: 'All Rooms',
   },
   {
+    path: 'our-services',
+    component: ServicePageComponent,
+    title: 'Our services',
+  },
+  {
     path: 'manage-profile',
     component: ProfileComponent,
     title: 'Manage Profile',
@@ -216,4 +222,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

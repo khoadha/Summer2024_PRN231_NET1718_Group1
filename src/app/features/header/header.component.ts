@@ -8,14 +8,16 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  constructor(private auth: AuthService,
+  constructor(
+    private auth: AuthService,
     private userStore: UserStoreService,
     private router: Router,
-    private categoriesService: RoomCategoryService) { }
-    
+    private categoriesService: RoomCategoryService
+  ) {}
+
   public username!: string;
   public userId!: string;
   public role!: string;
@@ -24,42 +26,45 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSessionUserInformation();
-    this.categoriesService.getRoomCategories().subscribe(res => {
+    this.categoriesService.getRoomCategories().subscribe((res) => {
       this.categories = res;
-    })
+    });
   }
 
   private getSessionUserInformation() {
-    this.userStore.getUsernameFromStore()
-      .subscribe(val => {
-        let usernameFromToken = this.auth.getUsernameFromToken();
-        this.username = val || usernameFromToken
-      })
+    this.userStore.getUsernameFromStore().subscribe((val) => {
+      let usernameFromToken = this.auth.getUsernameFromToken();
+      this.username = val || usernameFromToken;
+    });
 
-    this.userStore.getRoleFromStore().subscribe(val => {
+    this.userStore.getRoleFromStore().subscribe((val) => {
       const roleFromToken = this.auth.getRoleFromToken();
       this.role = val || roleFromToken;
-    })
+    });
 
-    this.userStore.getImgPathFromStore().subscribe(val => {
+    this.userStore.getImgPathFromStore().subscribe((val) => {
       const imgPath = this.auth.getImgPathFromToken();
       this.imgPath = val || imgPath;
-    })
-    if (this.role == "User") {
-      this.userStore.getUserIdFromStore().subscribe(val => {
+    });
+    if (this.role == 'User') {
+      this.userStore.getUserIdFromStore().subscribe((val) => {
         const usId = this.auth.getUserIdFromToken();
         this.userId = val || usId;
       });
     }
   }
 
-  onClickHeaderCategory(categoryName: string){
+  onClickHeaderCategory(categoryName: string) {
     sessionStorage.setItem('selectedHeaderCategory', categoryName);
-    window.location.href = '/all-room'
+    window.location.href = '/all-room';
   }
 
   onClickAllRooms() {
-window.location.href = '/all-room'
+    window.location.href = '/all-room';
+  }
+
+  onClickOurServices() {
+    window.location.href = '/our-services';
   }
 
   logOut() {

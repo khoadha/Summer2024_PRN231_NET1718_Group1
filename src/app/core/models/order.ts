@@ -1,4 +1,4 @@
-import { Room } from "./room";
+import { Room } from './room';
 
 export interface CreateOrderDto {
   roomId: number;
@@ -39,8 +39,6 @@ export interface GuestDto {
   birthday?: Date;
 }
 
-
-
 export interface ServiceWithPrice {
   id?: number;
   name: string;
@@ -50,6 +48,12 @@ export interface ServiceWithPrice {
   isCountPerCapita: boolean;
   image?: File;
 }
+
+export interface PaginationService {
+  total: number;
+  data: Service[];
+}
+
 export interface RoomServiceDto {
   serviceId?: number;
 }
@@ -57,8 +61,12 @@ export interface Service {
   id?: number;
   name: string;
   description: string;
+  serviceType?: string;
+  imgPath?: string;
+  isCountPerCapita?: boolean;
   servicePrice?: ServicePrice[];
 }
+
 export interface ServicePrice {
   id?: number;
   serviceId?: number;
@@ -68,11 +76,11 @@ export interface ServicePrice {
 }
 
 export interface GetFeeDto {
-  id: number
-  name: string
-  feeCategoryName: string
-  amount: number
-  paymentDate: string
-  feeStatus: number
-  usedKWh?: number
+  id: number;
+  name: string;
+  feeCategoryName: string;
+  amount: number;
+  paymentDate: string;
+  feeStatus: number;
+  usedKWh?: number;
 }
