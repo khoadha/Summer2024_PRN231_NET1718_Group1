@@ -1,1 +1,109 @@
-<p>service-page works!</p>
+<div class="bg-soft">
+    <div class="container">
+        <main id="main">
+            <!-- ======= Intro Single ======= -->
+            <section class="intro-single">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-8">
+                            <div class="title-single-box">
+                                <h1 class="title-single">Our Services</h1>
+                                <span class="color-text-a">Here are our available services</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section><!-- End Intro Single-->
+
+            <section class="property-grid grid">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="grid-option">
+                                <div class="d-flex flex-column gap-2">
+                                    <h5 class="text-start">Filter</h5>
+                                    <input placeholder="Enter service name here" type="text" pInputText
+                                        [(ngModel)]="search" name="search" />
+                                </div>
+                                <div class="d-flex flex-column gap-2 mt-3">
+                                    <p-dropdown [options]="types" [(ngModel)]="selectedType" optionValue="value"
+                                        optionLabel="label" [showClear]="true"
+                                        placeholder="Select service type"></p-dropdown>
+                                </div>
+                                <button ngClass="mt-3 bg-success w-100" icon="pi pi-search" pButton label="Search"
+                                    (click)="onSubmit()"></button>
+                            </div>
+                        </div>
+
+                        <div class="row col-md-9">
+                            <ng-container *ngIf="services.length > 0; else nodata">
+                                <div *ngFor="let service of services" class="col-sm-4">
+                                    <div class="card-box-a card-shadow">
+                                        <div class="img-box-a">
+                                            <img [src]="service.imgPath" alt="room-image" class="w-100"
+                                                style="height: 320px;" />
+                                        </div>
+                                        <div class="card-overlay">
+                                            <div class="card-overlay-a-content">
+                                                <div class="card-header-a">
+                                                    <h2 class="card-title-a">
+                                                        <a>{{ service.name }}</a>
+                                                    </h2>
+                                                    <h6>
+                                                        <small class="text-light">{{service.description}}</small>
+                                                    </h6>
+                                                </div>
+                                                <div class="card-footer-a">
+                                                    <ul class="card-info d-flex justify-content-around">
+                                                        <li>
+                                                            <h4 class="card-info-title">Type</h4>
+                                                            <ng-container *ngIf="service.serviceType=='ONLY_DAY'">
+                                                                <span class="truncate">Only for Daily</span>
+                                                            </ng-container>
+                                                            <ng-container *ngIf="service.serviceType=='ALL'">
+                                                                <span class="truncate">For Daily & Monthly</span>
+                                                            </ng-container>
+                                                            <ng-container *ngIf="service.serviceType=='ONLY_MONTHLY'">
+                                                                <span class="truncate">Only for Monthly</span>
+                                                            </ng-container>
+                                                        </li>
+                                                        <li>
+                                                            <h4 class="card-info-title">Count by</h4>
+                                                            <ng-container
+                                                                *ngIf="service.isCountPerCapita==true; else notcapita">
+                                                                <span class="truncate">Capita</span>
+                                                            </ng-container>
+                                                            <ng-template #notcapita>
+                                                                <span class="truncate">Room</span>
+                                                            </ng-template>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-content-center w-100 align-items-center my-5">
+                                    <p-paginator [showCurrentPageReport]="true" #paginator [first]="0" [rows]="6"
+                                        [totalRecords]="totalServices"
+                                        (onPageChange)="onPageChange($event)"></p-paginator>
+                                </div>
+                            </ng-container>
+                            <ng-template #nodata>
+                                <div class="row">
+                                    <div class="col-3"></div>
+                                    <div class="col-6">
+                                        <h1 class="text-center text-dark empty-cart-msg">No services matching your
+                                            criteria were found!</h1>
+                                    </div>
+                                    <div class="col-3"></div>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+</div>
