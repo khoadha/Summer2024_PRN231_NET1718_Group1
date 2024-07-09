@@ -78,6 +78,9 @@ import { CalendarModule } from 'primeng/calendar';
 import { BookRoomMonthlyComponent } from './pages/book-room-monthly/book-room-monthly.component';
 import { AdminFeeComponent } from './pages/admin-dashboard/admin-fee/admin-fee.component';
 import { ServicePageComponent } from './pages/service-page/service-page.component';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { Editor, EditorModule } from 'primeng/editor';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -114,6 +117,8 @@ import { ServicePageComponent } from './pages/service-page/service-page.componen
     TagModule,
     PaginatorModule,
     CalendarModule,
+    MultiSelectModule,
+    EditorModule,
     
   ],
   declarations: [

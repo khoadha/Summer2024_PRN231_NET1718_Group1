@@ -1,0 +1,11 @@
+:host >>> {
+    .p-multiselect {
+        width: 100% !important;
+        text-align: justify;
+    }
+
+    .p-inputtext {
+        width: 100% !important;
+        /* text-align: center; */
+    }
+}
