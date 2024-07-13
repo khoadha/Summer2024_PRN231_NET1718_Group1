@@ -38,6 +38,8 @@ import { PaymentRedirectComponent } from './features/payment-redirect/payment-re
 import { BookRoomMonthlyComponent } from './pages/book-room-monthly/book-room-monthly.component';
 import { AdminFeeComponent } from './pages/admin-dashboard/admin-fee/admin-fee.component';
 import { ServicePageComponent } from './pages/service-page/service-page.component';
+import { MyReportComponent } from './pages/my-report/my-report.component';
+import { AdminReportComponent } from './pages/admin-dashboard/admin-report/admin-report.component';
 const routes: Routes = [
   {
     path: 'home',
@@ -126,6 +128,12 @@ const routes: Routes = [
     canActivate: [userGuard],
   },
   {
+    path: 'my-report',
+    component: MyReportComponent,
+    title: 'My Report',
+    canActivate: [userGuard],
+  },
+  {
     path: 'book-room-monthly/:id',
     component: BookRoomMonthlyComponent,
     title: 'Book Room Monthly',
@@ -209,7 +217,13 @@ const routes: Routes = [
       {
         path: 'manage-fee',
         component: AdminFeeComponent,
-        title: 'Manage Room',
+        title: 'Manage Fee',
+        canActivate: [adminGuard],
+      },
+      {
+        path: 'manage-report',
+        component: AdminReportComponent,
+        title: 'Manage Report',
         canActivate: [adminGuard],
       },
     ],

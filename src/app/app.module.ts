@@ -80,6 +80,8 @@ import { AdminFeeComponent } from './pages/admin-dashboard/admin-fee/admin-fee.c
 import { ServicePageComponent } from './pages/service-page/service-page.component';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { Editor, EditorModule } from 'primeng/editor';
+import { MyReportComponent } from './pages/my-report/my-report.component';
+import { AdminReportComponent } from './pages/admin-dashboard/admin-report/admin-report.component';
 
 @NgModule({
   imports: [
@@ -166,6 +168,8 @@ import { Editor, EditorModule } from 'primeng/editor';
     BookRoomMonthlyComponent,
     AdminFeeComponent,
     ServicePageComponent,
+    MyReportComponent,
+    AdminReportComponent,
   ],
   providers: [
     {

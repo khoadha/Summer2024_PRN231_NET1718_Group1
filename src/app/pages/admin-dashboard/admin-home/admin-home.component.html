@@ -1,26 +1,72 @@
 <p-toast></p-toast>
 <div class="container">
-    <button pButton (click)="onClickSendEmailButton()" pRipple label="Send email to users"
-        class="p-button-success"></button>
+    <button pButton pRipple label="Send email to users" class="p-button-success">
+    </button>
+
 
     ai làm trang này thì kiếm chỗ nhét cái nút này vô, chỗ dễ nhìn
 </div>
 
-<p-dialog [header]="'Send email to users'" [(visible)]="showModal" [modal]="true"
-    [style]="{ width: '50%', height: '60vh' }">
-    <div class="row my-3">
-        <p-multiSelect placeholder="Select users email to send email" [options]="users"
-            filterPlaceHolder="Enter email, username or user id" filterBy="email,userName,id"
-            [(ngModel)]="selectedUsers" optionLabel="email" optionValue="email"></p-multiSelect>
-    </div>
-    <div class="row my-3" style="padding: 0 12px;">
-        <input placeholder="Enter email subject here!" type="text" pInputText [(ngModel)]="subject" />
-    </div>
-    <div class="row my-3">
-        <p-editor placeholder="Enter your email content here!" [(ngModel)]="content"
-            [style]="{ height: '240px' }"></p-editor>
-    </div>
-    <button [disabled]="!isDataValid()" ngClass="w-100" pButton (click)="onSubmit()" pRipple label="Send email to users"
-        class="p-button-success"></button>
 
+<p-dialog [header]="'Send email to users'" [(visible)]="showModal" [modal]="true" [style]="{ width: '50%' }">
+    <!-- <ng-container *ngIf="selectedReport">
+    <div class="mb-3">
+    <label class="form-label">Report ID</label>
+    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.id">
+    </div>
+    <div class="mb-3">
+    <label class="form-label">Room ID</label>
+    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.roomId">
+    </div>
+    <div class="mb-3">
+    <label class="form-label">Room Name</label>
+    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.roomName">
+    </div>
+    <div class="mb-3">
+    <label class="form-label">Author ID</label>
+    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.authorId">
+    </div>
+    <div class="mb-3">
+    <label class="form-label">Author Name</label>
+    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.authorName">
+    </div>
+    <div class="mb-3">
+    <label class="form-label">Description</label>
+    <textarea [disabled]="true" class="form-control"
+    [(ngModel)]="selectedReport.description"></textarea>
+    </div>
+    <div class="mb-3">
+    <label class="form-label">Created Date</label>
+    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.createdDate">
+    </div>
+    <div class="mb-3">
+    <label class="form-label">Start Date</label>
+    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.startDate">
+    </div>
+    <div class="mb-3">
+    <label class="form-label">End Date</label>
+    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.endDate">
+    </div>
+    <div class="mb-3">
+    <label class="form-label">Reply from admin</label>
+    <textarea [disabled]="true" class="form-control" [(ngModel)]="selectedReport.reply"></textarea>
+    </div>
+    <div class="mb-3">
+    <label class="form-label me-2">Status</label>
+    <ng-container [ngSwitch]="selectedReport.status">
+    <ng-container *ngSwitchCase="0">
+    <p-tag severity="danger" value="Rejected"></p-tag>
+    </ng-container>
+    <ng-container *ngSwitchCase="1">
+    <p-tag severity="warning" value="Pending"></p-tag>
+    </ng-container>
+    <ng-container *ngSwitchCase="2">
+    <p-tag severity="info" value="Processing"></p-tag>
+    </ng-container>
+    <ng-container *ngSwitchCase="3">
+    <p-tag severity="success" value="Completed"></p-tag>
+    </ng-container>
+    </ng-container>
+    </div>
+    </ng-container> -->
 </p-dialog>

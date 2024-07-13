@@ -1,0 +1,123 @@
+<p-toast></p-toast>
+<app-loader [loader]="loading"></app-loader>
+<div class="bg-soft">
+    <div class="container" style="padding: 140px 0; min-height: 60vh;">
+        <div class="text-center">
+            <h2>Reports Management</h2>
+        </div>
+        <p-table [value]="reports">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>#</th>
+                    <th>Room Id</th>
+                    <th>Room Name</th>
+                    <th>Author</th>
+                    <th>Created Date</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-report>
+                <tr>
+                    <td>{{ report.id }}</td>
+                    <td>{{ report.roomId }}</td>
+                    <td>{{ report.roomName }}</td>
+                    <td>{{ report.authorName }}</td>
+                    <td>{{ report.createdDate | date }}</td>
+                    <td>{{ report.startDate == null ? 'No data' : report.startDate | date }}</td>
+                    <td>{{ report.endDate == null ? 'No data' : report.endDate | date }}</td>
+                    <td>
+                        <ng-container [ngSwitch]="report.status">
+                            <ng-container *ngSwitchCase="0">
+                                <p-tag severity="danger" value="Rejected"></p-tag>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="1">
+                                <p-tag severity="warning" value="Pending"></p-tag>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="2">
+                                <p-tag severity="info" value="Processing"></p-tag>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="3">
+                                <p-tag severity="success" value="Completed"></p-tag>
+                            </ng-container>
+                        </ng-container>
+                    </td>
+                    <td>
+                        <p-button (onClick)="onOpenUpdateModal(report.id)" icon="pi pi-eye" label="View" />
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="empty" let-report>
+                <tr>
+                    No data yet.
+                </tr>
+            </ng-template>
+        </p-table>
+
+
+        <p-dialog [header]="header" [(visible)]="showModal" [modal]="true" [style]="{ width: '50%' }">
+            <ng-container *ngIf="selectedReport">
+                <div class="mb-3">
+                    <label class="form-label">Report ID</label>
+                    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.id">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Room ID</label>
+                    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.roomId">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Room Name</label>
+                    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.roomName">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Author ID</label>
+                    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.authorId">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Author Name</label>
+                    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.authorName">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea [disabled]="true" class="form-control"
+                        [(ngModel)]="selectedReport.description"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Created Date</label>
+                    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.createdDate">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Start Date</label>
+                    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.startDate">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">End Date</label>
+                    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.endDate">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Reply from admin</label>
+                    <textarea [disabled]="true" class="form-control" [(ngModel)]="selectedReport.reply"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label me-2">Status</label>
+                    <ng-container [ngSwitch]="selectedReport.status">
+                        <ng-container *ngSwitchCase="0">
+                            <p-tag severity="danger" value="Rejected"></p-tag>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="1">
+                            <p-tag severity="warning" value="Pending"></p-tag>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="2">
+                            <p-tag severity="info" value="Processing"></p-tag>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="3">
+                            <p-tag severity="success" value="Completed"></p-tag>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </p-dialog>
+    </div>
+</div>
