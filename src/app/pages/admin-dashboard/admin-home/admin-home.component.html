@@ -6,7 +6,7 @@
         class="p-button-success"></button>
 
 
-    ai làm trang này thì kiếm chỗ nhét cái nút này vô, chỗ dễ nhìn
+    Gui email
 </div>
 
 <p-dialog [header]="'Send email to users'" [(visible)]="showModal" [modal]="true"
@@ -25,9 +25,150 @@
     </div>
     <button [disabled]="!isDataValid()" ngClass="w-100" pButton (click)="onSubmit()" pRipple label="Send email to users"
         class="p-button-success"></button>
+</p-dialog>
+<ng-container *ngIf="adi">
+    <div class="row">
+        <div class="col-3">
+            <div class="card border shadow-xs mb-4">
+                <div class="card-body text-start p-3 w-100">
+                    <div
+                        class="icon icon-shape icon-sm bg-success text-white text-center border-radius-sm d-flex align-items-center justify-content-center mb-3">
 
-    <!-- <p-dialog [header]="'Send email to users'" [(visible)]="showModal" [modal]="true" [style]="{ width: '50%' }"> -->
-    <!-- <ng-container *ngIf="selectedReport">
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="w-100">
+                                <p class="text-sm text-secondary mb-1 bg">Tổng doanh thu toàn nền tảng</p>
+                                <h4 class="mb-2 font-weight-bold">{{adi.totalPlatformRevenue | vndCurrencyPipe}}</h4>
+                                <!-- <div class="d-flex align-items-center">
+                    <span class="text-sm text-success font-weight-bolder">
+                      <i class="fa fa-chevron-up text-xs me-1"></i>+10.5%
+                    </span>
+                    <span class="text-sm ms-1">từ 122.440.310 VNĐ</span>
+                  </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card border shadow-xs mb-4">
+                <div class="card-body text-start p-3 w-100">
+                    <div
+                        class="icon icon-shape icon-sm bg-primary text-white text-center border-radius-sm d-flex align-items-center justify-content-center mb-3">
+
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="w-100">
+                                <p class="text-sm text-secondary mb-1">Số sản phẩm toàn nền tảng</p>
+                                <h4 class="mb-2 font-weight-bold">{{adi.totalProductCount}}</h4>
+                                <!-- <div class="d-flex align-items-center">
+                    <span class="text-sm text-success font-weight-bolder">
+                      <i class="fa fa-chevron-up text-xs me-1"></i>+11.3%
+                    </span>
+                    <span class="text-sm ms-1">từ 3822</span>
+                  </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card border shadow-xs mb-4">
+                <div class="card-body text-start p-3 w-100">
+                    <div
+                        class="icon icon-shape icon-sm bg-danger text-white text-center border-radius-sm d-flex align-items-center justify-content-center mb-3">
+
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="w-100">
+                                <p class="text-sm text-secondary mb-1">Số cửa hàng toàn nền tảng</p>
+                                <h4 class="mb-2 font-weight-bold">{{adi.totalShopCount}}</h4>
+                                <!-- <div class="d-flex align-items-center">
+                    <span class="text-sm text-success font-weight-bolder">
+                      <i class="fa fa-chevron-up text-xs me-1"></i>+10%
+                    </span>
+                    <span class="text-sm ms-1">từ 216</span>
+                  </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card border shadow-xs mb-4">
+                <div class="card-body text-start p-3 w-100">
+                    <div
+                        class="icon icon-shape icon-sm bg-info text-white text-center border-radius-sm d-flex align-items-center justify-content-center mb-3">
+
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="w-100">
+                                <p class="text-sm text-secondary mb-1">Số đơn hàng toàn nền tảng</p>
+                                <h4 class="mb-2 font-weight-bold">{{adi.totalOrderCount}}</h4>
+                                <!-- <div class="d-flex align-items-center">
+                    <span class="text-sm text-danger font-weight-bolder">
+                      <i class="fa fa-chevron-up text-xs me-1"></i>-4.3%
+                    </span>
+                    <span class="text-sm ms-1">từ 1182</span>
+                  </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+<div class="row mb-3 mt-2">
+    <div class="mb-3 d-flex">
+        <div class="col-3">
+            <div class="card shadow-xs border h-100">
+                <div class="card-header pb-0">
+                    <div class="d-sm-flex align-items-center mb-3">
+                        <div>
+                            <h6 class="fw-bold mb-0 web-font pastel">Thống kê trạng thái các phòng</h6>
+                        </div>
+                    </div>
+                </div>
+                <ng-container *ngIf="orderCountStatistic">
+                    <div class="card-body">
+                        <app-bar-chart [data]="orderCountStatistic"></app-bar-chart>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div class="col-9 ms-4">
+            <div class="card shadow-xs border h-100">
+                <div class="card-header border-bottom pb-0">
+                    <div class="d-sm-flex align-items-center mb-3">
+                        <div>
+                            <h6 class="fw-bold mb-0 web-font pastel">Thống kê doanh thu theo ngày trên toàn nền
+                                tảng(trong 1
+                                tháng gần nhất)</h6>
+                        </div>
+
+                    </div>
+                </div>
+                <ng-container *ngIf="dailyRevenue">
+                    <div class="card-body py-3">
+                        <app-line-chart [data]="dailyRevenue"></app-line-chart>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <p-dialog [header]="'Send email to users'" [(visible)]="showModal" [modal]="true" [style]="{ width: '50%' }"> -->
+<!-- <ng-container *ngIf="selectedReport">
     <div class="mb-3">
     <label class="form-label">Report ID</label>
     <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.id">
@@ -87,4 +228,4 @@
     </ng-container>
     </div>
     </ng-container> -->
-    <!-- </p-dialog> -->
+<!-- </p-dialog> -->

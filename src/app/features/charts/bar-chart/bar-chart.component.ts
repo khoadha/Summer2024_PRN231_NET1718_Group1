@@ -8,21 +8,20 @@ echarts.use([LineChart, CanvasRenderer]);
 @Component({
   selector: 'app-bar-chart',
   templateUrl: './bar-chart.component.html',
-  styleUrls: ['./bar-chart.component.css']
+  styleUrls: ['./bar-chart.component.css'],
 })
 export class BarChartComponent implements OnInit {
-
   @Input() data!: OrderCountStatistic;
   chartOptions: EChartsOption = {};
 
   ngOnInit(): void {
     this.chartOptions = {
       tooltip: {
-        trigger: 'item'
+        trigger: 'item',
       },
       legend: {
         orient: 'vertical',
-        left: 'left'
+        left: 'left',
       },
       series: [
         {
@@ -30,22 +29,20 @@ export class BarChartComponent implements OnInit {
           type: 'pie',
           radius: '50%',
           data: [
-            { value: this.data.processingCount, name: 'Đang xử lí' },
-            { value: this.data.completedCount, name: 'Đã hoàn thành' },
-            { value: this.data.confirmedCount, name: 'Đã xác nhận' },
-            { value: this.data.canceledCount, name: 'Đã hủy' }
+            { value: this.data.processingCount, name: 'In Rent' },
+            { value: this.data.completedCount, name: 'Available' },
+            { value: this.data.confirmedCount, name: 'Canceled' },
+            { value: this.data.canceledCount, name: 'abcxyz' },
           ],
           emphasis: {
             itemStyle: {
               shadowBlur: 10,
               shadowOffsetX: 0,
-              shadowColor: 'rgba(0, 0, 0, 0.5)'
-            }
-          }
-        }
-      ]
+              shadowColor: 'rgba(0, 0, 0, 0.5)',
+            },
+          },
+        },
+      ],
     };
   }
-
-  
 }

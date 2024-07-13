@@ -82,9 +82,15 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { Editor, EditorModule } from 'primeng/editor';
 import { MyReportComponent } from './pages/my-report/my-report.component';
 import { AdminReportComponent } from './pages/admin-dashboard/admin-report/admin-report.component';
-
+import { NgxEchartsModule } from 'ngx-echarts';
+import * as echarts from 'echarts';
+import { BarChartComponent } from './features/charts/bar-chart/bar-chart.component';
+import { LineChartComponent } from './features/charts/line-chart/line-chart.component';
 @NgModule({
   imports: [
+    NgxEchartsModule.forRoot({
+      echarts,
+    }),
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -169,6 +175,8 @@ import { AdminReportComponent } from './pages/admin-dashboard/admin-report/admin
     ServicePageComponent,
     MyReportComponent,
     AdminReportComponent,
+    BarChartComponent,
+    LineChartComponent,
   ],
   providers: [
     {
