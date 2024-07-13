@@ -1,14 +1,32 @@
 <p-toast></p-toast>
 <div class="container">
-    <button pButton pRipple label="Send email to users" class="p-button-success">
-    </button>
+    <!-- <button pButton pRipple label="Send email to users" class="p-button-success">
+    </button> -->
+    <button pButton (click)="onClickSendEmailButton()" pRipple label="Send email to users"
+        class="p-button-success"></button>
 
 
     ai làm trang này thì kiếm chỗ nhét cái nút này vô, chỗ dễ nhìn
 </div>
 
+<p-dialog [header]="'Send email to users'" [(visible)]="showModal" [modal]="true"
+    [style]="{ width: '50%', height: '60vh' }">
+    <div class="row my-3">
+        <p-multiSelect placeholder="Select users email to send email" [options]="users"
+            filterPlaceHolder="Enter email, username or user id" filterBy="email,userName,id"
+            [(ngModel)]="selectedUsers" optionLabel="email" optionValue="email"></p-multiSelect>
+    </div>
+    <div class="row my-3" style="padding: 0 12px;">
+        <input placeholder="Enter email subject here!" type="text" pInputText [(ngModel)]="subject" />
+    </div>
+    <div class="row my-3">
+        <p-editor placeholder="Enter your email content here!" [(ngModel)]="content"
+            [style]="{ height: '240px' }"></p-editor>
+    </div>
+    <button [disabled]="!isDataValid()" ngClass="w-100" pButton (click)="onSubmit()" pRipple label="Send email to users"
+        class="p-button-success"></button>
 
-<p-dialog [header]="'Send email to users'" [(visible)]="showModal" [modal]="true" [style]="{ width: '50%' }">
+    <!-- <p-dialog [header]="'Send email to users'" [(visible)]="showModal" [modal]="true" [style]="{ width: '50%' }"> -->
     <!-- <ng-container *ngIf="selectedReport">
     <div class="mb-3">
     <label class="form-label">Report ID</label>
@@ -69,4 +87,4 @@
     </ng-container>
     </div>
     </ng-container> -->
-</p-dialog>
+    <!-- </p-dialog> -->

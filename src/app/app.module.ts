@@ -121,7 +121,6 @@ import { AdminReportComponent } from './pages/admin-dashboard/admin-report/admin
     CalendarModule,
     MultiSelectModule,
     EditorModule,
-    
   ],
   declarations: [
     AppComponent,
