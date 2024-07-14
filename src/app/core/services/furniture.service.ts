@@ -5,18 +5,21 @@ import { environment } from 'src/environment/environment';
 import { Furniture } from '../models/room';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FurnitureService {
-
   readonly baseUrl = environment.baseUrl;
-  readonly APIUrl = this.baseUrl + "Furnitures";
-  readonly odataUrl = environment.oDataUrl + "furniture"
+  readonly APIUrl = this.baseUrl + 'Furnitures';
+  readonly odataUrl = environment.oDataUrl + 'furniture';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getFurnitures(): Observable<Furniture[]> {
     return this.http.get<Furniture[]>(`${this.odataUrl}`);
+  }
+
+  getFurnituresCount(): Observable<number> {
+    return this.http.get<number>(`${this.APIUrl}/get-furniture-count`);
   }
 
   addFurnitures(formData: any) {
@@ -25,6 +28,10 @@ export class FurnitureService {
         Accept: 'application/json',
       }),
     };
-    return this.http.post<any>(`${this.APIUrl}/add-furniture/`, formData, httpOptions);
+    return this.http.post<any>(
+      `${this.APIUrl}/add-furniture/`,
+      formData,
+      httpOptions
+    );
   }
 }

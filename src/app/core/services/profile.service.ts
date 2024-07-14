@@ -2,14 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environment/environment';
-import { Profile, UpdateUsernameDto, UpdatePasswordDto } from '../models/profile';
+import {
+  Profile,
+  UpdateUsernameDto,
+  UpdatePasswordDto,
+} from '../models/profile';
 import { PaymentTransaction } from '../models/transaction';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProfileService {
-
   readonly baseUrl = environment.baseUrl;
   readonly APIUrl = this.baseUrl + 'profiles';
   readonly paymentUrl = this.baseUrl + 'Payments';
@@ -18,6 +21,10 @@ export class ProfileService {
 
   getProfileByUserId(id: string): Observable<Profile> {
     return this.http.get<Profile>(this.APIUrl + '/' + id);
+  }
+
+  getProfileCount(): Observable<number> {
+    return this.http.get<number>(this.APIUrl + '/get-totaluser');
   }
 
   checkLoginMethod(id: string): Observable<any> {

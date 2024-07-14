@@ -6,6 +6,7 @@ import { CreateOrderDto } from '../models/order';
 import { PaginationRoomDisplay, Room, RoomDisplay } from '../models/room';
 import { QueryModel } from '../models/queryModel';
 import { ConvertQueryModelToRequestQuery } from '../utilities/ConvertQueryModel';
+import { GetRoomAdminDisplayDTO } from '../models/statistic';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ import { ConvertQueryModelToRequestQuery } from '../utilities/ConvertQueryModel'
 export class RoomService {
   readonly baseUrl = environment.baseUrl;
   readonly APIUrl = this.baseUrl + 'Rooms';
-  readonly odataUrl = environment.oDataUrl + "room";
+  readonly odataUrl = environment.oDataUrl + 'room';
 
   constructor(private http: HttpClient) {}
 
@@ -27,7 +28,9 @@ export class RoomService {
 
   searchRoomDisplay(query: QueryModel): Observable<PaginationRoomDisplay> {
     var requestQuery = ConvertQueryModelToRequestQuery(query);
-    return this.http.get<PaginationRoomDisplay>(`${this.odataUrl}-display${requestQuery}`)
+    return this.http.get<PaginationRoomDisplay>(
+      `${this.odataUrl}-display${requestQuery}`
+    );
   }
 
   getRoomsDisplay(): Observable<RoomDisplay[]> {
@@ -67,5 +70,11 @@ export class RoomService {
       }),
     };
     return this.http.put<any>(`${this.APIUrl}/update-room/`, data, httpOptions);
+  }
+
+  getAdminRoomsInfo(): Observable<GetRoomAdminDisplayDTO> {
+    return this.http.get<GetRoomAdminDisplayDTO>(
+      `${this.APIUrl}/get-room-count/`
+    );
   }
 }

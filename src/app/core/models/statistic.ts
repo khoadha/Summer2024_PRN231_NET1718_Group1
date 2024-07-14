@@ -5,9 +5,10 @@ export interface Statistic {
   orderCount: number;
 }
 
-export interface RoomCountStatistic {
-  availableCount?: number;
-  inavailableCount?: number;
+export interface GetRoomAdminDisplayDTO {
+  roomCount?: number;
+  roomAvailable?: number;
+  roomInavailable?: number;
 }
 
 export interface AdminDashboardInformation {
@@ -31,8 +32,8 @@ export interface ProductForTopProductStatistic {
 }
 
 export interface DailyRevenue {
-  date: string;
   totalRevenue: number;
+  date: string;
 }
 
 export interface StoreOverviewStatistic {

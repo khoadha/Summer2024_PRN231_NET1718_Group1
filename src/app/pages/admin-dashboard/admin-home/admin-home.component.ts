@@ -4,8 +4,12 @@ import { SetupService } from 'src/app/core/services/setup.service';
 import {
   AdminDashboardInformation,
   DailyRevenue,
-  RoomCountStatistic,
+  GetRoomAdminDisplayDTO,
 } from 'src/app/core/models/statistic';
+import { RoomService } from 'src/app/core/services/room.service';
+import { PaymentService } from 'src/app/core/services/payment.service';
+import { ProfileService } from 'src/app/core/services/profile.service';
+import { FurnitureService } from 'src/app/core/services/furniture.service';
 @Component({
   selector: 'app-admin-home',
   templateUrl: './admin-home.component.html',
@@ -17,39 +21,57 @@ export class AdminHomeComponent implements OnInit {
   content: string = '';
   subject: string = '';
   showModal: boolean = false;
-  roomCountStatistic!: RoomCountStatistic;
+  roomCountStatistic!: GetRoomAdminDisplayDTO;
   dailyRevenue!: DailyRevenue[];
-  adi!: AdminDashboardInformation;
 
+  adi: AdminDashboardInformation = {
+    totalRoomCount: 0,
+    totalOrderCount: 0,
+    totalFurnitureCount: 0,
+    totalUserCount: 0,
+  };
   constructor(
     private setupService: SetupService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private roomService: RoomService,
+    private paymentService: PaymentService,
+    private profileService: ProfileService,
+    private furnitureService: FurnitureService
   ) {}
 
   ngOnInit(): void {
     this.setupService.getAllUsers().subscribe((res) => {
       this.users = res;
     });
-    this.adi = {
-      totalRoomCount: 10000000,
-      totalFurnitureCount: 111,
-      totalUserCount: 112,
-      totalOrderCount: 113,
-    };
-    this.roomCountStatistic = {
-      availableCount: 15,
-      inavailableCount: 5,
-    };
+    this.paymentService.getTransactionsDataChart().subscribe((res) => {
+      this.dailyRevenue = res;
+    });
 
-    this.dailyRevenue = [
-      { date: '2023-07-01', totalRevenue: 1000 },
-      { date: '2023-07-02', totalRevenue: 1500 },
-      { date: '2023-07-03', totalRevenue: 2000 },
-      { date: '2023-07-04', totalRevenue: 2500 },
-      { date: '2023-07-05', totalRevenue: 3000 },
-      { date: '2023-07-06', totalRevenue: 3500 },
-      { date: '2023-07-07', totalRevenue: 4000 },
-    ];
+    this.paymentService.getTransactionsCount().subscribe((res) => {
+      this.adi.totalOrderCount = res;
+    });
+    this.furnitureService.getFurnituresCount().subscribe((res) => {
+      this.adi.totalFurnitureCount = res;
+    });
+
+    this.profileService.getProfileCount().subscribe((res) => {
+      this.adi.totalUserCount = res;
+    });
+
+    this.roomService.getAdminRoomsInfo().subscribe((res) => {
+      this.roomCountStatistic = res;
+      this.adi.totalRoomCount = res.roomCount ?? 0;
+    });
+
+    // this.dailyRevenue = [
+    //   { date: '2023-07-01', totalRevenue: 1000 },
+    //   { date: '2023-07-02', totalRevenue: 1500 },
+    //   { date: '2023-07-03', totalRevenue: 2000 },
+    //   { date: '2023-07-04', totalRevenue: 2500 },
+    //   { date: '2023-07-05', totalRevenue: 3000 },
+    //   { date: '2023-07-06', totalRevenue: 3500 },
+    //   { date: '2023-07-07', totalRevenue: 4000 },
+    // ];
   }
 
   onSubmit() {
