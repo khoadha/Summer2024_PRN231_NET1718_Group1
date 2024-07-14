@@ -4,7 +4,7 @@ import { SetupService } from 'src/app/core/services/setup.service';
 import {
   AdminDashboardInformation,
   DailyRevenue,
-  OrderCountStatistic,
+  RoomCountStatistic,
 } from 'src/app/core/models/statistic';
 @Component({
   selector: 'app-admin-home',
@@ -17,7 +17,7 @@ export class AdminHomeComponent implements OnInit {
   content: string = '';
   subject: string = '';
   showModal: boolean = false;
-  orderCountStatistic!: OrderCountStatistic;
+  roomCountStatistic!: RoomCountStatistic;
   dailyRevenue!: DailyRevenue[];
   adi!: AdminDashboardInformation;
 
@@ -31,16 +31,14 @@ export class AdminHomeComponent implements OnInit {
       this.users = res;
     });
     this.adi = {
-      totalPlatformRevenue: 10000000,
-      totalProductCount: 111,
-      totalShopCount: 112,
+      totalRoomCount: 10000000,
+      totalFurnitureCount: 111,
+      totalUserCount: 112,
       totalOrderCount: 113,
     };
-    this.orderCountStatistic = {
-      completedCount: 15,
-      processingCount: 5,
-      confirmedCount: 10,
-      canceledCount: 2,
+    this.roomCountStatistic = {
+      availableCount: 15,
+      inavailableCount: 5,
     };
 
     this.dailyRevenue = [

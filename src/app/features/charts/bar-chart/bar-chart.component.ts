@@ -3,7 +3,7 @@ import { EChartsOption } from 'echarts';
 import { LineChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 import { Component, Input, OnInit } from '@angular/core';
-import { OrderCountStatistic } from 'src/app/core/models/statistic';
+import { RoomCountStatistic } from 'src/app/core/models/statistic';
 echarts.use([LineChart, CanvasRenderer]);
 @Component({
   selector: 'app-bar-chart',
@@ -11,7 +11,7 @@ echarts.use([LineChart, CanvasRenderer]);
   styleUrls: ['./bar-chart.component.css'],
 })
 export class BarChartComponent implements OnInit {
-  @Input() data!: OrderCountStatistic;
+  @Input() data!: RoomCountStatistic;
   chartOptions: EChartsOption = {};
 
   ngOnInit(): void {
@@ -29,10 +29,8 @@ export class BarChartComponent implements OnInit {
           type: 'pie',
           radius: '50%',
           data: [
-            { value: this.data.processingCount, name: 'In Rent' },
-            { value: this.data.completedCount, name: 'Available' },
-            { value: this.data.confirmedCount, name: 'Canceled' },
-            { value: this.data.canceledCount, name: 'abcxyz' },
+            { value: this.data.availableCount, name: 'Available' },
+            { value: this.data.inavailableCount, name: 'Inavailable' },
           ],
           emphasis: {
             itemStyle: {

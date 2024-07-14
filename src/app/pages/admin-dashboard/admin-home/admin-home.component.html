@@ -38,8 +38,8 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="w-100">
-                                <p class="text-sm text-secondary mb-1 bg">Tổng doanh thu toàn nền tảng</p>
-                                <h4 class="mb-2 font-weight-bold">{{adi.totalPlatformRevenue | vndCurrencyPipe}}</h4>
+                                <p class="text-sm text-secondary mb-1 bg">Total user in HostelLand</p>
+                                <h4 class="mb-2 font-weight-bold">{{adi.totalUserCount }}</h4>
                                 <!-- <div class="d-flex align-items-center">
                     <span class="text-sm text-success font-weight-bolder">
                       <i class="fa fa-chevron-up text-xs me-1"></i>+10.5%
@@ -62,8 +62,8 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="w-100">
-                                <p class="text-sm text-secondary mb-1">Số sản phẩm toàn nền tảng</p>
-                                <h4 class="mb-2 font-weight-bold">{{adi.totalProductCount}}</h4>
+                                <p class="text-sm text-secondary mb-1">Total Furniture in HostelLand</p>
+                                <h4 class="mb-2 font-weight-bold">{{adi.totalFurnitureCount}}</h4>
                                 <!-- <div class="d-flex align-items-center">
                     <span class="text-sm text-success font-weight-bolder">
                       <i class="fa fa-chevron-up text-xs me-1"></i>+11.3%
@@ -86,8 +86,8 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="w-100">
-                                <p class="text-sm text-secondary mb-1">Số cửa hàng toàn nền tảng</p>
-                                <h4 class="mb-2 font-weight-bold">{{adi.totalShopCount}}</h4>
+                                <p class="text-sm text-secondary mb-1">Total room in HostelLand/p>
+                                <h4 class="mb-2 font-weight-bold">{{adi.totalRoomCount}}</h4>
                                 <!-- <div class="d-flex align-items-center">
                     <span class="text-sm text-success font-weight-bolder">
                       <i class="fa fa-chevron-up text-xs me-1"></i>+10%
@@ -137,9 +137,9 @@
                         </div>
                     </div>
                 </div>
-                <ng-container *ngIf="orderCountStatistic">
+                <ng-container *ngIf="roomCountStatistic">
                     <div class="card-body">
-                        <app-bar-chart [data]="orderCountStatistic"></app-bar-chart>
+                        <app-bar-chart [data]="roomCountStatistic"></app-bar-chart>
                     </div>
                 </ng-container>
             </div>
