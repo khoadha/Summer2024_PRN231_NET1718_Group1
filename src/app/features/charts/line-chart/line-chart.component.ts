@@ -8,19 +8,20 @@ echarts.use([LineChart, CanvasRenderer]);
 @Component({
   selector: 'app-line-chart',
   templateUrl: './line-chart.component.html',
-  styleUrls: ['./line-chart.component.css']
+  styleUrls: ['./line-chart.component.css'],
 })
 export class LineChartComponent implements OnInit {
-
   @Input() data: any;
   chartOptions: EChartsOption = {};
+
+  private conversionRate: number = 25370.0;
 
   ngOnInit(): void {
     const transformedData = this.transformData(this.data);
     this.initChart(transformedData);
   }
 
-  initChart(data: any){
+  initChart(data: any) {
     const dateList = data.map(function (item: any[]) {
       return item[0];
     });
@@ -36,48 +37,52 @@ export class LineChartComponent implements OnInit {
           type: 'continuous',
           seriesIndex: 0,
           min: 0,
-          max: 1000
-        }
+          max: 1000,
+        },
       ],
       tooltip: {
         trigger: 'axis',
         formatter: (params: any) => {
           const param = params[0];
-          return `<div class="pastel web-font">Ngày: <span class="fw-bold">${param.axisValue}</span><br/>
-          Doanh thu: <span class="fw-bold">${this.formatCurrency(param.data)}</span>
+          return `<div class="pastel web-font">Ngày: <span class="fw-bold">${
+            param.axisValue
+          }</span><br/>
+          Doanh thu: <span class="fw-bold">${this.formatCurrency(
+            param.data
+          )}</span>
           </div>`;
-        } 
+        },
       },
       xAxis: [
         {
           data: dateList,
-        }
+        },
       ],
       yAxis: [
         {
           axisLabel: {
-            formatter: (value: number) => this.formatCurrency(value)
-          }
-        }
+            formatter: (value: number) => this.formatCurrency(value),
+          },
+        },
       ],
       series: [
         {
           type: 'line',
           showSymbol: false,
-          data: valueList
-        }
-      ]
-    }
+          data: valueList,
+        },
+      ],
+    };
   }
 
   transformData(data: any[]): any[] {
-    return data.map(item => [item.date.split('T')[0], item.totalRevenue]);
+    return data.map((item) => [
+      item.createdDate.split('T')[0],
+      item.amount / this.conversionRate,
+    ]);
   }
 
   formatCurrency(value: number): string {
-    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '₫';
+    return value.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '$';
   }
 }
-
-
-

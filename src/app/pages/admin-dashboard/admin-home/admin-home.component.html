@@ -1,12 +1,20 @@
 <p-toast></p-toast>
-<div class="container">
-    <!-- <button pButton pRipple label="Send email to users" class="p-button-success">
-    </button> -->
-    <button pButton (click)="onClickSendEmailButton()" pRipple label="Send email to users"
-        class="p-button-success"></button>
+<div class="container" style="max-width: 100%;">
+    <div class="row">
+        <div class="col-12">
+            <div class="card border shadow-xs mb-4">
+                <div class="card-body text-start p-3 w-100" style="display: flex; justify-content: end;">
+                    <div class="">
+
+                        <button pButton (click)="onClickSendEmailButton()" pRipple label="Send email to users"
+                            class="p-button p-button-success "> <i class="pi pi-inbox icon ms-1 me-2"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-    Gui email
 </div>
 
 <p-dialog [header]="'Send email to users'" [(visible)]="showModal" [modal]="true"
@@ -26,206 +34,143 @@
     <button [disabled]="!isDataValid()" ngClass="w-100" pButton (click)="onSubmit()" pRipple label="Send email to users"
         class="p-button-success"></button>
 </p-dialog>
-<ng-container *ngIf="adi">
-    <div class="row">
-        <div class="col-3">
-            <div class="card border shadow-xs mb-4">
-                <div class="card-body text-start p-3 w-100">
-                    <div
-                        class="icon icon-shape icon-sm bg-success text-white text-center border-radius-sm d-flex align-items-center justify-content-center mb-3">
-
+<div class="container" style="max-width: 100%;">
+    <ng-container *ngIf="adi">
+        <div class="row">
+            <div class="col-3">
+                <div class="card border shadow-xs mb-4">
+                    <div class="card-body text-start p-3 w-100">
+                        <div class="">
+                            <i class="pi pi-user icon fs-2"></i>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="w-100">
+                                    <p class="text-sm text-secondary mb-1 bg">Total user in HostelLand</p>
+                                    <h4 class="mb-2 font-weight-bold">{{adi.totalUserCount }}</h4>
+                                    <!-- <div class="d-flex align-items-center">
+                        <span class="text-sm text-success font-weight-bolder">
+                          <i class="fa fa-chevron-up text-xs me-1"></i>+10.5%
+                        </span>
+                        <span class="text-sm ms-1">từ 122.440.310 VNĐ</span>
+                      </div> -->
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="w-100">
-                                <p class="text-sm text-secondary mb-1 bg">Total user in HostelLand</p>
-                                <h4 class="mb-2 font-weight-bold">{{adi.totalUserCount }}</h4>
-                                <!-- <div class="d-flex align-items-center">
-                    <span class="text-sm text-success font-weight-bolder">
-                      <i class="fa fa-chevron-up text-xs me-1"></i>+10.5%
-                    </span>
-                    <span class="text-sm ms-1">từ 122.440.310 VNĐ</span>
-                  </div> -->
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card border shadow-xs mb-4">
+                    <div class="card-body text-start p-3 w-100">
+                        <div class="">
+                            <i class="pi pi-box icon fs-2"></i>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="w-100">
+                                    <p class="text-sm text-secondary mb-1">Total Furniture in HostelLand</p>
+                                    <h4 class="mb-2 font-weight-bold">{{adi.totalFurnitureCount}}</h4>
+                                    <!-- <div class="d-flex align-items-center">
+                        <span class="text-sm text-success font-weight-bolder">
+                          <i class="fa fa-chevron-up text-xs me-1"></i>+11.3%
+                        </span>
+                        <span class="text-sm ms-1">từ 3822</span>
+                      </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card border shadow-xs mb-4">
+                    <div class="card-body text-start p-3 w-100">
+                        <div class="">
+                            <i class="pi pi-shop icon fs-2"></i>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="w-100">
+                                    <p class="text-sm text-secondary mb-1">Total room in HostelLand</p>
+                                    <h4 class="mb-2 font-weight-bold">{{adi.totalRoomCount}}</h4>
+                                    <!-- <div class="d-flex align-items-center">
+                        <span class="text-sm text-success font-weight-bolder">
+                          <i class="fa fa-chevron-up text-xs me-1"></i>+10%
+                        </span>
+                        <span class="text-sm ms-1">từ 216</span>
+                      </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card border shadow-xs mb-4">
+                    <div class="card-body text-start p-3 w-100">
+                        <div class="">
+                            <i class="pi pi-shopping-cart icon fs-2"></i>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="w-100">
+                                    <p class="text-sm text-secondary mb-1">Số đơn hàng toàn nền tảng</p>
+                                    <h4 class="mb-2 font-weight-bold">{{adi.totalOrderCount}}</h4>
+                                    <!-- <div class="d-flex align-items-center">
+                        <span class="text-sm text-danger font-weight-bolder">
+                          <i class="fa fa-chevron-up text-xs me-1"></i>-4.3%
+                        </span>
+                        <span class="text-sm ms-1">từ 1182</span>
+                      </div> -->
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-3">
-            <div class="card border shadow-xs mb-4">
-                <div class="card-body text-start p-3 w-100">
-                    <div
-                        class="icon icon-shape icon-sm bg-primary text-white text-center border-radius-sm d-flex align-items-center justify-content-center mb-3">
-
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="w-100">
-                                <p class="text-sm text-secondary mb-1">Total Furniture in HostelLand</p>
-                                <h4 class="mb-2 font-weight-bold">{{adi.totalFurnitureCount}}</h4>
-                                <!-- <div class="d-flex align-items-center">
-                    <span class="text-sm text-success font-weight-bolder">
-                      <i class="fa fa-chevron-up text-xs me-1"></i>+11.3%
-                    </span>
-                    <span class="text-sm ms-1">từ 3822</span>
-                  </div> -->
+    </ng-container>
+    <div class="row mb-3 mt-2" style="overflow-x: hidden;">
+        <div class="mb-3 d-flex">
+            <div class="col-3">
+                <div class="card shadow-xs border h-100">
+                    <div class="card-header pb-0">
+                        <div class="d-sm-flex align-items-center mb-3">
+                            <div>
+                                <h6 class="fw-bold mb-0 web-font pastel">Statistics of all room status in HostelLand <i
+                                        class="pi pi-chart-pie icon"></i></h6>
                             </div>
                         </div>
                     </div>
+                    <ng-container *ngIf="roomCountStatistic">
+                        <div class="card-body">
+                            <app-bar-chart [data]="roomCountStatistic"></app-bar-chart>
+                        </div>
+                    </ng-container>
                 </div>
             </div>
-        </div>
-        <div class="col-3">
-            <div class="card border shadow-xs mb-4">
-                <div class="card-body text-start p-3 w-100">
-                    <div
-                        class="icon icon-shape icon-sm bg-danger text-white text-center border-radius-sm d-flex align-items-center justify-content-center mb-3">
-
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="w-100">
-                                <p class="text-sm text-secondary mb-1">Total room in HostelLand/p>
-                                <h4 class="mb-2 font-weight-bold">{{adi.totalRoomCount}}</h4>
-                                <!-- <div class="d-flex align-items-center">
-                    <span class="text-sm text-success font-weight-bolder">
-                      <i class="fa fa-chevron-up text-xs me-1"></i>+10%
-                    </span>
-                    <span class="text-sm ms-1">từ 216</span>
-                  </div> -->
+            <div class="col-9 ms-4">
+                <div class="card shadow-xs border h-100">
+                    <div class="card-header border-bottom pb-0">
+                        <div class="d-sm-flex align-items-center mb-3">
+                            <div>
+                                <h6 class="fw-bold mb-0 web-font pastel">Statistics of daily revenue across the platform
+                                    (in
+                                    the last month)
+                                    <i class="pi pi-chart-line icon"></i>
+                                </h6>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="card border shadow-xs mb-4">
-                <div class="card-body text-start p-3 w-100">
-                    <div
-                        class="icon icon-shape icon-sm bg-info text-white text-center border-radius-sm d-flex align-items-center justify-content-center mb-3">
 
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="w-100">
-                                <p class="text-sm text-secondary mb-1">Số đơn hàng toàn nền tảng</p>
-                                <h4 class="mb-2 font-weight-bold">{{adi.totalOrderCount}}</h4>
-                                <!-- <div class="d-flex align-items-center">
-                    <span class="text-sm text-danger font-weight-bolder">
-                      <i class="fa fa-chevron-up text-xs me-1"></i>-4.3%
-                    </span>
-                    <span class="text-sm ms-1">từ 1182</span>
-                  </div> -->
-                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</ng-container>
-<div class="row mb-3 mt-2">
-    <div class="mb-3 d-flex">
-        <div class="col-3">
-            <div class="card shadow-xs border h-100">
-                <div class="card-header pb-0">
-                    <div class="d-sm-flex align-items-center mb-3">
-                        <div>
-                            <h6 class="fw-bold mb-0 web-font pastel">Thống kê trạng thái các phòng</h6>
+                    <ng-container *ngIf="dailyRevenue">
+                        <div class="card-body py-3" style="overflow-x: hidden;">
+                            <app-line-chart [data]="dailyRevenue"></app-line-chart>
                         </div>
-                    </div>
+                    </ng-container>
                 </div>
-                <ng-container *ngIf="roomCountStatistic">
-                    <div class="card-body">
-                        <app-bar-chart [data]="roomCountStatistic"></app-bar-chart>
-                    </div>
-                </ng-container>
-            </div>
-        </div>
-        <div class="col-9 ms-4">
-            <div class="card shadow-xs border h-100">
-                <div class="card-header border-bottom pb-0">
-                    <div class="d-sm-flex align-items-center mb-3">
-                        <div>
-                            <h6 class="fw-bold mb-0 web-font pastel">Thống kê doanh thu theo ngày trên toàn nền
-                                tảng(trong 1
-                                tháng gần nhất)</h6>
-                        </div>
-
-                    </div>
-                </div>
-                <ng-container *ngIf="dailyRevenue">
-                    <div class="card-body py-3">
-                        <app-line-chart [data]="dailyRevenue"></app-line-chart>
-                    </div>
-                </ng-container>
             </div>
         </div>
     </div>
 </div>
-
-
-<!-- <p-dialog [header]="'Send email to users'" [(visible)]="showModal" [modal]="true" [style]="{ width: '50%' }"> -->
-<!-- <ng-container *ngIf="selectedReport">
-    <div class="mb-3">
-    <label class="form-label">Report ID</label>
-    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.id">
-    </div>
-    <div class="mb-3">
-    <label class="form-label">Room ID</label>
-    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.roomId">
-    </div>
-    <div class="mb-3">
-    <label class="form-label">Room Name</label>
-    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.roomName">
-    </div>
-    <div class="mb-3">
-    <label class="form-label">Author ID</label>
-    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.authorId">
-    </div>
-    <div class="mb-3">
-    <label class="form-label">Author Name</label>
-    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.authorName">
-    </div>
-    <div class="mb-3">
-    <label class="form-label">Description</label>
-    <textarea [disabled]="true" class="form-control"
-    [(ngModel)]="selectedReport.description"></textarea>
-    </div>
-    <div class="mb-3">
-    <label class="form-label">Created Date</label>
-    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.createdDate">
-    </div>
-    <div class="mb-3">
-    <label class="form-label">Start Date</label>
-    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.startDate">
-    </div>
-    <div class="mb-3">
-    <label class="form-label">End Date</label>
-    <input [disabled]="true" class="form-control" [(ngModel)]="selectedReport.endDate">
-    </div>
-    <div class="mb-3">
-    <label class="form-label">Reply from admin</label>
-    <textarea [disabled]="true" class="form-control" [(ngModel)]="selectedReport.reply"></textarea>
-    </div>
-    <div class="mb-3">
-    <label class="form-label me-2">Status</label>
-    <ng-container [ngSwitch]="selectedReport.status">
-    <ng-container *ngSwitchCase="0">
-    <p-tag severity="danger" value="Rejected"></p-tag>
-    </ng-container>
-    <ng-container *ngSwitchCase="1">
-    <p-tag severity="warning" value="Pending"></p-tag>
-    </ng-container>
-    <ng-container *ngSwitchCase="2">
-    <p-tag severity="info" value="Processing"></p-tag>
-    </ng-container>
-    <ng-container *ngSwitchCase="3">
-    <p-tag severity="success" value="Completed"></p-tag>
-    </ng-container>
-    </ng-container>
-    </div>
-    </ng-container> -->
-<!-- </p-dialog> -->
