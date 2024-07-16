@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environment/environment';
 import { PaymentTransaction } from '../models/transaction';
@@ -24,8 +24,16 @@ export class PaymentService {
     );
   }
 
-  getTransactionsDataChart(): Observable<DailyRevenue[]> {
-    return this.http.get<DailyRevenue[]>(this.APIUrl + '/transactions-data');
+  getTransactionsDataChart(
+    fromDate: string,
+    toDate: string
+  ): Observable<DailyRevenue[]> {
+    const params = new HttpParams()
+      .set('fromDate', fromDate)
+      .set('toDate', toDate);
+    return this.http.get<DailyRevenue[]>(this.APIUrl + '/transactions-data', {
+      params,
+    });
   }
   getTransactionsCount(): Observable<number> {
     return this.http.get<number>(this.APIUrl + '/total-transactions');

@@ -16,7 +16,7 @@
 # General
 --------------------------------------------------------------*/
 * {
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .primary-color {
@@ -2182,4 +2182,16 @@ footer .copyright-footer {
 
 footer .credits {
   font-size: 14px;
+}
+
+.bg-color-1 {
+  background-color: #f0f0f0; /* Light grey */
+}
+
+.bg-color-2 {
+  background-color: #e0e0e0; /* Slightly darker grey */
+}
+
+.error-message {
+  color: red;
 }

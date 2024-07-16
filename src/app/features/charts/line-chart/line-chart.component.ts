@@ -2,7 +2,13 @@ import * as echarts from 'echarts/core';
 import { EChartsOption } from 'echarts';
 import { LineChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 echarts.use([LineChart, CanvasRenderer]);
 
 @Component({
@@ -17,6 +23,16 @@ export class LineChartComponent implements OnInit {
   private conversionRate: number = 25370.0;
 
   ngOnInit(): void {
+    const transformedData = this.transformData(this.data);
+    this.initChart(transformedData);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data']) {
+      this.updateChart();
+    }
+  }
+  updateChart(): void {
     const transformedData = this.transformData(this.data);
     this.initChart(transformedData);
   }
@@ -44,10 +60,10 @@ export class LineChartComponent implements OnInit {
         trigger: 'axis',
         formatter: (params: any) => {
           const param = params[0];
-          return `<div class="pastel web-font">Ngày: <span class="fw-bold">${
+          return `<div class="pastel web-font">Date: <span class="fw-bold">${
             param.axisValue
           }</span><br/>
-          Doanh thu: <span class="fw-bold">${this.formatCurrency(
+          Revenue: <span class="fw-bold">${this.formatCurrency(
             param.data
           )}</span>
           </div>`;

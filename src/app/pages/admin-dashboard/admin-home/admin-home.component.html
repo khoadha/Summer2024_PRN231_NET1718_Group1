@@ -115,7 +115,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="w-100">
-                                    <p class="text-sm text-secondary mb-1">Số đơn hàng toàn nền tảng</p>
+                                    <p class="text-sm text-secondary mb-1">Total orders in HostelLand</p>
                                     <h4 class="mb-2 font-weight-bold">{{adi.totalOrderCount}}</h4>
                                     <!-- <div class="d-flex align-items-center">
                         <span class="text-sm text-danger font-weight-bolder">
@@ -152,18 +152,31 @@
             </div>
             <div class="col-9 ms-4">
                 <div class="card shadow-xs border h-100">
-                    <div class="card-header border-bottom pb-0">
-                        <div class="d-sm-flex align-items-center mb-3">
-                            <div>
-                                <h6 class="fw-bold mb-0 web-font pastel">Statistics of daily revenue across the platform
-                                    (in
-                                    the last month)
+                    <div class="card-header border-bottom pb-0" style="height: auto;">
+                        <div class="mb-3">
+                            <div class="web-font pastel">
+                                <h6 class="fw-bold mb-0">Statistics of daily revenue across the platform (in the last
+                                    month)
                                     <i class="pi pi-chart-line icon"></i>
                                 </h6>
                             </div>
+                        </div>
+                        <div class="d-sm-flex align-items-center" style="height: 70px;">
+                            <div class="ms-auto">
+                                <label for="fromDate">From:</label>
+                                <input type="date" id="fromDate" [(ngModel)]="fromDate">
+                                <label for="toDate" class="ms-2">To:</label>
+                                <input type="date" id="toDate" [(ngModel)]="toDate">
 
+                                <button class="btn btn-primary ms-2" (click)="updateData()"
+                                    [disabled]="fromDate && toDate && fromDate > toDate">Submit</button>
+                                <div *ngIf="fromDate && toDate && fromDate > toDate" class="error-message">
+                                    From Date cannot be greater than To Date.
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                     <ng-container *ngIf="dailyRevenue">
                         <div class="card-body py-3" style="overflow-x: hidden;">
                             <app-line-chart [data]="dailyRevenue"></app-line-chart>
@@ -172,5 +185,92 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row mb-3 mt-2" style="overflow-x: hidden;">
+        <div class="d-flex justify-content-between mb-3">
+            <h5>Top 10 Latest Transactions</h5>
+        </div>
+        <p-table [showCurrentPageReport]="true" [value]="transactions">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Created Date</th>
+                    <th>Status</th>
+                    <th>Amount</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-transaction>
+                <tr class="bg-color-1">
+                    <td>{{ transaction.vnPayTransactionId }}</td>
+                    <td>{{ transaction.createdDate | date }}</td>
+                    <td>
+                        <ng-container [ngSwitch]="transaction.transactionStatus">
+                            <ng-container *ngSwitchCase="0">
+                                <p-tag severity="danger" value="Failed"></p-tag>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="1">
+                                <p-tag severity="success" value="Paid"></p-tag>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="2">
+                                <p-tag severity="danger" value="Failed"></p-tag>
+                            </ng-container>
+                        </ng-container>
+                    </td>
+                    <td>{{ transaction.amount | currency }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <div class="row mb-3 mt-2">
+        <div class="d-flex justify-content-between mb-3">
+            <h5>Top 10 Latest Reports</h5>
+        </div>
+        <p-table [value]="reports">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>#</th>
+                    <th>Room Id</th>
+                    <th>Room Name</th>
+                    <th>Author</th>
+                    <th>Created Date</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-report>
+                <tr class="bg-color-1">
+                    <td>{{ report.id }}</td>
+                    <td>{{ report.roomId }}</td>
+                    <td>{{ report.roomName }}</td>
+                    <td>{{ report.authorName }}</td>
+                    <td>{{ report.createdDate | date }}</td>
+                    <td>{{ report.startDate == null ? 'No data' : report.startDate | date }}</td>
+                    <td>{{ report.endDate == null ? 'No data' : report.endDate | date }}</td>
+                    <td>
+                        <ng-container [ngSwitch]="report.status">
+                            <ng-container *ngSwitchCase="0">
+                                <p-tag severity="danger" value="Rejected"></p-tag>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="1">
+                                <p-tag severity="warning" value="Pending"></p-tag>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="2">
+                                <p-tag severity="info" value="Processing"></p-tag>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="3">
+                                <p-tag severity="success" value="Completed"></p-tag>
+                            </ng-container>
+                        </ng-container>
+                    </td>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="empty" let-report>
+                <tr>
+                    No data yet.
+                </tr>
+            </ng-template>
+        </p-table>
     </div>
 </div>

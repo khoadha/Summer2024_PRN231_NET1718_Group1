@@ -25,7 +25,7 @@ export class BarChartComponent implements OnInit {
       },
       series: [
         {
-          name: 'Trạng thái',
+          name: 'Status',
           type: 'pie',
           radius: '50%',
           data: [
