@@ -2193,5 +2193,9 @@ footer .credits {
 }
 
 .error-message {
-  color: red;
+  color: #dc3545; /* Bootstrap danger color */
+  font-size: 0.875em;
+}
+.height-100vh {
+  height: 100vh;
 }

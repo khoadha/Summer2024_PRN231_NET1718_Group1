@@ -24,7 +24,8 @@
     </div>
 </div>
 
-<div class="p-sidebar-content content-container" [ngClass]="{'content-shift': drawerVisible}">
+<div class="p-sidebar-content content-container" [ngClass]="{'content-shift': drawerVisible}"
+    style="background-color:  #DADBCB;">
     <ng-container>
         <button class="my-3 ms-4 p-button p-component p-button-icon-only rounded visible-btn"
             *ngIf="!drawerVisible; else closed" pTooltip="Open menu" (click)="drawerVisible = true">

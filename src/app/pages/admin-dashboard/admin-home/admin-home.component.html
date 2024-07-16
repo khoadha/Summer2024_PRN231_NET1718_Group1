@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card border shadow-xs mb-4">
-                <div class="card-body text-start p-3 w-100" style="display: flex; justify-content: end;">
+                <div class="card-body text-start p-3 w-100" style="display: flex; justify-content: start;">
                     <div class="">
 
                         <button pButton (click)="onClickSendEmailButton()" pRipple label="Send email to users"
@@ -41,19 +41,13 @@
                 <div class="card border shadow-xs mb-4">
                     <div class="card-body text-start p-3 w-100">
                         <div class="">
-                            <i class="pi pi-user icon fs-2"></i>
+                            <i class="pi pi-user icon fs-3"></i>
                         </div>
                         <div class="row">
                             <div class="col-12">
                                 <div class="w-100">
                                     <p class="text-sm text-secondary mb-1 bg">Total user in HostelLand</p>
                                     <h4 class="mb-2 font-weight-bold">{{adi.totalUserCount }}</h4>
-                                    <!-- <div class="d-flex align-items-center">
-                        <span class="text-sm text-success font-weight-bolder">
-                          <i class="fa fa-chevron-up text-xs me-1"></i>+10.5%
-                        </span>
-                        <span class="text-sm ms-1">từ 122.440.310 VNĐ</span>
-                      </div> -->
                                 </div>
                             </div>
                         </div>
@@ -64,19 +58,13 @@
                 <div class="card border shadow-xs mb-4">
                     <div class="card-body text-start p-3 w-100">
                         <div class="">
-                            <i class="pi pi-box icon fs-2"></i>
+                            <i class="pi pi-box icon fs-3"></i>
                         </div>
                         <div class="row">
                             <div class="col-12">
                                 <div class="w-100">
                                     <p class="text-sm text-secondary mb-1">Total Furniture in HostelLand</p>
                                     <h4 class="mb-2 font-weight-bold">{{adi.totalFurnitureCount}}</h4>
-                                    <!-- <div class="d-flex align-items-center">
-                        <span class="text-sm text-success font-weight-bolder">
-                          <i class="fa fa-chevron-up text-xs me-1"></i>+11.3%
-                        </span>
-                        <span class="text-sm ms-1">từ 3822</span>
-                      </div> -->
                                 </div>
                             </div>
                         </div>
@@ -87,19 +75,13 @@
                 <div class="card border shadow-xs mb-4">
                     <div class="card-body text-start p-3 w-100">
                         <div class="">
-                            <i class="pi pi-shop icon fs-2"></i>
+                            <i class="pi pi-shop icon fs-3"></i>
                         </div>
                         <div class="row">
                             <div class="col-12">
                                 <div class="w-100">
                                     <p class="text-sm text-secondary mb-1">Total room in HostelLand</p>
                                     <h4 class="mb-2 font-weight-bold">{{adi.totalRoomCount}}</h4>
-                                    <!-- <div class="d-flex align-items-center">
-                        <span class="text-sm text-success font-weight-bolder">
-                          <i class="fa fa-chevron-up text-xs me-1"></i>+10%
-                        </span>
-                        <span class="text-sm ms-1">từ 216</span>
-                      </div> -->
                                 </div>
                             </div>
                         </div>
@@ -117,12 +99,6 @@
                                 <div class="w-100">
                                     <p class="text-sm text-secondary mb-1">Total orders in HostelLand</p>
                                     <h4 class="mb-2 font-weight-bold">{{adi.totalOrderCount}}</h4>
-                                    <!-- <div class="d-flex align-items-center">
-                        <span class="text-sm text-danger font-weight-bolder">
-                          <i class="fa fa-chevron-up text-xs me-1"></i>-4.3%
-                        </span>
-                        <span class="text-sm ms-1">từ 1182</span>
-                      </div> -->
                                 </div>
                             </div>
                         </div>
@@ -135,7 +111,9 @@
         <div class="mb-3 d-flex">
             <div class="col-3">
                 <div class="card shadow-xs border h-100">
-                    <div class="card-header pb-0">
+                    <div class="card-header pb-0" style="    background: none;
+                    border-bottom: none;
+                    padding-top: 32px;">
                         <div class="d-sm-flex align-items-center mb-3">
                             <div>
                                 <h6 class="fw-bold mb-0 web-font pastel">Statistics of all room status in HostelLand <i
@@ -152,7 +130,9 @@
             </div>
             <div class="col-9 ms-4">
                 <div class="card shadow-xs border h-100">
-                    <div class="card-header border-bottom pb-0" style="height: auto;">
+                    <div class="card-header border-bottom pb-0" style="height: auto;     background: none;
+                    border-bottom: none !important;
+                    padding-top: 32px;">
                         <div class="mb-3">
                             <div class="web-font pastel">
                                 <h6 class="fw-bold mb-0">Statistics of daily revenue across the platform (in the last
@@ -162,11 +142,15 @@
                             </div>
                         </div>
                         <div class="d-sm-flex align-items-center" style="height: 70px;">
-                            <div class="ms-auto">
+                            <div class="">
                                 <label for="fromDate">From:</label>
-                                <input type="date" id="fromDate" [(ngModel)]="fromDate">
-                                <label for="toDate" class="ms-2">To:</label>
-                                <input type="date" id="toDate" [(ngModel)]="toDate">
+                                <p-calendar id="fromDate" [(ngModel)]="fromDate"
+                                    (ngModelChange)="fromDate = $event.toISOString().split('T')[0]" inputId="fromDate"
+                                    dateFormat="yy-mm-dd"></p-calendar>
+                                <label for="fromDate" class="ms-2">To:</label>
+                                <p-calendar id=" toDate" [(ngModel)]="toDate"
+                                    (ngModelChange)="toDate = $event.toISOString().split('T')[0]" inputId="toDate"
+                                    dateFormat="yy-mm-dd"></p-calendar>
 
                                 <button class="btn btn-primary ms-2" (click)="updateData()"
                                     [disabled]="fromDate && toDate && fromDate > toDate">Submit</button>
@@ -197,6 +181,7 @@
                     <th>Created Date</th>
                     <th>Status</th>
                     <th>Amount</th>
+                    <th>Payment method</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-transaction>
@@ -217,6 +202,19 @@
                         </ng-container>
                     </td>
                     <td>{{ transaction.amount | currency }}</td>
+                    <td class="align-middle">
+                        <div class="d-flex">
+                            <div
+                                class="border px-1 py-1 text-center d-flex align-items-center border-radius-sm my-auto">
+                                <img src="https://s-vnba-cdn.aicms.vn/vnba-media/23/8/16/vnpay-logo_64dc3da9d7a11.jpg"
+                                    style="width: 50px; height: auto;" alt="payment-method">
+                            </div>
+                            <div class="ms-2">
+                                <p class="text-dark text-sm mb-0">VN Pay</p>
+                                <p class="text-secondary text-sm mb-0">Banking</p>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
             </ng-template>
         </p-table>

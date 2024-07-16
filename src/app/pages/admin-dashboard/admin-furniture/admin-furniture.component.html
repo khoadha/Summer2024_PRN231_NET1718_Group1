@@ -1,41 +1,45 @@
-<p-toast/>
-  <div class="container">
-    <div class="d-flex justify-content-between mb-3">
-      <h2>Furniture Management</h2>
-      <button type="button" class="btn btn-success" (click)="showCreateModal = true">Create new furniture</button>
-    </div>
-  
-    <p-table [value]="furnitureData">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Cost ($)</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-furniture>
-        <tr>
-          <td>{{ furniture.id }}</td>
-          <td>{{ furniture.name }}</td>
-          <td>{{ furniture.description }}</td>
-          <td>{{ furniture.cost | currency }}</td>
-        </tr>
-      </ng-template>
-    </p-table>
+<p-toast />
+<div class="container height-100vh">
+  <div class="d-flex justify-content-between mb-3">
+    <h2>Furniture Management</h2>
+    <button type="button" class="btn btn-success" (click)="showCreateModal = true">Create new furniture</button>
+  </div>
 
-    <p-dialog header="Submit furniture information form" [(visible)]="showCreateModal" [modal]="true" [style]="{ width: '40%' }">
-      <div class="mb-3">
-        <label for="name" class="form-label">Name</label>
-        <input placeholder="Enter furniture name" type="text" class="form-control" id="name" [(ngModel)]="newFurniture.name">
-      </div>
-      <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea placeholder="Enter furniture description" class="form-control" id="description" [(ngModel)]="newFurniture.description"></textarea>
-      </div>
-      <div class="mb-3">
-        <label for="cost" class="form-label">Cost ($)</label>
-        <input placeholder="Enter furniture cost per day" type="number" class="form-control" id="cost" [(ngModel)]="newFurniture.cost">
-      </div>
-      <button type="button" class="btn btn-primary w-100" (click)="createFurniture()">Submit information</button>
-    </p-dialog>
+  <p-table [value]="furnitureData">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Cost ($)</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-furniture>
+      <tr>
+        <td>{{ furniture.id }}</td>
+        <td>{{ furniture.name }}</td>
+        <td>{{ furniture.description }}</td>
+        <td>{{ furniture.cost | currency }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-dialog header="Submit furniture information form" [(visible)]="showCreateModal" [modal]="true"
+    [style]="{ width: '40%' }">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input placeholder="Enter furniture name" type="text" class="form-control" id="name"
+        [(ngModel)]="newFurniture.name">
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea placeholder="Enter furniture description" class="form-control" id="description"
+        [(ngModel)]="newFurniture.description"></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="cost" class="form-label">Cost ($)</label>
+      <input placeholder="Enter furniture cost per day" type="number" class="form-control" id="cost"
+        [(ngModel)]="newFurniture.cost">
+    </div>
+    <button type="button" class="btn btn-primary w-100" (click)="createFurniture()">Submit information</button>
+  </p-dialog>
