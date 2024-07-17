@@ -92,10 +92,7 @@ export class LineChartComponent implements OnInit {
   }
 
   transformData(data: any[]): any[] {
-    return data.map((item) => [
-      item.createdDate.split('T')[0],
-      item.amount / this.conversionRate,
-    ]);
+    return data.map((item) => [item.createdDate.split('T')[0], item.amount]);
   }
 
   formatCurrency(value: number): string {
