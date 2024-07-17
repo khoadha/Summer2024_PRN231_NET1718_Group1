@@ -142,6 +142,11 @@ export class AuthService {
       return this.userPayload.ImgPath;
   }
 
+  getIsStaffFromToken(){
+    if (this.userPayload)
+      return this.userPayload.IsStaff;
+  }
+
   getCookie(name: string): string {
     const cookieName = `${name}=`;
     const decodedCookie = decodeURIComponent(document.cookie);

@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
   public role!: string;
   imgPath!: string;
   categories: RoomCategory[] = [];
-
+  isStaff: any;
   ngOnInit(): void {
     this.getSessionUserInformation();
     this.categoriesService.getRoomCategories().subscribe((res) => {
@@ -51,6 +51,8 @@ export class HeaderComponent implements OnInit {
         const usId = this.auth.getUserIdFromToken();
         this.userId = val || usId;
       });
+
+      this.isStaff = this.auth.getIsStaffFromToken();
     }
   }
 

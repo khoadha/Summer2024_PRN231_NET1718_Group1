@@ -8,7 +8,7 @@ export interface Statistic {
 export interface GetRoomAdminDisplayDTO {
   roomCount?: number;
   roomAvailable?: number;
-  roomInavailable?: number;
+  roomUnavailable?: number;
 }
 
 export interface AdminDashboardInformation {

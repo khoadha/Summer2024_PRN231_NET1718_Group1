@@ -1,0 +1,65 @@
+<ng-container *ngIf="isStaff==='False'; else nopermission">
+<p-toast></p-toast>
+<app-loader [loader]="isLoading"></app-loader>
+    <ng-container *ngIf="users">
+        <div class="container vh-100">
+            <p-table [paginator]="true" [rows]="10" [showCurrentPageReport]="true" [value]="users">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>ID</th>
+                        <th>Image</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-user>
+                    <tr>
+                        <td>{{user.id}}</td>
+                        <td>
+                            <p-image [src]="user.imgPath" height="60" width="60"></p-image>
+                        </td>
+                        <td>{{user.userName}}</td>
+                        <td>{{user.email}}</td>
+                        <ng-container *ngIf="user.role != null; else nodata">
+                            <ng-container *ngIf="user.role==='Admin'">
+                                <ng-container *ngIf="user.isStaff===false">
+                                <td>Admin</td>
+                                </ng-container>
+                                <ng-container *ngIf="user.isStaff===true">
+                                <td>Staff</td>
+                                </ng-container>
+                           </ng-container>
+                           <ng-container *ngIf="user.role==='User'">
+                                <td>User</td>
+                           </ng-container>
+                        </ng-container>
+                        <ng-template #nodata>
+                            <td>No data</td>
+                        </ng-template>
+                        <td>
+                            <ng-container *ngIf="user.role==='User'">
+                                <p-button (click)="updateRole(user.id, 1)" icon="pi pi-user-edit" label="Set role staff"></p-button>
+                            </ng-container>
+                            <ng-container *ngIf="user.role==='Admin'">
+                                 <ng-container *ngIf="user.isStaff===false">
+                                    <p-button [disabled]="true" icon="pi pi-user-edit" label="Set role user"></p-button>
+                                 </ng-container>
+                                 <ng-container *ngIf="user.isStaff===true">
+                                    <p-button (click)="updateRole(user.id, 2)" icon="pi pi-user-edit" label="Set role user"></p-button>
+                                 </ng-container>
+                            </ng-container>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </ng-container>
+</ng-container>
+
+<ng-template #nopermission>
+    <div class="container vh-100">
+        You have no permisson to access this page
+    </div>
+</ng-template>

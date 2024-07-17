@@ -59,6 +59,7 @@ import { AdminHomeComponent } from './pages/admin-dashboard/admin-home/admin-hom
 import { TooltipModule } from 'primeng/tooltip';
 import { RoomPageComponent } from './pages/room-page/room-page.component';
 import { RoomDetailComponent } from './pages/room-detail/room-detail.component';
+import { ImageModule } from 'primeng/image';
 import { AdminOrderComponent } from './pages/admin-dashboard/admin-order/admin-order.component';
 import { ManageOrderComponent } from './pages/manage-order/manage-order.component';
 import { OrderDetailComponent } from './pages/order-detail/order-detail.component';
@@ -86,6 +87,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import * as echarts from 'echarts';
 import { BarChartComponent } from './features/charts/bar-chart/bar-chart.component';
 import { LineChartComponent } from './features/charts/line-chart/line-chart.component';
+import { AdminUserComponent } from './pages/admin-dashboard/admin-user/admin-user.component';
 @NgModule({
   imports: [
     NgxEchartsModule.forRoot({
@@ -127,6 +129,7 @@ import { LineChartComponent } from './features/charts/line-chart/line-chart.comp
     CalendarModule,
     MultiSelectModule,
     EditorModule,
+    ImageModule,
   ],
   declarations: [
     AppComponent,
@@ -177,6 +180,7 @@ import { LineChartComponent } from './features/charts/line-chart/line-chart.comp
     AdminReportComponent,
     BarChartComponent,
     LineChartComponent,
+    AdminUserComponent,
   ],
   providers: [
     {

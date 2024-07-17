@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -12,7 +13,8 @@ import { UserStoreService } from 'src/app/core/services/user-store.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.css'],
+  providers: [DatePipe],
 })
 export class ProfileComponent implements OnInit{
   // component
@@ -21,6 +23,9 @@ export class ProfileComponent implements OnInit{
   breadcrumbItems: MenuItem[] | undefined;
   isLoading: boolean = false;
   transactions!: PaymentTransaction[];
+  selectedTransaction!: PaymentTransaction;
+  selectedTransactionStatusText: string = '';
+  isModalOpen: boolean = false;
   // form
   updatePasswordForm!: FormGroup; 
 
@@ -53,6 +58,7 @@ export class ProfileComponent implements OnInit{
     private userService: ProfileService,
     private messageService: MessageService,
     private paymentService: PaymentService,
+    private datePipe: DatePipe,
     private fb: FormBuilder,
     private userStore: UserStoreService) { }
 
@@ -255,5 +261,30 @@ export class ProfileComponent implements OnInit{
   storeUserInformation(res: Profile) {
     this.userStore.setUsernameForStore(res.userName);
     this.userStore.setImgPathForStore(res.imgPath);
+  }
+
+  showDialog(trans: PaymentTransaction) {
+    this.selectedTransaction = trans;
+    this.transformData();
+    this.isModalOpen = true;
+  }
+
+  transformData() {
+    if (this.selectedTransaction.createdDate != null) {
+      this.selectedTransaction.createdDate = this.datePipe.transform(
+        this.selectedTransaction.createdDate,
+        'yyyy-MM-dd'
+      );
+    }
+
+    if(this.selectedTransaction.transactionStatus != null) {
+      if(this.selectedTransaction.transactionStatus==0) {
+        this.selectedTransactionStatusText = 'Pending';
+      } else if(this.selectedTransaction.transactionStatus==1) {
+        this.selectedTransactionStatusText = 'Success';
+      } else if(this.selectedTransaction.transactionStatus==1) {
+        this.selectedTransactionStatusText = 'Failed';
+      }
+    }
   }
 }

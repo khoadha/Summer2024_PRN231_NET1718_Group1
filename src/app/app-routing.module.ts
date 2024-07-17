@@ -40,6 +40,7 @@ import { AdminFeeComponent } from './pages/admin-dashboard/admin-fee/admin-fee.c
 import { ServicePageComponent } from './pages/service-page/service-page.component';
 import { MyReportComponent } from './pages/my-report/my-report.component';
 import { AdminReportComponent } from './pages/admin-dashboard/admin-report/admin-report.component';
+import { AdminUserComponent } from './pages/admin-dashboard/admin-user/admin-user.component';
 const routes: Routes = [
   {
     path: 'home',
@@ -200,6 +201,12 @@ const routes: Routes = [
         path: 'manage-service',
         component: AdminServiceComponent,
         title: 'Manage Service',
+        canActivate: [adminGuard],
+      },
+      {
+        path: 'manage-user',
+        component: AdminUserComponent,
+        title: 'Manage User',
         canActivate: [adminGuard],
       },
       {

@@ -9,7 +9,8 @@
         <div class="col col-lg-12 mb-4 mb-lg-0">
           <div class="card h-100" style="border-radius: .5rem;">
             <div class="row g-0 h-100">
-              <div class="col-md-4 gradient-custom text-center text-white d-flex flex-column justify-content-center align-items-center">
+              <div
+                class="col-md-4 gradient-custom text-center text-white d-flex flex-column justify-content-center align-items-center">
                 <div class="profile-container">
                   <img [src]="profile.imgPath" alt="Avatar" class="profile-image img-fluid mt-5" />
                   <i class="pi pi-camera mt-1" (click)="openAvatarDialog()"></i>
@@ -17,7 +18,7 @@
                 <div class="profile-details">
                   <h5>
                     {{ profile.userName }}
-                    <span class="pi pi-file-edit" (click)="openUserNameDialog()"></span>            
+                    <span class="pi pi-file-edit" (click)="openUserNameDialog()"></span>
                   </h5>
                   <p>{{ profile.email }}</p>
                   <div class="mb-5"></div>
@@ -32,42 +33,44 @@
                         <h6 class="content-text">Email</h6>
                         <p class="content-text text-muted">{{ profile.email }}</p>
                       </div>
-                      
+
                     </p-tabPanel>
                     <p-tabPanel header="Transaction History">
-                        <p-table
-                        [paginator]="true"
-                        [rows]="5"
-                        [showCurrentPageReport]="true"
-                        [value]="transactions">
-                          <ng-template pTemplate="header">
-                              <tr>
-                                  <th>Transaction ID</th>
-                                  <th>Created Date</th>
-                                  <th>Status</th>
-                                  <th>Amount</th>
-                              </tr>
-                          </ng-template>
-                          <ng-template pTemplate="body" let-transaction>
-                              <tr>
-                                  <td>{{ transaction.vnPayTransactionId }}</td>
-                                  <td>{{ transaction.createdDate | date }}</td>
-                                  <td>
-                                    <ng-container [ngSwitch]="transaction.transactionStatus">
-                                      <ng-container *ngSwitchCase="0">
-                                        <p-tag severity="danger" value="Failed"></p-tag>
-                                      </ng-container>
-                                      <ng-container *ngSwitchCase="1">
-                                        <p-tag severity="success" value="Paid"></p-tag>
-                                    </ng-container>
-                                      <ng-container *ngSwitchCase="2">
-                                          <p-tag severity="danger" value="Failed"></p-tag>
-                                      </ng-container>
-                                  </ng-container>
-                                  </td>
-                                  <td>{{ transaction.amount | currency }}</td>
-                              </tr>
-                          </ng-template>
+                      <p-table [paginator]="true" [rows]="5" [showCurrentPageReport]="true" [value]="transactions">
+                        <ng-template pTemplate="header">
+                          <tr>
+                            <th>Transaction ID</th>
+                            <th>Created Date</th>
+                            <th>Status</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                          </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-transaction>
+                          <tr>
+                            <td>{{ transaction.vnPayTransactionId }}</td>
+                            <td>{{ transaction.createdDate | date }}</td>
+                            <td>
+                              <ng-container [ngSwitch]="transaction.transactionStatus">
+                                <ng-container *ngSwitchCase="0">
+                                  <p-tag severity="warning" value="Pending"></p-tag>
+                                </ng-container>
+                                <ng-container *ngSwitchCase="1">
+                                  <p-tag severity="success" value="Paid"></p-tag>
+                                </ng-container>
+                                <ng-container *ngSwitchCase="2">
+                                  <p-tag severity="danger" value="Failed"></p-tag>
+                                </ng-container>
+                              </ng-container>
+                            </td>
+                            <td>{{ transaction.amount | currency }}</td>
+                            <td>
+                              <p-button (click)="showDialog(transaction)" icon="pi pi-list"
+                                label="View details"></p-button>
+                            </td>
+                          </tr>
+
+                        </ng-template>
                       </p-table>
                     </p-tabPanel>
                     <p-tabPanel header="Security" *ngIf="loginMethod === 'Normal'">
@@ -77,7 +80,7 @@
                         <i class="pi pi-angle-right icon" (click)="openPasswordDialog()"></i>
                       </div>
                     </p-tabPanel>
-                  </p-tabView>  
+                  </p-tabView>
                 </div>
               </div>
 
@@ -91,11 +94,41 @@
 
 
 <!-- dialog name -->
-<p-dialog 
-  header="Edit Profile" 
-  [style]="{ width: '25rem' }"
-  [(visible)]="updateUserNameVisible" 
-  [modal]="true"
+
+<p-dialog header="Transaction Details" [(visible)]="isModalOpen" [modal]="true" [style]="{width: '50vw'}">
+  <ng-container *ngIf="selectedTransaction">
+    <div class="mb-3">
+      <label class="form-label">ID</label>
+      <input [disabled]="true" class="form-control" [(ngModel)]="selectedTransaction.id">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Transaction ID</label>
+      <input [disabled]="true" class="form-control" [(ngModel)]="selectedTransaction.vnPayTransactionId">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">User ID</label>
+      <input [disabled]="true" class="form-control" [(ngModel)]="selectedTransaction.userId">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Amount ($)</label>
+      <input [disabled]="true" class="form-control" [(ngModel)]="selectedTransaction.amount">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+      <input [disabled]="true" class="form-control" [(ngModel)]="selectedTransaction.description">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Transaction Status</label>
+      <input [disabled]="true" class="form-control" [(ngModel)]="selectedTransactionStatusText">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Created Date</label>
+      <input [disabled]="true" class="form-control" [(ngModel)]="selectedTransaction.createdDate">
+    </div>
+  </ng-container>
+</p-dialog>
+
+<p-dialog header="Edit Profile" [style]="{ width: '25rem' }" [(visible)]="updateUserNameVisible" [modal]="true"
   [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
   <span class="p-text-secondary block mb-5">Update Name.</span>
   <div class="field">
@@ -103,131 +136,109 @@
       <span class="p-inputgroup-addon">
         <i class="pi pi-user"></i>
       </span>
-      <input 
-        pInputText 
-        placeholder="Name*" 
-        class="custom-input"
-        [(ngModel)]="newUsername" 
-        input="text" 
-        autocomplete="off" 
-        required 
-        autofocus
-        (ngModelChange)="validateUsername()"/>
+      <input pInputText placeholder="Name*" class="custom-input" [(ngModel)]="newUsername" input="text"
+        autocomplete="off" required autofocus (ngModelChange)="validateUsername()" />
     </div>
     <small *ngIf="userNameError" class="p-error"> Name must be 8-14 chars and no space.</small>
   </div>
   <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" class="p-button-text custome-button" (click)="updateUserNameVisible = false"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text primary-color-bg text-light custome-button" (click)="updateUsername()"></button>
+    <button pButton pRipple label="Cancel" class="p-button-text custome-button"
+      (click)="updateUserNameVisible = false"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check"
+      class="p-button-text primary-color-bg text-light custome-button" (click)="updateUsername()"></button>
   </ng-template>
 </p-dialog>
 
 <!-- dialog password -->
-<p-dialog 
-  header="Edit Profile" 
-  [style]="{ width: '50vw', height: '90vh' }"
-  [(visible)]="updatePasswordVisible" 
-  [modal]="true"
-  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
-  class="custom-dialog">
+<p-dialog header="Edit Profile" [style]="{ width: '50vw', height: '90vh' }" [(visible)]="updatePasswordVisible"
+  [modal]="true" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" class="custom-dialog">
   <span class="p-text-secondary block mb-5">Update Password.</span>
   <div class="field password-field">
-    <form [formGroup]="updatePasswordForm">  
-      <p-password formControlName="oldPassword" 
-        [style]="{ margin: '1rem 0'}"
-        [toggleMask]="true"
-        [feedback]="false"
-        placeholder="Old Password*"
-        class="custom-password">
+    <form [formGroup]="updatePasswordForm">
+      <p-password formControlName="oldPassword" [style]="{ margin: '1rem 0'}" [toggleMask]="true" [feedback]="false"
+        placeholder="Old Password*" class="custom-password">
       </p-password>
 
-      <p-password formControlName="newPassword" 
-                    [style]="{ margin: '1rem 0'}"
-                    [toggleMask]="true"
-                    [feedback]="true"
-                    placeholder="New Password*"
-                    class="custom-password"
-                    promptLabel="Enter New password"
-                    weakLabel="Weak" 
-                    mediumLabel="Medium" 
-                    strongLabel="Strong"
-                    (input)="checkPasswordCriteria(updatePasswordForm.get('newPassword')!.value)">
-                    <ng-template pTemplate="header">
-                        <h6>Password Strength</h6>
-                    </ng-template>
-                    <ng-template pTemplate="footer">
-                        <p-divider></p-divider>
-                        <p class="mt-2">Suggestions</p>
-                        <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
-                            <li [class.text-success]="passwordCriteria.lowercase" [class.text-danger]="!passwordCriteria.lowercase">
-                                <i [class.pi]="true" [class.pi-check]="passwordCriteria.lowercase" [class.pi-times]="!passwordCriteria.lowercase"></i>                              
-                                At least one lowercase letter
-                            </li>
+      <p-password formControlName="newPassword" [style]="{ margin: '1rem 0'}" [toggleMask]="true" [feedback]="true"
+        placeholder="New Password*" class="custom-password" promptLabel="Enter New password" weakLabel="Weak"
+        mediumLabel="Medium" strongLabel="Strong"
+        (input)="checkPasswordCriteria(updatePasswordForm.get('newPassword')!.value)">
+        <ng-template pTemplate="header">
+          <h6>Password Strength</h6>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <p-divider></p-divider>
+          <p class="mt-2">Suggestions</p>
+          <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+            <li [class.text-success]="passwordCriteria.lowercase" [class.text-danger]="!passwordCriteria.lowercase">
+              <i [class.pi]="true" [class.pi-check]="passwordCriteria.lowercase"
+                [class.pi-times]="!passwordCriteria.lowercase"></i>
+              At least one lowercase letter
+            </li>
 
-                            <li [class.text-success]="passwordCriteria.uppercase" [class.text-danger]="!passwordCriteria.uppercase">
-                                <i [class.pi]="true" [class.pi-check]="passwordCriteria.uppercase" [class.pi-times]="!passwordCriteria.uppercase"></i>
-                                At least one uppercase letter
-                            </li>
-                            
-                            <li [class.text-success]="passwordCriteria.number" [class.text-danger]="!passwordCriteria.number">
-                                <i [class.pi]="true" [class.pi-check]="passwordCriteria.number" [class.pi-times]="!passwordCriteria.number"></i>
-                                At least one number
-                            </li>
+            <li [class.text-success]="passwordCriteria.uppercase" [class.text-danger]="!passwordCriteria.uppercase">
+              <i [class.pi]="true" [class.pi-check]="passwordCriteria.uppercase"
+                [class.pi-times]="!passwordCriteria.uppercase"></i>
+              At least one uppercase letter
+            </li>
 
-                            <li [class.text-success]="passwordCriteria.specialChar" [class.text-danger]="!passwordCriteria.specialChar">
-                                <i [class.pi]="true" [class.pi-check]="passwordCriteria.specialChar" [class.pi-times]="!passwordCriteria.specialChar"></i>
-                                At least one special character
-                            </li>
+            <li [class.text-success]="passwordCriteria.number" [class.text-danger]="!passwordCriteria.number">
+              <i [class.pi]="true" [class.pi-check]="passwordCriteria.number"
+                [class.pi-times]="!passwordCriteria.number"></i>
+              At least one number
+            </li>
 
-                            <li [class.text-success]="passwordCriteria.minLength" [class.text-danger]="!passwordCriteria.minLength">
-                                <i [class.pi]="true" [class.pi-check]="passwordCriteria.minLength" [class.pi-times]="!passwordCriteria.minLength"></i>
-                                Minimum 8 characters
-                            </li>
-                        </ul>
-                    </ng-template>
-                </p-password>
+            <li [class.text-success]="passwordCriteria.specialChar" [class.text-danger]="!passwordCriteria.specialChar">
+              <i [class.pi]="true" [class.pi-check]="passwordCriteria.specialChar"
+                [class.pi-times]="!passwordCriteria.specialChar"></i>
+              At least one special character
+            </li>
+
+            <li [class.text-success]="passwordCriteria.minLength" [class.text-danger]="!passwordCriteria.minLength">
+              <i [class.pi]="true" [class.pi-check]="passwordCriteria.minLength"
+                [class.pi-times]="!passwordCriteria.minLength"></i>
+              Minimum 8 characters
+            </li>
+          </ul>
+        </ng-template>
+      </p-password>
       <small class="text-warning" *ngIf="updatePasswordForm.get('newPassword')!.invalid 
                             && updatePasswordForm.get('newPassword')!.dirty">
-                                    New password is required and must be at least 8 characters, 1 special characters, 1 cased characters, 1 normal characters 
+        New password is required and must be at least 8 characters, 1 special characters, 1 cased characters, 1 normal
+        characters
       </small>
 
-      <p-password formControlName="confirmedPassword" 
-        [style]="{ margin: '1rem 0'}"
-        [toggleMask]="true"
-        [feedback]="false"
-        placeholder="Confirm Password*"
-        class="custom-password">
+      <p-password formControlName="confirmedPassword" [style]="{ margin: '1rem 0'}" [toggleMask]="true"
+        [feedback]="false" placeholder="Confirm Password*" class="custom-password">
       </p-password>
       <small class="text-warning" *ngIf="updatePasswordForm.get('confirmedPassword')!.invalid 
                             && updatePasswordForm.get('confirmedPassword')!.dirty">
-                                    Confirmed password must match new password
+        Confirmed password must match new password
       </small>
     </form>
   </div>
   <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" class="p-button-text custome-button" (click)="updatePasswordVisible = false"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text primary-color-bg text-light custom-button" (click)="updatePassword()"></button>
+    <button pButton pRipple label="Cancel" class="p-button-text custome-button"
+      (click)="updatePasswordVisible = false"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check"
+      class="p-button-text primary-color-bg text-light custom-button" (click)="updatePassword()"></button>
   </ng-template>
 </p-dialog>
 
 <!-- dialog avatar-->
-<p-dialog 
-  header="Edit Profile" 
-  [style]="{ width: '50vw', height: 'auto' }"
-  [(visible)]="updateAvatarVisible" 
-  [modal]="true"
-  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+<p-dialog header="Edit Profile" [style]="{ width: '50vw', height: 'auto' }" [(visible)]="updateAvatarVisible"
+  [modal]="true" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
   <span class="p-text-secondary block mb-5">Update Avatar.</span>
 
   <div class="field">
     <div class="row mt-2 d-flex flex-column">
       <p-divider align="center">
-          <span class="text-secondary">Choose Avatar</span>
+        <span class="text-secondary">Choose Avatar</span>
       </p-divider>
       <input type="file" accept="image/*" #fileInput (change)="onFileSelected($event)" hidden>
       <button class="mx-auto my-4 custome-button" type="button" mat-icon-button (click)="fileInput.click()"
-          [ngClass]="isImageSelected ? 'bg-success text-white':'text-dark'">
-          <i class="pi" style="font-size: 2rem" [ngClass]="!isImageSelected ? 'pi-image' : 'pi-check'"></i>
+        [ngClass]="isImageSelected ? 'bg-success text-white':'text-dark'">
+        <i class="pi" style="font-size: 2rem" [ngClass]="!isImageSelected ? 'pi-image' : 'pi-check'"></i>
       </button>
       <div *ngIf="isImageSelected" class="main-image-container">
         <img [src]="getImagePreviewUrl()" alt="Profile Image" class="img-preview">
@@ -235,8 +246,9 @@
     </div>
   </div>
   <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" class="p-button-text custome-button" (click)="updateAvatarVisible = false"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text primary-color-bg text-light custome-button" (click)="updateAvatar()"></button>
+    <button pButton pRipple label="Cancel" class="p-button-text custome-button"
+      (click)="updateAvatarVisible = false"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check"
+      class="p-button-text primary-color-bg text-light custome-button" (click)="updateAvatar()"></button>
   </ng-template>
 </p-dialog>
-

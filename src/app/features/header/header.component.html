@@ -72,6 +72,12 @@
                 Account: <span class="pastel fw-bold">{{ username }}</span>
               </p>
             </li>
+            <ng-container *ngIf="isStaff=='True'">
+              <li>
+                <a class="dropdown-item web-font d-flex align-items-center" routerLink="/adashboard">
+                  <i class="pi pi-wrench me-2"></i> Dashboard</a>
+              </li>
+            </ng-container>
             <li>
               <a class="dropdown-item web-font d-flex align-items-center" routerLink="/manage-profile">
                 <i class="pi pi-id-card me-2"></i>

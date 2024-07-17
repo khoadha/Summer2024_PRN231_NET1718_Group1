@@ -1,26 +1,146 @@
-<p-toast />
-<div class="container height-100vh">
-  <div class="d-flex justify-content-between mb-3">
-    <h2>Orders Management</h2>
-  </div>
+<ng-container *ngIf="orderData">
+  <p-toast />
+  <div class="container height-100vh">
+    <div class="d-flex justify-content-between mb-3">
+      <h2>Orders Management</h2>
+    </div>
 
-  <p-table [value]="orderData">
-    <ng-template pTemplate="header">
-      <tr>
-        <th>ID</th>
-        <th>Customer Name</th>
-        <th>Room Name</th>
-        <th>Order Date</th>
-        <th>Cancel Date</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-order>
-      <tr>
-        <td>{{ order.id }}</td>
-        <td>{{ order.userName }}</td>
-        <td>{{ order.roomName }}</td>
-        <td>{{ order.orderDate | date }}</td>
-        <td>{{ order.cancelDate | date }}</td>
-      </tr>
-    </ng-template>
-  </p-table>
+    <p-table [value]="orderData">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Customer Name</th>
+          <th>Room Name</th>
+          <th>Order Date</th>
+          <th>Cancel Date</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-order>
+        <tr>
+          <td>{{ order.id }}</td>
+          <td>{{ order.userName }}</td>
+          <td>{{ order.roomName }}</td>
+          <td>{{ order.orderDate | date }}</td>
+          <ng-container *ngIf="order.cancelDate != null; else nodata">
+            <td>{{ order.cancelDate | date }}</td>
+          </ng-container>
+          <ng-template #nodata>
+            <td>No data</td>
+          </ng-template>
+          <td>
+            <ng-container [ngSwitch]="order.status">
+              <ng-container *ngSwitchCase="'Canceled'">
+                <p-tag severity="failed" value="Canceled"></p-tag>
+              </ng-container>
+              <ng-container *ngSwitchCase="'Processing'">
+                <p-tag severity="info" value="Processing"></p-tag>
+              </ng-container>
+              <ng-container *ngSwitchCase="'Confirmed'">
+                <p-tag severity="warning" value="Confirmed"></p-tag>
+              </ng-container>
+              <ng-container *ngSwitchCase="'Completed'">
+                <p-tag severity="success" value="Completed"></p-tag>
+              </ng-container>
+            </ng-container>
+          </td>
+          <td>
+            <p-button (click)="showDialog(order)" icon="pi pi-list" label="View details"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <p-dialog header="Order Details" [(visible)]="isModalOpen" [modal]="true" [style]="{width: '50vw'}">
+      <ng-container *ngIf="selectedOrder">
+        <div class="mb-3">
+          <label class="form-label">ID</label>
+          <input [disabled]="true" class="form-control" [(ngModel)]="selectedOrder.id">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Room ID</label>
+          <input [disabled]="true" class="form-control" [(ngModel)]="selectedOrder.roomId">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Room Name</label>
+          <input [disabled]="true" class="form-control" [(ngModel)]="selectedOrder.roomName">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">User ID</label>
+          <input [disabled]="true" class="form-control" [(ngModel)]="selectedOrder.userId">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input [disabled]="true" class="form-control" [(ngModel)]="selectedOrder.userName">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Order Date</label>
+          <input [disabled]="true" class="form-control" [(ngModel)]="selectedOrder.orderDate">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Cancel Date</label>
+          <input [disabled]="true" class="form-control" [(ngModel)]="selectedOrder.cancelDate">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Transaction Status</label>
+          <input [disabled]="true" class="form-control" [(ngModel)]="selectedOrder.status">
+        </div>
+
+      <div class="card mb-3">
+          <div class="card-header">
+              Room Using Services
+          </div>
+          <ul class="list-group list-group-flush">
+              <li *ngFor="let service of selectedOrder.roomServices" class="list-group-item">
+                  {{ service.serviceName }}
+              </li>
+              <li *ngIf="selectedOrder.roomServices.length === 0" class="list-group-item">
+                  No room services selected.
+              </li>
+          </ul>
+      </div>
+      <div class="mb-3">
+        <h3 class="text-center my-2">Contracts</h3>
+        <p-table [value]="selectedOrder.contracts">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Contract Type</th>
+              <th>Start date</th>
+              <th>End date</th>
+              <th>Cost</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-contract>
+            <tr>
+              <td>{{contract.contractTypeName}}</td>
+              <td>{{contract.startDate | date}}</td>
+              <td>{{contract.endDate | date}}</td>
+              <td>{{contract.cost | currency}}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+      <div class="mb-3">
+        <h3 class="text-center my-2">Guests</h3>
+        <p-table [value]="selectedOrder.guests">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Full Name</th>
+              <th>Email</th>
+              <th>Birthday</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-guest>
+            <tr>
+              <td>{{ guest.fullname }}</td>
+              <td>{{ guest.email}}</td>
+              <td>{{ guest.birthday | date }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+      </ng-container>
+    </p-dialog>
+  </div>
+</ng-container>

@@ -120,7 +120,7 @@
                     </ng-container>
                 </ng-container>
             </div>
-            <ng-container *ngIf="selectedReport.reply==='No data'">
+            <ng-container *ngIf="selectedReport.reply==='No data' && selectedReport.status != 0">
                 <div class="mb-3">
                     <label class="form-label">Reply from Admin</label>
                     <input placeholder="Enter your reply to this report" class="form-control"

@@ -18,6 +18,7 @@ export class AdminDashboardComponent implements OnInit {
   drawerVisible: boolean = true;
   items: MenuItem[] = [
     { label: 'Dashboard', url: '/adashboard', icon: 'pi-chart-bar' },
+    { label: 'Manage Users', url: '/adashboard/manage-user', icon: 'pi-user' },
     { label: 'Manage Rooms', url: '/adashboard/manage-room', icon: 'pi-home' },
     {
       label: 'Manage Furniture',

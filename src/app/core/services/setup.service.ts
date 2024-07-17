@@ -17,6 +17,10 @@ export class SetupService {
     return this.http.get<any>(`${this.APIUrl}/users`)
   }
 
+  updateUserRole(userId: string, action: number){
+    return this.http.put<any>(`${this.APIUrl}/users?userId=${userId}&action=${action}`,{});
+  }
+
   sendEmail(sendEmailRequestDto: any) {
     return this.http.post(`${this.APIUrl}/send-email`, sendEmailRequestDto)
   }

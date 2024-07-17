@@ -1,23 +1,4 @@
 <p-toast></p-toast>
-<div class="container" style="max-width: 100%; margin-bottom: 16px;">
-    <div class="row">
-        <div class="col-12">
-            <div class="">
-
-                <button pButton (click)="onClickSendEmailButton()" pRipple label="Send email to users"
-                    class="p-button p-button-success "> <i class="pi pi-inbox icon ms-1 me-2"></i></button>
-            </div>
-            <!-- <div class="card border shadow-xs mb-4">
-                <div class="card-body text-start p-3 w-100" style="display: flex; justify-content: start;">
-                    
-                </div>
-            </div> -->
-        </div>
-    </div>
-
-
-</div>
-
 <p-dialog [header]="'Send email to users'" [(visible)]="showModal" [modal]="true"
     [style]="{ width: '50%', height: '60vh' }">
     <div class="row my-3">
@@ -35,7 +16,15 @@
     <button [disabled]="!isDataValid()" ngClass="w-100" pButton (click)="onSubmit()" pRipple label="Send email to users"
         class="p-button-success"></button>
 </p-dialog>
-<div class="container" style="max-width: 100%;">
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="">
+                <button pButton (click)="onClickSendEmailButton()" pRipple label="Send announcement to users"
+                    class="p-button p-button-success "> <i class="pi pi-inbox icon ms-1 me-2"></i></button>
+            </div>
+        </div>
+    </div>
     <ng-container *ngIf="adi">
         <div class="row">
             <div class="col-3">
@@ -47,7 +36,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="w-100">
-                                    <p class="text-sm text-secondary mb-1 bg">Total user in HostelLand</p>
+                                    <p class="text-sm text-secondary mb-1 bg">Total user in Hosteland</p>
                                     <h4 class="mb-2 font-weight-bold">{{adi.totalUserCount }}</h4>
                                 </div>
                             </div>
@@ -64,7 +53,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="w-100">
-                                    <p class="text-sm text-secondary mb-1">Total Furniture in HostelLand</p>
+                                    <p class="text-sm text-secondary mb-1">Total Furniture in Hosteland</p>
                                     <h4 class="mb-2 font-weight-bold">{{adi.totalFurnitureCount}}</h4>
                                 </div>
                             </div>
@@ -76,12 +65,12 @@
                 <div class="card border shadow-xs mb-4">
                     <div class="card-body text-start p-3 w-100">
                         <div class="">
-                            <i class="pi pi-shop icon fs-3"></i>
+                            <i class="pi pi-home icon fs-3"></i>
                         </div>
                         <div class="row">
                             <div class="col-12">
                                 <div class="w-100">
-                                    <p class="text-sm text-secondary mb-1">Total room in HostelLand</p>
+                                    <p class="text-sm text-secondary mb-1">Total room in Hosteland</p>
                                     <h4 class="mb-2 font-weight-bold">{{adi.totalRoomCount}}</h4>
                                 </div>
                             </div>
@@ -98,7 +87,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="w-100">
-                                    <p class="text-sm text-secondary mb-1">Total orders in HostelLand</p>
+                                    <p class="text-sm text-secondary mb-1">Total orders in Hosteland</p>
                                     <h4 class="mb-2 font-weight-bold">{{adi.totalOrderCount}}</h4>
                                 </div>
                             </div>
@@ -117,7 +106,7 @@
                     padding-top: 32px;">
                         <div class="d-sm-flex align-items-center mb-3">
                             <div>
-                                <h6 class="fw-bold mb-0 web-font pastel">Statistics of all room status in HostelLand <i
+                                <h6 class="fw-bold mb-0 web-font pastel">Statistics of all room status in Hosteland <i
                                         class="pi pi-chart-pie icon"></i></h6>
                             </div>
                         </div>
@@ -136,8 +125,7 @@
                     padding-top: 32px;">
                         <div class="mb-3">
                             <div class="web-font pastel">
-                                <h6 class="fw-bold mb-0">Statistics of daily revenue across the platform (in the last
-                                    month)
+                                <h6 class="fw-bold mb-0">Statistics of daily revenue across the platform
                                     <i class="pi pi-chart-line icon"></i>
                                 </h6>
                             </div>

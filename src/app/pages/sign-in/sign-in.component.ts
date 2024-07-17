@@ -99,6 +99,7 @@ export class SignInComponent implements OnInit{
   }
 
   handleCredentialResponse(response: CredentialResponse) {
+    this.isLoading = true;
     this.auth.loginWithGoogle(response.credential).subscribe({
       next: (res) => {
         this.storeUserInformation(res);

@@ -30,7 +30,7 @@ export class BarChartComponent implements OnInit {
           radius: '50%',
           data: [
             { value: this.data.roomAvailable, name: 'Available' },
-            { value: this.data.roomInavailable, name: 'Inavailable' },
+            { value: this.data.roomUnavailable, name: 'Unavailable' },
           ],
           emphasis: {
             itemStyle: {

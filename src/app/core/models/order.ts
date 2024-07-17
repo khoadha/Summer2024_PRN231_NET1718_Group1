@@ -15,10 +15,11 @@ export interface GetOrderDto {
   roomId: number;
   userId: string | null;
   guests: GuestDto[];
-  orderDate: Date | null;
-  cancelDate: Date | null;
+  orderDate: any;
+  cancelDate: any;
   userName: string;
   roomName: string;
+  status: any;
   roomServices: GetRoomServiceDto[];
   contracts: ContractDto[];
 }
