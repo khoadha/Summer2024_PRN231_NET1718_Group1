@@ -28,10 +28,10 @@
 }
 
 .bg-image {
-  background-image: url("src\assets\images\slide-1.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  /* background-image: url("src\assets\images\slide-1.jpg") !important; */
+  background-size:contain !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
   min-height: 100vh; /* Make the div take up at least the full viewport height */
 }
 

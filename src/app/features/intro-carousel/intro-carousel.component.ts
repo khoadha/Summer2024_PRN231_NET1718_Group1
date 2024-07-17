@@ -1,16 +1,41 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { QueryModel } from 'src/app/core/models/queryModel';
+import { RoomDisplay } from 'src/app/core/models/room';
+import { RoomService } from 'src/app/core/services/room.service';
 
 @Component({
   selector: 'app-intro-carousel',
   templateUrl: './intro-carousel.component.html',
   styleUrls: ['./intro-carousel.component.css']
 })
-export class IntroCarouselComponent {
-  images = [
-    { url: "assets/images/slide-1.jpg", location: 'Doral, Florida', zipCode: '78345', propertyNumber: '204', propertyName: 'Mount Olive Road Two', price: '12,000' },
-    { url: "assets/images/slide-2.jpg", location: 'Doral, Florida', zipCode: '78345', propertyNumber: '204', propertyName: 'Rino Venda Road Five', price: '12,000' },
-    { url: "assets/images/slide-3.jpg", location: 'Doral, Florida', zipCode: '78345', propertyNumber: '204', propertyName: 'Alira Roan Road One', price: '12,000' }
-  ];
+export class IntroCarouselComponent implements OnInit {
+
+  properties: RoomDisplay[] = [];
+  images: any;
+  constructor(private roomService: RoomService) {}
+
+  ngOnInit(): void {
+    this.initRooms();
+  }
+
+  initRooms() {
+    var query: QueryModel = {
+      top: 5,
+    };
+    this.roomService.searchRoomDisplay(query).subscribe(res => {
+      this.updateImages(res.data);
+    });
+  }
+
+  updateImages(data: any){
+    this.images = data.map((room: any) => ({
+      url: room.imgPath,
+      location: room.categoryName,
+      propertyNumber: room.id.toString(),
+      propertyName: room.name,
+      price: room.costPerDay.toString()
+  }));
+  }
 
   responsiveOptions: any[] = [
     {
