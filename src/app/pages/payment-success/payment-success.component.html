@@ -1,40 +1,36 @@
 <div style="background-color: #fff; height: 80vh;">
     <div class="container-fluid pb-5">
         <div class="row justify-content-center pt-5">
-            <h1 class="text-center fs-1 web-font pb-3 fw-bold" style="color: #77b43f;">THANH TOÁN THÀNH CÔNG!</h1>
+            <h1 class="text-center fs-1 web-font pb-3 fw-bold" style="color: #77b43f;">PAYMENT SUCCESSFUL!</h1>
             <div class="col-8">
                 <table class="table caption-top web-font table-hover table-borderless">
-                    <caption class="fw-bold">Thông tin thanh toán</caption>
+                    <caption class="fw-bold">Payment Information</caption>
                     <thead class="table-light">
                         <tr>
                             <th scope="col-6">#</th>
-                            <th scope="col-6">Nội dung</th>
+                            <th scope="col-6">Details</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <th class="web-font" scope="row">Mã thanh toán:</th>
+                            <th class="web-font" scope="row">Transaction ID:</th>
                             <td class="web-font">{{transactionNo}}</td>
                         </tr>
                         <tr>
-                            <th class="web-font" scope="row">Tiền thanh toán:</th>
-                            <td class="web-font">{{amount | vndCurrencyPipe}}</td>
+                            <th class="web-font" scope="row">Amount Paid:</th>
+                            <td class="web-font">${{amount}}</td>
                         </tr>
                         <tr>
-                            <th class="web-font" scope="row">Mã ngân hàng:</th>
+                            <th class="web-font" scope="row">Bank Code:</th>
                             <td class="web-font">{{bankCode}}</td>
                         </tr>
                         <tr>
-                            <th class="web-font" scope="row">Phương thức:</th>
+                            <th class="web-font" scope="row">Method:</th>
                             <td class="web-font">{{cardType}}</td>
                         </tr>
                         <tr>
-                            <th class="web-font" scope="row">Thông tin:</th>
-                            <td class="web-font">{{orderInfo}}</td>
-                        </tr>
-                        <tr>
-                            <th class="web-font" scope="row">Ngày thanh toán:</th>
-                            <td class="web-font">{{payDateTime| date:'medium'}}</td>
+                            <th class="web-font" scope="row">Payment Date:</th>
+                            <td class="web-font">{{payDateTime | date:'medium'}}</td>
                         </tr>
                     </tbody>
                 </table>
