@@ -12,7 +12,9 @@ import { OrderService } from 'src/app/core/services/order.service';
 export class FeeDetailComponent implements OnInit {
   fees: GetFeeDto[] = [];
   selectedFeeIds: number[] = [];
-  orderId: string ='';
+  orderId: string = '';
+  selectAllChecked: boolean = false;
+
   electricityPrices: any[] = [
     { step: 'First 50 kWh', range: '0 - 50 kWh', priceUSD: 0.078 },
     { step: 'Next 50 kWh', range: '51 - 100 kWh', priceUSD: 0.081 },
@@ -22,12 +24,12 @@ export class FeeDetailComponent implements OnInit {
     { step: 'Above 400 kWh', range: '401+ kWh', priceUSD: 0.137 },
   ];
 
-  
+
   constructor(
     private route: ActivatedRoute,
     private orderService: OrderService,
     private authService: AuthService,
-  ) {}
+  ) { }
 
   ngOnInit() {
     const userId = this.authService.getUserIdFromToken();
@@ -47,20 +49,25 @@ export class FeeDetailComponent implements OnInit {
         this.selectedFeeIds.splice(index, 1);
       }
     }
+    this.updateSelectAllCheckbox();
+  }
+
+  onFeeSelectionAllChange(isSelected: boolean) {
+    this.selectedFeeIds = isSelected ? this.fees.map(fee => fee.id) : [];
+    this.updateSelectAllCheckbox();
+  }
+
+  updateSelectAllCheckbox() {
+    this.selectAllChecked = this.selectedFeeIds.length === this.fees.length;
   }
 
   paySelectedFees() {
     const userId = this.authService.getUserIdFromToken();
     if (this.selectedFeeIds.length > 0) {
       const createPaymentRequest = { description: "string", feeIds: this.selectedFeeIds };
-      this.orderService.createPayment(createPaymentRequest, userId).subscribe(
-        res => {
-          window.location.href = res.url;
-        },
-        err => {
-          console.error('Payment failed', err);
-          // Handle payment error
-        }
+      this.orderService.createPayment(createPaymentRequest, userId).subscribe(res => {
+        window.location.href = res.url;
+      }
       );
     }
   }

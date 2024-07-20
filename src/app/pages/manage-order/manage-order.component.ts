@@ -17,6 +17,7 @@ export class ManageOrderComponent implements OnInit {
   description: string = '';
   showModal: boolean = false;
   header: string = '';
+  isLoading: boolean = false;
 
   displayedColumns: string[] = [
     'id',
@@ -63,9 +64,13 @@ export class ManageOrderComponent implements OnInit {
   }
 
   getOrders(): void {
+    this.isLoading=true;
     const userId = this.authService.getUserIdFromToken();
     this.orderService
       .getOrdersByUserId(userId)
-      .subscribe((orders) => (this.orders = orders));
+      .subscribe(res => {
+        this.orders=res;
+        this.isLoading=false;
+      });
   }
 }

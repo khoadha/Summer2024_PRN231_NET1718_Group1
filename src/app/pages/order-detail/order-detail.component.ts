@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class OrderDetailComponent implements OnInit {
   order!: GetOrderDto;
+  totalDays: number = 0;
 
   constructor(
     private router: Router,
@@ -26,6 +27,7 @@ export class OrderDetailComponent implements OnInit {
       .subscribe(res => {
         this.order = res;
         this.checkPagePermisson();
+        this.calculateTotalDays();
       });
   }
 
@@ -35,4 +37,14 @@ export class OrderDetailComponent implements OnInit {
       this.router.navigate(['home'])
     }
   }
+
+  calculateTotalDays() {
+    if (this.order.contracts[0].startDate && this.order.contracts[0].endDate) {
+      const startDate = new Date(this.order.contracts[0].startDate);
+      const endDate = new Date(this.order.contracts[0].endDate);
+      const timeDifference = endDate.getTime() - startDate.getTime();
+      this.totalDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
+      this.totalDays += 1;
+    }
+  } 
 }

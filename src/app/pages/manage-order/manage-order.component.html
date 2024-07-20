@@ -1,14 +1,10 @@
+<app-loader [loader]="isLoading"></app-loader>
 <ng-container *ngIf="orders">
     <p-toast></p-toast>
     <div class="bg-soft">
         <div class="container" style="padding: 120px 0; min-height: 60vh;">
             <h1 class="text-center my-5">My Orders</h1>
             <p-table [value]="orders" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped">
-                <!-- <ng-template pTemplate="caption">
-    <div class="flex align-items-center justify-content-between">
-    Orders Management
-    </div>
-    </ng-template> -->
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Room Name</th>

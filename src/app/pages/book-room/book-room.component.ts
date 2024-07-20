@@ -148,6 +148,10 @@ export class BookRoomComponent implements OnInit {
     return this.allServices.filter(service => this.bookingForm.get(service.name)?.value);
   }
 
+  get allSelectedServicesPrice() {
+    return this.selectedServices.reduce((sum, item) => sum + item.servicePriceNumber, 0)
+  }
+
   addOccupant() {
     const tempOccupant = this.fb.group({
       fullname: [this.newOccupant.fullname],
@@ -184,15 +188,19 @@ export class BookRoomComponent implements OnInit {
 
   calculateTotalFee() {
     let feePerDay = this.room.costPerDay;
+    const occupantsCount = this.occupants.length;
 
     this.allServices.forEach(service => {
       const serviceControl = this.bookingForm.get(service.name);
       if (serviceControl && serviceControl.value) {
-        feePerDay += service.servicePriceNumber;
+        if (service.isCountPerCapita) {
+          feePerDay += service.servicePriceNumber * occupantsCount;
+        } else {
+          feePerDay += service.servicePriceNumber;
+        }
       }
     });
-    const totalDays = this.calculateDays();
-    var totalFee = feePerDay *= totalDays;
+    const totalFee = feePerDay * this.totalDays;
     return totalFee;
   }
 

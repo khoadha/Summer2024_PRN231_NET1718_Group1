@@ -1,11 +1,10 @@
 <div class="bg-soft">
   <div class="container" style="padding: 14% 0; min-height: 60vh;">
     <h1 class="text-center mb-2">Fees to pay (Order ID #{{orderId}})</h1>
-    <h4 class="text-center mb-5 text-danger">For monthly booking, the booking fee will be automatically generated on the 15th of each month</h4>
+    <h4 class="text-center mb-5 text-danger">For monthly booking, booking fees will be automatically generated on the 15th of each month</h4>
     <p-table [value]="fees">
       <ng-template pTemplate="header">
         <tr>
-          <!-- <th>ID</th> -->
           <th>Fee Name</th>
           <th>Category</th>
           <th>Amount</th>
@@ -13,7 +12,22 @@
           <th>Status</th>
           <th>Select to Pay</th>
         </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>
+            <p-checkbox
+              [binary]="true"
+              [(ngModel)]="selectAllChecked"
+              (onChange)="onFeeSelectionAllChange($event.checked)"
+            ></p-checkbox>
+            Select all</th>
+        </tr>
       </ng-template>
+
       <ng-template pTemplate="body" let-fee>
         <tr>
           <!-- <td>{{ fee.id }}</td> -->
@@ -37,7 +51,8 @@
           <td>
             <p-checkbox
               [binary]="true"
-              [disabled]="fee.feeStatus === 1"
+              [ngModel]="selectedFeeIds.includes(fee.id)"
+              [disabled]="fee.feeStatus !== 0"
               (onChange)="onFeeSelectionChange(fee.id, $event.checked)"
             ></p-checkbox>
           </td>

@@ -29,6 +29,8 @@ export interface ContractDto {
   endDate: Date;
   contractTypeId: number;
   contractTypeName: string;
+  name: string;
+  serviceId: number;
 }
 export interface GetRoomServiceDto {
   serviceName?: string;

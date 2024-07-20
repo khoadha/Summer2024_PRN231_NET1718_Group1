@@ -20,7 +20,7 @@ export class IntroCarouselComponent implements OnInit {
 
   initRooms() {
     var query: QueryModel = {
-      top: 5,
+      top: 3,
     };
     this.roomService.searchRoomDisplay(query).subscribe(res => {
       this.updateImages(res.data);

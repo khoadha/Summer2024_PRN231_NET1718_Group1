@@ -18,6 +18,7 @@
         <div class="form-group">
             <h3 class="text-center">Room Details</h3>
             <div class="form-container">
+                <p class="form-control-static">Fee per day: {{ room.costPerDay*90/100 | currency }} (Discount 10% for monthly rental)</p>
                 <p class="form-control-static">Area: {{ room.roomArea }} m²</p>
                 <p class="form-control-static">Maximum Occupancy: {{ room.roomSize }} people</p>
                 <p class="form-control-static">Description: {{ room.roomDescription }}</p>
@@ -80,8 +81,10 @@
                 <div class="form-container">
                     <div class="form-check" *ngFor="let service of allServices">
                         <input class="form-check-input me-2" type="checkbox" [formControlName]="service.name">
-                        <label class="form-check-label">{{ service.name }} - ${{ service.servicePriceNumber}} - 
-                            <ng-container *ngIf="service.isCountPerCapita===true; else perRoom">Per capita</ng-container>
+                        <label class="form-check-label">{{ service.name }} - {{ service.servicePriceNumber | currency }}/day - 
+                            <ng-container *ngIf="service.isCountPerCapita===true; else perRoom">
+                                Per capita (Currently {{occupants.length}} occupant(s))
+                            </ng-container>
                             <ng-template #perRoom>Per room</ng-template>
                         </label>
                     </div>
@@ -168,134 +171,154 @@
     </p-dialog>
 
     <p-dialog header="Display Contract" [(visible)]="showContract" [modal]="true"
-        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true">
-        <div class="container mt-5">
-            <div class="contract">
-                <h2>Hosteland Booking Contract</h2>
-                <p>This contract is made and entered into as of {{today}} by and between:</p>
-                <ul>
-                    <li><strong>Hosteland</strong> ("Hostel")</li>
-                    <li><strong>{{ username }}</strong> ("Guest")</li>
-                </ul>
-                <p><strong>Witnesseth:</strong></p>
-                <p>WHEREAS, Guest desires to reserve accommodations at Hostel; and</p>
-                <p>WHEREAS, Hostel desires to provide such accommodations to Guest subject to the terms and conditions
-                    set
-                    forth herein.</p>
-                <p><strong>NOW, THEREFORE, in consideration of the mutual covenants contained herein, the parties agree
-                        as
-                        follows:</strong></p>
+            [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true">
+            <div class="container mt-5">
+                <div class="contract">
+                    <h2>Hosteland Booking Contract</h2>
+                    <p>This contract is made and entered into as of {{today}} by and between:</p>
+                    <ul>
+                        <li><strong>Hosteland</strong> ("Hostel")</li>
+                        <li><strong>{{ username }}</strong> ("Guest")</li>
+                    </ul>
+                    <p><strong>Witnesseth:</strong></p>
+                    <p>WHEREAS, Guest desires to reserve accommodations at Hostel; and</p>
+                    <p>WHEREAS, Hostel desires to provide such accommodations to Guest subject to the terms and
+                        conditions
+                        set
+                        forth herein.</p>
+                    <p><strong>NOW, THEREFORE, in consideration of the mutual covenants contained herein, the parties
+                            agree
+                            as
+                            follows:</strong></p>
 
-                <section class="mt-3">
-                    <h4>1. Room Details and Cost</h4>
-                    <table class="table table-bordered">
-                        <tbody>
-                            <tr>
-                                <th>Room Name</th>
-                                <td>{{ room.name }}</td>
-                            </tr>
-                            <tr>
-                                <th>Room Rate</th>
-                                <td>{{ room.costPerDay }}$</td>
-                            </tr>
-                            <tr>
-                                <th>Number of Occupants</th>
-                                <td>{{ occupants.length }} people</td>
-                            </tr>
-                            <tr>
-                                <th>Total Cost</th>
-                                <td>{{ calculateTotalFee() }}$</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </section>
-
-                <section class="mt-3">
-                    <h4>2. Dates of Stay</h4>
-                    <table class="table table-bordered">
-                        <tbody>
-                            <tr>
-                                <th>Arrival Date</th>
-                                <td>{{ bookingForm.get('startDate')?.value }}</td>
-                            </tr>
-                            <tr>
-                                <th>Departure Date</th>
-                                <td>{{ bookingForm.get('estimatedEndDate')?.value }}</td>
-                            </tr>
-                            <tr>
-                                <th>Number of Nights</th>
-                                <td>{{this.calculateDays()}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </section>
-
-                <section class="mt-3">
-                    <h4>3. Services Booked</h4>
-                    <ng-container *ngIf="selectedServices.length > 0; else noServices">
+                    <section class="mt-3">
+                        <h4>1. Room Details and Cost</h4>
                         <table class="table table-bordered">
                             <tbody>
                                 <tr>
-                                    <th>Service Name</th>
-                                    <th>Service Price</th>
-                                    <th>Count By</th>
+                                    <th>Room Name</th>
+                                    <td>{{ room.name }}</td>
                                 </tr>
-                                <tr *ngFor="let service of selectedServices">
-                                    <td>{{ service.name }}</td>
-                                    <td>${{ service.servicePriceNumber }}</td>
-                                    <td>
-                                        <ng-container *ngIf="service.isCountPerCapita===true;else nocapita">
-                                            Capita
-                                        </ng-container>
-                                        <ng-template #nocapita>
-                                            Room
-                                        </ng-template>
-                                    </td>
+                                <tr>
+                                    <th>Fee per day</th>
+                                    <td>{{ room.costPerDay }}$</td>
+                                </tr>
+                                <tr>
+                                    <th>Number of Occupants</th>
+                                    <td>{{ occupants.length }} people</td>
+                                </tr>
+                                <tr>
+                                    <th>Room Fee (Discount 90% for monthly rental)</th>
+                                    <td>{{ (room.costPerDay*calculateDays() * 90/100) | currency }}</td>
                                 </tr>
                             </tbody>
                         </table>
-                    </ng-container>
-                    <ng-template #noServices>
-                        <p>No services booked.</p>
-                    </ng-template>
-                </section>
+                    </section>
 
+                    <section class="mt-3">
+                        <h4>2. Dates of Stay</h4>
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Arrival Date</th>
+                                    <td>{{ bookingForm.get('startDate')?.value }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Month(s) Last</th>
+                                    <td>{{ bookingForm.get('monthLast')?.value }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Number of Nights</th>
+                                    <td>{{calculateDays()}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
 
-                <section class="mt-3">
-                    <h4>4. Occupants</h4>
-                    <table class="table table-bordered">
-                        <tbody>
-                            <tr>
-                                <th>Full Name</th>
-                                <th>Email</th>
-                                <th>Birthday</th>
-                            </tr>
-                            <tr *ngFor="let occupant of occupants.controls">
-                                <td class="col">{{ occupant.get('fullname')?.value }}</td>
-                                <td class="col">
-                                    {{ occupant.get('email')?.value !== '' ? occupant.get('email')?.value : 'none' }}
-                                </td>
-                                <td class="col">{{ occupant.get('birthday')?.value }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </section>
-
-                <p><strong>IN WITNESS WHEREOF, the parties have executed this Contract as of the date first written
-                        above.</strong></p>
-                <br>
-                <p><strong>Hosteland</strong></p>
-                <p>By: Do Hoang Anh Khoa</p>
-                <p>Title: CEO</p>
-                <br>
-                <p><strong>Guest:</strong></p>
-                <p></p>
-                <p>Signature: ________________________</p>
+                    <section class="mt-3">
+                        <h4>3. Services Booked</h4>
+                        <ng-container *ngIf="selectedServices.length > 0; else noServices">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th>Service Name</th>
+                                        <th>Service Price</th>
+                                        <th>Is Count Per Capita</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                    <tr *ngFor="let service of selectedServices">
+                                        <td>{{ service.name }}</td>
+                                        <td>{{ service.servicePriceNumber | currency }}</td>
+                                        <ng-container *ngIf="service.isCountPerCapita==true; else nocount">
+                                        <td>Yes (for {{occupants.controls.length}} people)</td>
+                                        <td>{{(service.servicePriceNumber * totalDays * occupants.controls.length) | currency}}</td>
+                                        </ng-container>
+                                        <ng-template #nocount>
+                                        <td>No</td>
+                                        <td>{{(service.servicePriceNumber * totalDays) | currency}}</td>
+                                        </ng-template>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </ng-container>
+                        <ng-template #noServices>
+                            <p>No services booked.</p>
+                        </ng-template>
+                    </section>
+                    <section class="mt-3">
+                        <h4>4. Occupants</h4>
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Full Name</th>
+                                    <th>Email</th>
+                                    <th>Birthday</th>
+                                </tr>
+                                <tr *ngFor="let occupant of occupants.controls">
+                                    <td class="col">{{ occupant.get('fullname')?.value }}</td>
+                                    <td class="col">
+                                        {{ occupant.get('email')?.value !== '' ? occupant.get('email')?.value : 'none'
+                                        }}
+                                    </td>
+                                    <td class="col">{{ occupant.get('birthday')?.value }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+                    <section class="mt-3">
+                        <h4>5. Fees Information</h4>
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Room Fee</th>
+                                    <td>{{ (room.costPerDay*calculateDays()* 90 / 100) | currency }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Service Fee</th>
+                                    <td>{{ (allSelectedServicesPrice*calculateDays()) | currency }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Total Fees</th>
+                                    <td>{{ (allSelectedServicesPrice*calculateDays() + room.costPerDay*calculateDays()* 90 / 100) | currency }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+                    <p><strong>IN WITNESS WHEREOF, the parties have executed this Contract as of the date first written
+                            above.</strong></p>
+                    <br>
+                    <p><strong>Hosteland</strong></p>
+                    <p>By: Do Hoang Anh Khoa</p>
+                    <p>Title: CEO</p>
+                    <br>
+                    <p><strong>Guest:</strong></p>
+                    <p></p>
+                    <p>Signature: ________________________</p>
+                </div>
+                <button pButton type="button" class="rounded"
+                    [label]="loadingSubmit ? 'Signing...' : 'Sign Contract and Confirm Book'" [disabled]="loadingSubmit"
+                    tabindex="-1" (click)="submitForm()"></button>
             </div>
-            <button pButton type="button" class="rounded"
-                [label]="loadingSubmit ? 'Signing...' : 'Sign Contract and Confirm Book'" [disabled]="loadingSubmit"
-                tabindex="-1" (click)="submitForm()"></button>
-        </div>
-    </p-dialog>
+        </p-dialog>
 </div>  
 </ng-container>

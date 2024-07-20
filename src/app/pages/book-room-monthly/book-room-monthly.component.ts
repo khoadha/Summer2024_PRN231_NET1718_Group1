@@ -151,7 +151,17 @@ export class BookRoomMonthlyComponent implements OnInit {
     return endDate;
   }
 
-  calculateDays(): void {
+  get allSelectedServicesPrice() {
+    return this.selectedServices.reduce((sum, item) => {
+      let totalPrice = item.servicePriceNumber;
+      if (item.isCountPerCapita) {
+        totalPrice *= this.occupants.length;
+      }
+      return sum + totalPrice;
+    }, 0);
+  }
+
+  calculateDays(): any {
     const startDateString = this.bookingForm.get('startDate')?.value;
     const months = this.bookingForm.get('monthLast')?.value;
     if (startDateString && months) {
@@ -161,13 +171,15 @@ export class BookRoomMonthlyComponent implements OnInit {
       this.bookingForm.get('estimatedEndDate')?.setValue(this.estimatedEndDate, { emitEvent: false });
       const totalDays = 1 + Math.ceil(Math.abs((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)));
       this.totalDays = totalDays;
+      return totalDays;
     } else {
       this.totalDays = 0;
+      return this.totalDays;
     }
   }
 
   calculateTotalFee() {
-    let feePerDay = this.room.costPerDay;
+    let feePerDay = this.room.costPerDay * 90 / 100;
     const occupantsCount = this.occupants.length;
 
     this.allServices.forEach(service => {
