@@ -148,13 +148,13 @@
                 </ng-template>
             </p-table>
             <div class="d-flex flex-row align-items-baseline gap-5 my-3 justify-content-center">
-                <p class="fs-6" style="color: rgb(0, 128, 128);">Total service fee: $<span id="fee-text">
+                <p class="fs-6" style="color: rgb(0, 128, 128);">Total service fee: <span id="fee-text">
                     {{ calculateServiceTotal() | currency }}</span>
                 </p>
                 <p class="fs-6" style="color: rgb(0, 128, 128);">Total day(s) rented:<span id="fee-text">
                         {{totalDays}}</span>
                 </p>
-                <p class="fs-6" style="color: rgb(0, 128, 0);">Total Fee: $<span
+                <p class="fs-6" style="color: rgb(0, 128, 0);">Total Fee: <span
                         id="fee-text">{{ calculateTotalFee() | currency }}</span>
                 </p>
             </div>

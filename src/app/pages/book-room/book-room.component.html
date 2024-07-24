@@ -152,14 +152,14 @@
                     </ng-template>
                 </p-table>
                 <div class="d-flex flex-row align-items-baseline gap-5 my-3 justify-content-center">
-                    <p class="fs-6" style="color: rgb(0, 128, 128);">Rate per day: $<span id="fee-text">
-                            {{(calculateTotalFee()/totalDays)}}</span>
+                    <p class="fs-6" style="color: rgb(0, 128, 128);">Rate per day: <span id="fee-text">
+                            {{(calculateTotalFee()/totalDays) | currency}}</span>
                     </p>
                     <p class="fs-6" style="color: rgb(0, 128, 128);">Total day(s) rented:<span id="fee-text">
                             {{totalDays}}</span>
                     </p>
-                    <p class="fs-6" style="color: rgb(0, 128, 0);">Total Fee: $<span
-                            id="fee-text">{{calculateTotalFee()}}</span>
+                    <p class="fs-6" style="color: rgb(0, 128, 0);">Total Fee: <span
+                            id="fee-text">{{calculateTotalFee() | currency}}</span>
                     </p>
                 </div>
                 <div class="mb-3">
