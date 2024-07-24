@@ -77,11 +77,11 @@
                 <div class="col-6"></div>
             </div>  
             <div class="form-group">
-                <label class="mb-1 fs-3">Services - Each services chosen will increase the rate per day</label>
+                <label class="mb-1 fs-3">Services - Each services chosen will increase the rate per month</label>
                 <div class="form-container">
                     <div class="form-check" *ngFor="let service of allServices">
                         <input class="form-check-input me-2" type="checkbox" [formControlName]="service.name">
-                        <label class="form-check-label">{{ service.name }} - {{ service.servicePriceNumber | currency }}/day - 
+                        <label class="form-check-label">{{ service.name }} - {{ service.servicePriceNumber | currency }}/month - 
                             <ng-container *ngIf="service.isCountPerCapita===true; else perRoom">
                                 Per capita (Currently {{occupants.length}} occupant(s))
                             </ng-container>
@@ -148,14 +148,14 @@
                 </ng-template>
             </p-table>
             <div class="d-flex flex-row align-items-baseline gap-5 my-3 justify-content-center">
-                <p class="fs-6" style="color: rgb(0, 128, 128);">Rate per day: $<span id="fee-text">
-                        {{(calculateTotalFee()/totalDays)}}</span>
+                <p class="fs-6" style="color: rgb(0, 128, 128);">Total service fee: $<span id="fee-text">
+                    {{ calculateServiceTotal() | currency }}</span>
                 </p>
                 <p class="fs-6" style="color: rgb(0, 128, 128);">Total day(s) rented:<span id="fee-text">
                         {{totalDays}}</span>
                 </p>
                 <p class="fs-6" style="color: rgb(0, 128, 0);">Total Fee: $<span
-                        id="fee-text">{{calculateTotalFee()}}</span>
+                        id="fee-text">{{ calculateTotalFee() | currency }}</span>
                 </p>
             </div>
             <div class="mb-3">
@@ -192,7 +192,78 @@
                             follows:</strong></p>
 
                     <section class="mt-3">
-                        <h4>1. Room Details and Cost</h4>
+                        <h4>1. Dates of Stay</h4>
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Arrival Date</th>
+                                    <td>{{ bookingForm.get('startDate')?.value }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Month(s) Last</th>
+                                    <td>{{ bookingForm.get('monthLast')?.value }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Number of Nights</th>
+                                    <td>{{calculateDays()}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <section class="mt-3">
+                        <h4>2. Services Booked</h4>
+                        <ng-container *ngIf="selectedServices.length > 0; else noServices">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th>Service Name</th>
+                                        <th>Service Price</th>
+                                        <th>Is Count Per Capita</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                    <tr *ngFor="let service of selectedServices">
+                                        <td>{{ service.name }}</td>
+                                        <td>{{ service.servicePriceNumber | currency }}</td>
+                                        <ng-container *ngIf="service.isCountPerCapita==true; else nocount">
+                                        <td>Yes (for {{occupants.controls.length}} people)</td>
+                                        <td>{{(service.servicePriceNumber * monthLast * occupants.controls.length) | currency}}</td>
+                                        </ng-container>
+                                        <ng-template #nocount>
+                                        <td>No</td>
+                                        <td>{{(service.servicePriceNumber * monthLast) | currency}}</td>
+                                        </ng-template>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </ng-container>
+                        <ng-template #noServices>
+                            <p>No services booked.</p>
+                        </ng-template>
+                    </section>
+                    <section class="mt-3">
+                        <h4>3. Occupants</h4>
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Full Name</th>
+                                    <th>Phone Number</th>
+                                    <th>Birthday</th>
+                                </tr>
+                                <tr *ngFor="let occupant of occupants.controls">
+                                    <td class="col">{{ occupant.get('fullname')?.value }}</td>
+                                    <td class="col">
+                                        {{ occupant.get('email')?.value !== '' ? occupant.get('email')?.value : 'none'
+                                        }}
+                                    </td>
+                                    <td class="col">{{ occupant.get('birthday')?.value }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+                    
+                    <section class="mt-3">
+                        <h4>4. Room Details and Cost</h4>
                         <table class="table table-bordered">
                             <tbody>
                                 <tr>
@@ -216,76 +287,6 @@
                     </section>
 
                     <section class="mt-3">
-                        <h4>2. Dates of Stay</h4>
-                        <table class="table table-bordered">
-                            <tbody>
-                                <tr>
-                                    <th>Arrival Date</th>
-                                    <td>{{ bookingForm.get('startDate')?.value }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Month(s) Last</th>
-                                    <td>{{ bookingForm.get('monthLast')?.value }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Number of Nights</th>
-                                    <td>{{calculateDays()}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </section>
-
-                    <section class="mt-3">
-                        <h4>3. Services Booked</h4>
-                        <ng-container *ngIf="selectedServices.length > 0; else noServices">
-                            <table class="table table-bordered">
-                                <tbody>
-                                    <tr>
-                                        <th>Service Name</th>
-                                        <th>Service Price</th>
-                                        <th>Is Count Per Capita</th>
-                                        <th>Subtotal</th>
-                                    </tr>
-                                    <tr *ngFor="let service of selectedServices">
-                                        <td>{{ service.name }}</td>
-                                        <td>{{ service.servicePriceNumber | currency }}</td>
-                                        <ng-container *ngIf="service.isCountPerCapita==true; else nocount">
-                                        <td>Yes (for {{occupants.controls.length}} people)</td>
-                                        <td>{{(service.servicePriceNumber * totalDays * occupants.controls.length) | currency}}</td>
-                                        </ng-container>
-                                        <ng-template #nocount>
-                                        <td>No</td>
-                                        <td>{{(service.servicePriceNumber * totalDays) | currency}}</td>
-                                        </ng-template>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </ng-container>
-                        <ng-template #noServices>
-                            <p>No services booked.</p>
-                        </ng-template>
-                    </section>
-                    <section class="mt-3">
-                        <h4>4. Occupants</h4>
-                        <table class="table table-bordered">
-                            <tbody>
-                                <tr>
-                                    <th>Full Name</th>
-                                    <th>Email</th>
-                                    <th>Birthday</th>
-                                </tr>
-                                <tr *ngFor="let occupant of occupants.controls">
-                                    <td class="col">{{ occupant.get('fullname')?.value }}</td>
-                                    <td class="col">
-                                        {{ occupant.get('email')?.value !== '' ? occupant.get('email')?.value : 'none'
-                                        }}
-                                    </td>
-                                    <td class="col">{{ occupant.get('birthday')?.value }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </section>
-                    <section class="mt-3">
                         <h4>5. Fees Information</h4>
                         <table class="table table-bordered">
                             <tbody>
@@ -295,11 +296,11 @@
                                 </tr>
                                 <tr>
                                     <th>Service Fee</th>
-                                    <td>{{ (allSelectedServicesPrice*calculateDays()) | currency }}</td>
+                                    <td>{{ calculateServiceTotal() | currency }}</td>
                                 </tr>
                                 <tr>
                                     <th>Total Fees</th>
-                                    <td>{{ (allSelectedServicesPrice*calculateDays() + room.costPerDay*calculateDays()* 90 / 100) | currency }}</td>
+                                    <td>{{ calculateTotalFee() | currency }}</td>
                                 </tr>
                             </tbody>
                         </table>

@@ -60,7 +60,9 @@
                             <strong>Service ID:</strong> {{ contract.serviceId }} <br>
                         </ng-container>
                         <strong>Type:</strong> {{ contract.contractTypeName }} <br>
-                        <strong>Total Price:</strong> {{ contract.cost | currency:'USD':'symbol':'1.2-2' }} ({{(contract.cost / totalDays) | currency }}/day)<br>
+                        <strong>Total Price:</strong> {{ contract.cost | currency:'USD':'symbol':'1.2-2' }}
+                        <!-- ({{(contract.cost / totalDays) | currency }}/day)-->
+                        <br>
                         <strong>Start Date:</strong> {{ contract.startDate | date }} <br>
                         <strong>End Date:</strong> {{ contract.endDate | date }}
                     </li>

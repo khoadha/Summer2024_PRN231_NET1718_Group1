@@ -26,10 +26,6 @@ export class ServicePageComponent implements OnInit {
       value: '',
     },
     {
-      label: 'Daily and monthly',
-      value: 'ALL',
-    },
-    {
       label: 'Only daily rental',
       value: 'ONLY_DAY',
     },

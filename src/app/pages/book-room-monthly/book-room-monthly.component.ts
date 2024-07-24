@@ -120,6 +120,12 @@ export class BookRoomMonthlyComponent implements OnInit {
     return this.bookingForm.get('occupants') as FormArray;
   }
 
+  
+  get monthLast(): number {
+    return this.bookingForm.get('monthLast')?.value as number;
+  }
+
+
   get selectedServices() {
     return this.allServices.filter(service => this.bookingForm.get(service.name)?.value);
   }
@@ -180,19 +186,29 @@ export class BookRoomMonthlyComponent implements OnInit {
 
   calculateTotalFee() {
     let feePerDay = this.room.costPerDay * 90 / 100;
+    const totalFee = feePerDay * this.totalDays + this.calculateServiceTotal();
+    return totalFee;
+  }
+
+  calculateServiceTotal() {
+    let serviceFeePerMonth = 0;
     const occupantsCount = this.occupants.length;
 
     this.allServices.forEach(service => {
       const serviceControl = this.bookingForm.get(service.name);
       if (serviceControl && serviceControl.value) {
         if (service.isCountPerCapita) {
-          feePerDay += service.servicePriceNumber * occupantsCount;
+          serviceFeePerMonth += service.servicePriceNumber * occupantsCount;
         } else {
-          feePerDay += service.servicePriceNumber;
+          serviceFeePerMonth += service.servicePriceNumber;
         }
       }
     });
-    const totalFee = feePerDay * this.totalDays;
+    let totalFee = serviceFeePerMonth;
+    if(this.bookingForm.get('monthLast')!=null)
+    {
+      totalFee*= this.bookingForm.get('monthLast')?.value;
+    }
     return totalFee;
   }
 
