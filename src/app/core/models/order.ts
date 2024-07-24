@@ -23,6 +23,16 @@ export interface GetOrderDto {
   roomServices: GetRoomServiceDto[];
   contracts: ContractDto[];
 }
+export interface GetOrderDisplayDto {
+  id?: number;
+  roomId: number;
+  userId: string | null;
+  orderDate: any;
+  cancelDate: any;
+  userName: string;
+  roomName: string;
+  status: any;
+}
 export interface ContractDto {
   cost: number;
   startDate: Date;

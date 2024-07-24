@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from 'src/environment/environment';
-import { CreateOrderDto, GetFeeDto, GetOrderDto } from '../models/order';
+import { CreateOrderDto, GetFeeDto, GetOrderDisplayDto, GetOrderDto } from '../models/order';
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +19,8 @@ export class OrderService {
     return this.http.get<GetOrderDto[]>(`${this.odataUrl}`);
   }
 
-  getOrdersByUserId(userId: string): Observable<GetOrderDto[]> {
-    return this.http.get<GetOrderDto[]>(`${this.APIUrl}/get-user-id/${userId}`);
+  getOrdersByUserId(userId: string): Observable<GetOrderDisplayDto[]> {
+    return this.http.get<GetOrderDisplayDto[]>(`${this.APIUrl}/get-user-id/${userId}`);
   }
 
   getOrderById(id: number): Observable<GetOrderDto> {

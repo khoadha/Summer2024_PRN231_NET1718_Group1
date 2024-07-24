@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/core/services/order.service';
-import { GetOrderDto } from 'src/app/core/models/order';
+import { GetOrderDisplayDto, GetOrderDto } from 'src/app/core/models/order';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { AddReportDto } from 'src/app/core/models/report';
 import { ReportService } from 'src/app/core/services/report.service';
@@ -12,8 +12,8 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./manage-order.component.css'],
 })
 export class ManageOrderComponent implements OnInit {
-  orders: GetOrderDto[] = [];
-  selectedOrder!: GetOrderDto;
+  orders: GetOrderDisplayDto[] = [];
+  selectedOrder!: GetOrderDisplayDto;
   description: string = '';
   showModal: boolean = false;
   header: string = '';
